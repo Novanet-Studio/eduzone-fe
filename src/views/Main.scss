@@ -1,0 +1,188 @@
+// Archivos importados
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+
+/* Hero */
+.hero {
+  @include flex;
+  @include center;
+  border-bottom: $rojo 10px solid;
+  .container {
+    justify-content: center;
+  }
+  &__info {
+    @include flex;
+    @include center;
+    border-radius: 4em;
+    text-align: center;
+    background-color: $amarillo;
+    box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+  }
+  &__input {
+    border: none;
+    color: $negro;
+  }
+  &__button {
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    background-color: $rojo;
+  }
+}
+
+/* Enjoy */
+.enjoy {
+  @include flex;
+  align-content: center;
+  border-bottom: $azul 10px solid;
+  .container {
+    justify-content: space-between;
+  }
+}
+
+/* FAQ */
+.faq {
+  @include flex;
+  text-align: center;
+  border-bottom: $amarillo 10px solid;
+  .container {
+    justify-content: center;
+  }
+  &__drop {
+    background: $gris1;
+  }
+  &__question,
+  &__answer {
+    font-weight:300;
+    color: #fff;
+  }
+  &__info {
+    @include flex;
+    @include center;
+    border-radius: 7em;
+    text-align: center;
+    background-color: $amarillo;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
+    &-input {
+      border: none;
+      color: $negro;
+    }
+    &-button {
+      border: none;
+      border-radius: 0;
+      color: #fff;
+      cursor: pointer;
+      background-color: $rojo;
+    }
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait) {
+}
+
+@media only screen and (min-device-width: 568px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape) {
+}
+
+@media only screen and (min-device-width: 768px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait) {
+}
+
+@media only screen and (min-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape) {
+}
+
+@media only screen and (min-device-width: 1280px) and (-webkit-min-device-pixel-ratio: 1) {
+  /* Hero */
+  .hero {
+    height: 72vh;
+    background-size: cover;
+    background-position: center;
+    &__info {
+      width: 55vw;
+      padding: 5vh 0;
+    }
+    &__title {
+      flex: 100%;
+      padding-bottom: 1.5vh;
+    }
+    &__text {
+      flex: 100%;
+      padding-bottom: 1.5vh;
+    }
+    &__form {
+      width: 70%;
+    }
+    &__input {
+      width: 65%;
+      padding: 1.65vh;
+      font-size: 0.95rem;
+    }
+    &__button {
+      padding: 1vh 1vh 1.5vh 1vh;
+      font-size: 1.3rem;
+    }
+  }
+
+  /* Enjoy */
+  .enjoy {
+    height: 50vh;
+    .container {
+      padding: 0 18vh;
+    }
+    &__col-left {
+      flex: 0 0 45%;
+    }
+    &__col-right {
+      flex: 0 0 40%;
+    }
+    &__title {
+      padding-bottom: 3vh;
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    padding-top: 7vh;
+    padding-bottom: 2vh;
+    &__title {
+      flex: 0 0 100%;
+      padding-bottom: 5vh;
+    }
+    &__drop {
+      width: 50.5%;
+      margin-bottom: 1vh;
+      padding: 2vh;
+    }
+    &__answer {
+      padding-top: 2vh;
+    }
+    &__info {
+      width: 50vw;
+      margin-top: 4vh;
+      padding: 3vh 0;
+      &-title {
+        flex: 100%;
+        padding-bottom: 1.5vh;
+      }
+      &-text {
+        flex: 100%;
+        padding-bottom: 1.5vh;
+      }
+      &-subs {
+        width: 70%;
+      }
+      &-input {
+        width: 65%;
+        padding: 1.65vh;
+        font-size: 0.95rem;
+      }
+      &-button {
+        padding: 1vh 1vh 1.5vh 1vh;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+/* Bariol 300 - Light */
+@font-face {
+  font-family: "Bariol";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../font/Bariol-Light.ttf");
+}
+
+/* Bariol 400 - Regular */
+@font-face {
+  font-family: "Bariol";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../font/Bariol-Regular.ttf");
+}
+
+
+/* Bariol 600 - Bold */
+@font-face {
+  font-family: "Bariol";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../font/Bariol-Bold.ttf");
+}
+
+* {
+  font-family: "Bariol", sans-serif;
+  color:$negro;
+}

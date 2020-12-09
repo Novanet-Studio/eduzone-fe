@@ -1,4 +1,9 @@
 {
+  "name": "eduzone",
+  "description": "Eduzone Store",
+  "version": "0.1.0",
+  "author": "Novanet Studio <info@novanet.studio>",
+  "homepage": "https://edu-zone.org/eduzonestore",
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
@@ -7,12 +12,18 @@
     "lint": "prettier --check \"src/**/*.{js,jsx}\""
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.11.0",
+    "axios": "^0.21.0",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
+    "@csstools/postcss-sass": "^4.0.0",
     "@snowpack/plugin-dotenv": "^2.0.5",
     "@snowpack/plugin-react-refresh": "^2.3.8",
+    "@snowpack/plugin-sass": "^1.2.0",
     "@snowpack/web-test-runner-plugin": "^0.1.5",
     "@testing-library/react": "^11.0.0",
     "@web/test-runner": "^0.10.0",

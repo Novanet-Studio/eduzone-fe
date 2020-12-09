@@ -1,39 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Switch, Route } from 'react-router-dom'
 
-function App() {
-  // Create the count state.
-  const [count, setCount] = useState(0);
-  // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
-  // Return the App component.
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
-  );
-}
+import Main from './views/Main'
+import Register from './views/Register'
+import Login from './views/Login'
+import Prices from './views/Prices'
+import Account from './views/Account'
+import Success from './components/Success'
 
-export default App;
+import './App.scss'
+
+const baseUrl = import.meta.env.MODE === 'production' ? '/eduzonestore/' : '/'
+
+const App = () => (
+  <Switch basename={baseUrl}>
+    <Route path="/">
+      <Main />
+    </Route>
+    <Route exact path="/login">
+      <Login />
+    </Route>
+    <Route path="/register">
+      <Register />
+    </Route>
+    <Route path="/prices">
+      <Prices />
+    </Route>
+    <Route path="/account">
+      <Account />
+    </Route>
+    <Route path="/success">
+      <Success />
+    </Route>
+  </Switch>
+)
+
+export default App

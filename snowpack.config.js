@@ -2,9 +2,13 @@
 module.exports = {
   mount: {
     public: '/',
-    src: '/_dist_',
+    src: '/dist',
   },
-  plugins: ['@snowpack/plugin-react-refresh', '@snowpack/plugin-dotenv'],
+  plugins: [
+    '@snowpack/plugin-react-refresh',
+    '@snowpack/plugin-dotenv',
+    '@snowpack/plugin-sass',
+  ],
   install: [
     /* ... */
   ],
@@ -23,4 +27,4 @@ module.exports = {
   alias: {
     /* ... */
   },
-};
+}

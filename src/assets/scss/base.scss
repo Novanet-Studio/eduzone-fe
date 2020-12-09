@@ -1,0 +1,160 @@
+// Archivos importados
+@import './normalize';
+@import './variables';
+@import './mixins';
+@import './fonts';
+
+/* Contenedores principales */
+body {
+  background-color: #fff;
+}
+
+.container {
+  margin-top: 0;
+  @include flex;
+}
+
+/*Texto*/
+h2 {
+  color: $negro;
+}
+
+h3 {
+  color: $negro;
+}
+
+p, button {
+  font-weight: 300;
+}
+
+/* Header */
+.header {
+  @include flex;
+  align-items: center;
+  background-color: $negro;
+  .container {
+    justify-content: space-between;
+  }
+  &__logo {
+    cursor: pointer;
+  }
+  &__login {
+    button {
+      border: none;
+      color: #fff;
+      background-color: $azul;
+      cursor: pointer;
+    }
+  }
+}
+
+/* Footer */
+.footer {
+  @include flex;
+  @include center;
+  text-align: center;
+  color: #fff;
+  background-color: $gris2;
+  .container {
+    justify-content: center;
+  }
+  &__title {
+    flex: 100%;
+    color: #fff;
+  }
+  &__email {
+    flex: 100%;
+    cursor: pointer;
+    color: #fff;
+  }
+  &__line {
+    flex: 100%;
+    border-top: 2px solid #fff;
+  }
+  &__logo {
+    cursor: pointer;
+  }
+  &__copy {
+    flex: 100%;
+    color: #fff;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait) {
+}
+
+@media only screen and (min-device-width: 568px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape) {
+}
+
+@media only screen and (min-device-width: 768px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait) {
+}
+
+@media only screen and (min-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape) {
+}
+
+@media only screen and (min-device-width: 1280px) and (-webkit-min-device-pixel-ratio: 1) {
+  .container {
+    width: 87vw;
+  }
+
+  /*Texto*/
+  h2 {
+    font-size: 2.2rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 1.6rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+  }
+
+  /* Header */
+  .header {
+    min-height: 8vh;
+    .container {
+      padding: 0 10vh;
+    }
+    &__logo {
+      width: 14vw;
+    }
+    &__login {
+      button {
+        padding: 1vh 4vh;
+        font-size: 0.8rem;
+        border-radius: 0.4em;
+      }
+    }
+  }
+
+  /* Footer */
+  .footer {
+    min-height: 35vh;
+    .container {
+      padding: 0 18vh;
+    }
+    &__title {
+      padding-bottom: 2vh;
+    }
+    &__email {
+      font-size: 1.4rem;
+      padding-bottom: 3vh;
+    }
+    &__line {
+      margin: 2vh 0;
+    }
+    &__logo {
+      width: 24vw;
+    }
+    &__copy {
+      padding-top: 2vh;
+      font-size: 1.1rem;
+    }
+  }
+}
