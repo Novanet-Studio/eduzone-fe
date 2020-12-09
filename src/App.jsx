@@ -1,39 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { loadStripe } from '@stripe/stripe-js'
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements
+} from '@stripe/react-stripe-js'
 
-function App() {
-  // Create the count state.
-  const [count, setCount] = useState(0);
-  // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
-  // Return the App component.
+import axios from 'axios'
+
+import './App.css'
+
+const stripePromise = loadStripe(
+  'pk_test_51HrYUuDQxWpdMrSvs5C2SVJsaod3aSGLMeNXgAl098S0Z6KXjwsH8L7cLcltwurqO6M25L6hgFNN5r0xjnM35xUM00HGQYzaxj',
+)
+
+// CheckoutSession
+const CheckoutSession = () => {
+  const stripe = useStripe()
+  const createCheckoutSession = (priceId) => {
+    return fetch('http://localhost:4242/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ priceId })
+    }).then(result => result.json())
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    createCheckoutSession()
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
-  );
+    <button id="checkout" onSubmit={handleSubmit}>
+      Subscribe
+    </button>
+  )
 }
 
-export default App;
+function App() {
+  return (
+    <div className="container">
+      <CheckoutSession />
+    </div>
+  )
+}
+
+export default App
