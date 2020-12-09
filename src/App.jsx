@@ -1,52 +1,30 @@
-import React, { useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements
-} from '@stripe/react-stripe-js'
+import React from 'react'
+import { BrowserRouter as Switch, Route } from 'react-router-dom'
 
-import axios from 'axios'
+import Register from './views/Register'
+import Login from './views/Login';
+import Prices from './views/Prices'
+import Account from './views/Account'
+import Success from './components/Success';
 
-import './App.css'
-
-const stripePromise = loadStripe(
-  'pk_test_51HrYUuDQxWpdMrSvs5C2SVJsaod3aSGLMeNXgAl098S0Z6KXjwsH8L7cLcltwurqO6M25L6hgFNN5r0xjnM35xUM00HGQYzaxj',
+const App = () => (
+  <Switch>
+    <Route exact path="/">
+      <Login />
+    </Route>
+    <Route path="/register">
+      <Register />
+    </Route>
+    <Route path="/prices">
+      <Prices />
+    </Route>
+    <Route path="/account">
+      <Account />
+    </Route>
+    <Route path="/success">
+      <Success />
+    </Route>
+  </Switch>
 )
-
-// CheckoutSession
-const CheckoutSession = () => {
-  const stripe = useStripe()
-  const createCheckoutSession = (priceId) => {
-    return fetch('http://localhost:4242/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ priceId })
-    }).then(result => result.json())
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    createCheckoutSession()
-  }
-
-  return (
-    <button id="checkout" onSubmit={handleSubmit}>
-      Subscribe
-    </button>
-  )
-}
-
-function App() {
-  return (
-    <div className="container">
-      <CheckoutSession />
-    </div>
-  )
-}
 
 export default App
