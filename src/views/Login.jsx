@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import { fetchData } from '../utils'
+import { fetchData, URL } from '../utils'
 
 const initialState = {
   email: '',
@@ -19,13 +19,13 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    const result = await fetchData('http://localhost:3000/api/auth/signin', 'POST', {
+    const result = await fetchData(`${URL}/api/auth/signin`, 'POST', {
       userName: state.email,
       password: state.password,
     })
 
     const response = await fetchData(
-      'http://localhost:3000/api/auth/signin',
+      `${URL}/api/auth/signin`,
       'POST',
       { userToken: result.token },
     )

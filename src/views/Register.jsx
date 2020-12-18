@@ -51,11 +51,9 @@ function Register() {
     try {
 
       if (_isMounted.current) {
-        const response = await fetchData(
-          'http://localhost:3000/api/auth/verify',
-          'POST',
-          { email: state.email }
-        )
+        const response = await fetchData(`${URL}/api/auth/verify`, 'POST', {
+          email: state.email,
+        })
   
         if (response.exists) {
           setLoading(false)

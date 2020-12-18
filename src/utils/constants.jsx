@@ -1,4 +1,7 @@
-export const URL = 'http://localhost:3000'
+export const URL = import.meta.env.MODE === 'production' 
+  ? 'https://eduzone-server.herokuapp.com'
+  : 'http://localhost:3000'
+
 export const products = [
   {
     key: 0,

@@ -246,7 +246,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
 
     try {
       const response = await fetchData(
-        'http://localhost:3000/api/auth/signup',
+        `${URL}/api/auth/signup`,
         'POST',
         bodyParams,
       )
