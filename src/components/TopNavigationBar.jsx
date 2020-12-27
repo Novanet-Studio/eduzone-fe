@@ -12,11 +12,11 @@ const styles = {
   }
 }
 
-const TopNavigationBar = ({ loggedIn }) => (
+const TopNavigationBar = ({ loggedIn, handleClick }) => (
   <div style={styles.topBar}>
     <div className="brand">Brand Here</div>
     <div className="wrapper">
-      <button>{loggedIn ? 'Sign out' : 'Sign in'}</button>
+      <button onClick={handleClick}>{loggedIn ? 'Sign out' : 'Sign in'}</button>
     </div>
   </div>
 )

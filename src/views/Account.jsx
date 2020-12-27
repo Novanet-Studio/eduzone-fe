@@ -71,13 +71,13 @@ function Account({ location }) {
   }
 
   const signOut = () => {
-    localStorage.setItem('auth', '')
+    localStorage.clear()
     window.location.href = '/'
   }
 
   return (
     <>
-      <TopNavigationBar loggedIn={true} onClick={signOut} />
+      <TopNavigationBar loggedIn={true} handleClick={signOut} />
       {subscriptionCancelled ? (
         <div>
           <h3>Subscription canceled</h3>

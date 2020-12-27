@@ -11,7 +11,7 @@ function Login() {
   const [state, setState] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
-  const [data, setData] = useState({})
+  const [accountInformation, setAccountInformation] = useState({})
 
   const handleChange = ({ target }) =>
     setState({ ...state, [target.name]: target.value })
@@ -24,30 +24,30 @@ function Login() {
       password: state.password,
     })
 
-    const response = await fetchData(
-      `${URL}/api/auth/signin`,
-      'POST',
-      { userToken: result.token },
-    )
+    if (!result.auth) {
+      console.log(result.message)
+      setLoading(false)
+      return
+    }
 
-    localStorage.setItem('auth', response.data.token)
+    localStorage.setItem('auth', result.auth)
+    localStorage.setItem('token', result.token)
 
-    setData(response.data)
+    setAccountInformation({ ...result })
 
-    setIsAuth(true)
-
-    console.log(response)
     setLoading(false)
+    setIsAuth(true)
   }
 
   if (isAuth) {
+    console.log(accountInformation.paymentMethodId)
     return (
       <Redirect
         to={{
-          pathname: '/success',
+          pathname: '/account',
           state: {
             isAuth,
-            data
+            accountInformation,
           },
         }}
       />
