@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import { apiRequest, products, URL } from '../utils'
 import Footer from '../components/Footer'
 import Product from '../components/Product'
 import TopNavigationBar from '../components/TopNavigationBar'
 import PriceChangeForm from '../components/PriceChangeForm'
-import { withRouter } from 'react-router-dom'
+import AccountDetails from '../components/AccountDetails'
+import AccountEditing from '../components/AccountEditing'
 
 const buttonStyle = {
   border: '1px solid #ccc',
@@ -14,21 +16,22 @@ const buttonStyle = {
   width: '13rem',
   cursor: 'pointer',
   backgroundColor: '#aaa',
-  color: '#222'
+  color: '#222',
 }
 
 function Account({ location }) {
-  
-  if (!location.state)
-    window.location.href = '/'
-  
-  const [accountInformation] = useState(location.state.accountInformation)
+  if (!location.state) window.location.href = '/'
+
+  const [isEditing, setIsEditing] = useState(false)
+  const [accountInformation, setAccountInformation] = useState(
+    location.state.accountInformation,
+  )
   const [customerPaymentMethod, setCustomerPaymentMethod] = useState(null)
   const [showChangePriceForm, setShowChangePriceForm] = useState(false)
   const [subscriptionCancelled, setSubscriptionCancelled] = useState(false)
   const [newProductSelected, setNewProductSelected] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(
-    accountInformation.priceId
+    accountInformation.priceId,
   )
 
   useEffect(() => {
@@ -64,7 +67,7 @@ function Account({ location }) {
   async function cancelSubscription() {
     console.log(accountInformation.subscription)
     await apiRequest(`${URL}/stripe/cancel-subscription`, 'POST', {
-      subscriptionId: accountInformation.subscription.id
+      subscriptionId: accountInformation.subscription.id,
     })
 
     setSubscriptionCancelled(true)
@@ -74,6 +77,12 @@ function Account({ location }) {
     localStorage.clear()
     window.location.href = '/'
   }
+
+  const handleEdit = () => setIsEditing(!isEditing)
+
+  const updateInformation = (user) => setAccountInformation({ ...accountInformation, user})
+
+  console.log(accountInformation)
 
   return (
     <>
@@ -88,20 +97,48 @@ function Account({ location }) {
           </div>
         </div>
       ) : (
-        <div style={{
-          maxWidth: 500,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          backgroundColor: '#f0f0f0',
-          padding: '2em',
-          display: "flex",
-          flexDirection: "column",
-        }}>
+        <div
+          style={{
+            maxWidth: 500,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            backgroundColor: '#f0f0f0',
+            padding: '2em',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
           <div className="title">
             <h3>Account Settings</h3>
           </div>
+
           <div>
-            <h4>Account</h4>
+            <h4 style={{ display: 'inline-block', marginRight: '1rem' }}>
+              User Account
+            </h4>{' '}
+            <button onClick={handleEdit} style={{ display: 'inline-block' }}>
+              Edit
+            </button>
+            {isEditing ? (
+              <div>
+                <AccountEditing
+                  defaults={accountInformation.user}
+                  updateInformation={updateInformation}
+                  editing={setIsEditing}
+                />
+              </div>
+            ) : (
+              <AccountDetails
+                firstname={accountInformation.user.firstname}
+                lastname={accountInformation.user?.lastname || 'none'}
+                email={accountInformation.user.userName}
+                status={accountInformation.user.status}
+              />
+            )}
+          </div>
+
+          <div>
+            <h4>Stripe Account</h4>
             <div>
               <h5>Current Price</h5>
               <span>{selectedProduct}</span>
