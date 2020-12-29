@@ -18,17 +18,27 @@ function Prices({ location }) {
   return (
     <>
       <TopNavigationBar />
-      <div>
-        <div className="message">Subscribe to plan</div>
-        <div className="products">
-          {products.map((product, index) => (
-            <Product key={index} product={product} handleClick={handleClick} />
-          ))}
+      <section className="princes">
+        <div className="container">
+          <div className="princes__message">Subscribe to plan</div>
+          <div className="princes__products">
+            {products.map((product, index) => (
+              <Product
+                key={index}
+                product={product}
+                handleClick={handleClick}
+              />
+            ))}
+          </div>
+          {productSelected && (
+            <PaymentForm
+              productSelected={productSelected}
+              customer={customer}
+              formData={formData}
+            />
+          )}
         </div>
-        {productSelected && (
-          <PaymentForm productSelected={productSelected} customer={customer} formData={formData} />
-        )}
-      </div>
+      </section>
       <Footer />
     </>
   )
