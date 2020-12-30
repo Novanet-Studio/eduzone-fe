@@ -1,14 +1,13 @@
 import React from 'react'
+import Logo from '../assets/images/edu-logo.png'
 
 const Footer = () => (
   <div className="footer">
     <div className="container">
       <h3 className="footer__title">Contact</h3>
       <p className="footer__email">edu-zone.support@edu-zone.org</p>
-      <div className="footer__logo">
-        footer logo
-      </div>
       <hr className="footer__line" />
+      <img className="footer__logo" src={Logo} alt="Footer logo" />
       <p className="footer__copy">© {new Date().getFullYear()} All rights reserverd</p>
     </div>
   </div>

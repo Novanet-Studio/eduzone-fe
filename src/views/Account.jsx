@@ -6,8 +6,7 @@ import Footer from '../components/Footer'
 import Product from '../components/Product'
 import Header from '../components/Header'
 import PriceChangeForm from '../components/PriceChangeForm'
-import AccountDetails from '../components/AccountDetails'
-import AccountEditing from '../components/AccountEditing'
+import { withRouter } from 'react-router-dom'
 
 function Account({ location }) {
   if (!location.state) window.location.href = '/'

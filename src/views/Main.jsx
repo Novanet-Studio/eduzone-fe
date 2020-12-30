@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
+import Ipad from '../assets/images/ipad-libros.png'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -80,8 +81,7 @@ function Main() {
                     onChange={handleChange}
                   />
                   <button className="hero__button" type="submit">
-                    {loading ? 'Loading...' : 'Next'}
-                    Subscribe
+                    {loading ? 'Loading...' : 'Subscribe'}
                   </button>
                 </form>
               </div>
@@ -99,7 +99,7 @@ function Main() {
                 </p>
               </div>
               <div className="enjoy__col-right">
-                <img className="enjoy__img" />
+                <img className="enjoy__img" src={Ipad} alt="Enjoy ipad" />
               </div>
             </div>
           </section>
@@ -159,8 +159,7 @@ function Main() {
                     onChange={handleChange}
                   />
                   <button className="faq__info-button" type="submit">
-                    {loading ? 'Loading...' : 'Next'}
-                    Subscribe
+                    {loading ? 'Loading...' : 'Subscribe'}
                   </button>
                 </form>
               </div>
