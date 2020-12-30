@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Switch, Route } from 'react-router-dom'
 
+import Main from './views/Main'
 import Register from './views/Register'
 import Login from './views/Login'
 import Prices from './views/Prices'
@@ -13,7 +14,10 @@ const baseUrl = import.meta.env.MODE === 'production' ? '/eduzonestore/' : '/'
 
 const App = () => (
   <Switch basename={baseUrl}>
-    <Route exact path="/">
+    <Route path="/">
+      <Main />
+    </Route>
+    <Route exact path="/login">
       <Login />
     </Route>
     <Route path="/register">

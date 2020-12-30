@@ -54,35 +54,37 @@ function Login() {
   }
 
   return (
-    <div>
-      <form className="form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <div>
-          <label htmlFor="email">Email</label>
+    <section className="login">
+      <div className="container">
+        <h2 className="login__title">Login</h2>
+        <form className="login__form" onSubmit={handleSubmit}>
           <input
+            className="login__input"
             type="email"
             name="email"
             id="email"
+            placeholder="Email address"
             value={state.email}
             onChange={handleChange}
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
           <input
+            className="login__input"
             type="password"
             name="password"
             id="password"
+            placeholder="Password"
             value={state.password}
             onChange={handleChange}
           />
-        </div>
-        <button>{loading ? 'loading...' : 'Login'}</button>
-      </form>
-      <p>
-        You don't have an account yet? <Link to="/register">register</Link>
-      </p>
-    </div>
+          <button className="login__button">
+            {loading ? 'loading...' : 'Login'}
+          </button>
+        </form>
+        <p className="login__register">
+          You don't have an account yet? <Link to="/register">register</Link>
+        </p>
+      </div>
+    </section>
   )
 }
 

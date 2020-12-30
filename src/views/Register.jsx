@@ -1,29 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 
-import TopNavigationBar from '../components/TopNavigationBar'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { fetchData, URL } from '../utils'
-
-const styles = {
-  form: {
-    padding: 20,
-    width: 300,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: 3,
-    boxShadow: '1px 1px 10px rgba(0,0,0,.2)',
-  },
-  title: { textAlign: 'center' },
-  input: {
-    margin: '10px 0',
-  },
-  button: {
-    marginTop: 10,
-  },
-}
 
 const initialState = {
   email: '',
@@ -38,10 +18,10 @@ function Register() {
   let formData = useRef(null)
 
   useEffect(() => {
-    return () => _isMounted.current = false
+    return () => (_isMounted.current = false)
   }, [])
 
-  const handleChange = ({ target }) => 
+  const handleChange = ({ target }) =>
     setState({ ...state, [target.name]: target.value })
 
   const handleSubmit = async (e) => {
@@ -49,22 +29,25 @@ function Register() {
     formData.current = state
     setLoading(true)
     try {
-
       if (_isMounted.current) {
         const response = await fetchData(`${URL}/api/auth/verify`, 'POST', {
           email: state.email,
         })
-  
+
         if (response.exists) {
           setLoading(false)
           console.log('User already exists')
           return
         }
-  
-        const result = await fetchData(`${URL}/stripe/create-customer`, 'POST', {
-          email: state.email,
-        })
-        console.log('creating a new customer');
+
+        const result = await fetchData(
+          `${URL}/stripe/create-customer`,
+          'POST',
+          {
+            email: state.email,
+          },
+        )
+        console.log('creating a new customer')
         setCustomer(result.customer)
         setLoading(false)
       }
@@ -85,37 +68,44 @@ function Register() {
   } else {
     return (
       <>
-        <TopNavigationBar loggedIn={false} />
-        <h2 style={styles.title}>Register</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            style={styles.input}
-            value={state.email}
-            onChange={handleChange}
-            placeholder="Email address"
-            required
-          />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            style={styles.input}
-            value={state.password}
-            onChange={handleChange}
-            placeholder="Enter password"
-            required
-          />
-
-          <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? 'Loading...' : 'Next'}
-          </button>
-        </form>
-        <p>
-          You have an account? <Link to="/">login</Link>
-        </p>
+        <Header loggedIn={false} />
+        <section className="register">
+          <div className="container">
+            <h2 className="register__title">Register</h2>
+            <form className="register__form" onSubmit={handleSubmit}>
+              <input
+                className="register__input"
+                type="text"
+                id="email"
+                name="email"
+                value={state.email}
+                onChange={handleChange}
+                placeholder="Email address"
+                required
+              />
+              <input
+                className="register__input"
+                type="password"
+                id="password"
+                name="password"
+                value={state.password}
+                onChange={handleChange}
+                placeholder="Enter password"
+                required
+              />
+              <button
+                className="register__button"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Loading...' : 'Next'}
+              </button>
+            </form>
+            <p className="register__login">
+              You have an account? <Link to="/">login</Link>
+            </p>
+          </div>
+        </section>
         <Footer />
       </>
     )

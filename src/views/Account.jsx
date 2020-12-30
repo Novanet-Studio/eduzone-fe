@@ -4,28 +4,15 @@ import { withRouter } from 'react-router-dom'
 import { apiRequest, products, URL } from '../utils'
 import Footer from '../components/Footer'
 import Product from '../components/Product'
-import TopNavigationBar from '../components/TopNavigationBar'
+import Header from '../components/Header'
 import PriceChangeForm from '../components/PriceChangeForm'
 import AccountDetails from '../components/AccountDetails'
 import AccountEditing from '../components/AccountEditing'
 
-const buttonStyle = {
-  border: '1px solid #ccc',
-  margin: '1rem',
-  padding: '1rem',
-  width: '13rem',
-  cursor: 'pointer',
-  backgroundColor: '#aaa',
-  color: '#222',
-}
-
 function Account({ location }) {
   if (!location.state) window.location.href = '/'
 
-  const [isEditing, setIsEditing] = useState(false)
-  const [accountInformation, setAccountInformation] = useState(
-    location.state.accountInformation,
-  )
+  const [accountInformation] = useState(location.state.accountInformation)
   const [customerPaymentMethod, setCustomerPaymentMethod] = useState(null)
   const [showChangePriceForm, setShowChangePriceForm] = useState(false)
   const [subscriptionCancelled, setSubscriptionCancelled] = useState(false)
@@ -86,112 +73,91 @@ function Account({ location }) {
 
   return (
     <>
-      <TopNavigationBar loggedIn={true} handleClick={signOut} />
+      <Header loggedIn={true} handleClick={signOut} />
       {subscriptionCancelled ? (
-        <div>
-          <h3>Subscription canceled</h3>
-          <div>
-            <button type="button" onClick={() => resetDemo()}>
+        <section className="canceled">
+          <div className="container">
+            <h2 className="canceled__title">Subscription canceled</h2>
+            <button
+              className="canceled__button"
+              type="button"
+              onClick={() => resetDemo()}
+            >
               Restart Demo
             </button>
           </div>
-        </div>
+        </section>
       ) : (
-        <div
-          style={{
-            maxWidth: 500,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            backgroundColor: '#f0f0f0',
-            padding: '2em',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div className="title">
-            <h3>Account Settings</h3>
-          </div>
+        <section className="account">
+          <div className="container">
+            <h2 className="account__title">Account Settings</h2>
 
-          <div>
-            <h4 style={{ display: 'inline-block', marginRight: '1rem' }}>
-              User Account
-            </h4>{' '}
-            <button onClick={handleEdit} style={{ display: 'inline-block' }}>
-              Edit
-            </button>
-            {isEditing ? (
-              <div>
-                <AccountEditing
-                  defaults={accountInformation.user}
-                  updateInformation={updateInformation}
-                  editing={setIsEditing}
-                />
+            <div className="account__card">
+              <div className="account__card-header">
+                <h3 className="account__card-title">Account</h3>
+                <hp className="account__prince">Current Price</hp>
+                <span className="account__product">{selectedProduct}</span>
               </div>
-            ) : (
-              <AccountDetails
-                firstname={accountInformation.user.firstname}
-                lastname={accountInformation.user?.lastname || 'none'}
-                email={accountInformation.user.userName}
-                status={accountInformation.user.status}
-              />
-            )}
-          </div>
 
-          <div>
-            <h4>Stripe Account</h4>
-            <div>
-              <h5>Current Price</h5>
-              <span>{selectedProduct}</span>
-            </div>
-          </div>
-
-          <div className="header">
-            <div className="card-info">
-              <h4>Credit Card</h4>
-              <span>{customerPaymentMethod}</span>
-            </div>
-
-            <div onClick={() => handleChangePriceForm()} style={buttonStyle}>
-              <span>Change pricing plan {'->'}</span>
-            </div>
-
-            <div onClick={() => cancelSubscription()} style={buttonStyle}>
-              <span>Cancel subscription {'->'}</span>
-            </div>
-          </div>
-
-          {showChangePriceForm ? (
-            <div className="prices-form">
-              <h3>Change pricing plan</h3>
-              <div className="wrapper">
-                {products.map((product, index) => {
-                  let currentProductSelected = false
-                  if (product.name === selectedProduct) {
-                    currentProductSelected = true
-                  }
-                  return (
-                    <Product
-                      key={index}
-                      product={product}
-                      currentProductSelected={currentProductSelected}
-                      handleClick={handleClick}
-                    />
-                  )
-                })}
+              <div className="account__card-info">
+                <h3 className="account__card-title">Credit Card</h3>
+                <span className="account__card-payment">
+                  {customerPaymentMethod}
+                </span>
               </div>
-              {newProductSelected ? (
-                <PriceChangeForm
-                  customerId={accountInformation.subscription.customer}
-                  subscriptionId={accountInformation.subscription.id}
-                  currentProductSelected={selectedProduct}
-                  newProductSelected={newProductSelected}
-                  setShowChangePriceForm={setShowChangePriceForm}
-                  setSelectedProduct={setSelectedProduct}
-                />
-              ) : null}
+
+              <div
+                className="account__card-info"
+                onClick={() => handleChangePriceForm()}
+              >
+                <span className="account__card-button">
+                  Change pricing plan {'->'}
+                </span>
+              </div>
+
+              <div
+                className="account__card-info"
+                onClick={() => cancelSubscription()}
+              >
+                <span className="account__card-button">
+                  Cancel subscription {'->'}
+                </span>
+              </div>
             </div>
-          ) : null}
-        </div>
+
+            {showChangePriceForm ? (
+              <div className="prices-form">
+                <h3>Change pricing plan</h3>
+                <div className="wrapper">
+                  {products.map((product, index) => {
+                    let currentProductSelected = false
+                    if (product.name === selectedProduct) {
+                      currentProductSelected = true
+                    }
+                    return (
+                      <Product
+                        key={index}
+                        product={product}
+                        currentProductSelected={currentProductSelected}
+                        handleClick={handleClick}
+                      />
+                    )
+                  })}
+                </div>
+                {newProductSelected ? (
+                  <PriceChangeForm
+                    customerId={accountInformation.subscription.customer}
+                    subscriptionId={accountInformation.subscription.id}
+                    currentProductSelected={selectedProduct}
+                    newProductSelected={newProductSelected}
+                    setShowChangePriceForm={setShowChangePriceForm}
+                    setSelectedProduct={setSelectedProduct}
+                  />
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        </section>
       )}
       <Footer />
     </>
