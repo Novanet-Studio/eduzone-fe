@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { apiRequest, products, URL } from '../utils'
 import Footer from '../components/Footer'
 import Product from '../components/Product'
-import TopNavigationBar from '../components/TopNavigationBar'
+import Header from '../components/Header'
 import PriceChangeForm from '../components/PriceChangeForm'
 import { withRouter } from 'react-router-dom'
 
@@ -65,13 +65,13 @@ function Account({ location }) {
 
   return (
     <>
-      <TopNavigationBar loggedIn={true} handleClick={signOut} />
+      <Header loggedIn={true} handleClick={signOut} />
       {subscriptionCancelled ? (
-        <section className="account">
+        <section className="canceled">
           <div className="container">
-            <h2 className="account__title">Subscription canceled</h2>
+            <h2 className="canceled__title">Subscription canceled</h2>
             <button
-              className="account__button"
+              className="canceled__button"
               type="button"
               onClick={() => resetDemo()}
             >

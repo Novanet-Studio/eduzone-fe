@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import Product from '../components/Product'
 import Footer from '../components/Footer'
 import PaymentForm from '../components/PaymentForm'
-import TopNavigationBar from '../components/TopNavigationBar'
+import Header from '../components/Header'
 
 import { products } from '../utils'
 
@@ -17,11 +17,11 @@ function Prices({ location }) {
 
   return (
     <>
-      <TopNavigationBar />
-      <section className="princes">
+      <Header />
+      <section className="prices">
         <div className="container">
-          <div className="princes__message">Subscribe to plan</div>
-          <div className="princes__products">
+          <div className="prices__message">Subscribe to plan</div>
+          <div className="prices__products">
             {products.map((product, index) => (
               <Product
                 key={index}

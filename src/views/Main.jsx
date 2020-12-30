@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import {  Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-import TopNavigationBar from '../components/TopNavigationBar'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { fetchData, URL } from '../utils'
 
@@ -10,7 +10,7 @@ const initialState = {
   password: '',
 }
 
-function Landing() {
+function Main() {
   const [state, setState] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
@@ -59,7 +59,7 @@ function Landing() {
 
   return (
     <>
-      <TopNavigationBar loggedIn={false} />
+      <Header loggedIn={false} />
       <div>
         <div className="container">
           <section className="hero">
@@ -80,6 +80,7 @@ function Landing() {
                     onChange={handleChange}
                   />
                   <button className="hero__button" type="submit">
+                    {loading ? 'Loading...' : 'Next'}
                     Subscribe
                   </button>
                 </form>
@@ -158,6 +159,7 @@ function Landing() {
                     onChange={handleChange}
                   />
                   <button className="faq__info-button" type="submit">
+                    {loading ? 'Loading...' : 'Next'}
                     Subscribe
                   </button>
                 </form>
@@ -171,4 +173,4 @@ function Landing() {
   )
 }
 
-export default Landing
+export default Main

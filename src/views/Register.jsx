@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 
-import TopNavigationBar from '../components/TopNavigationBar'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { fetchData, URL } from '../utils'
 
@@ -68,7 +68,7 @@ function Register() {
   } else {
     return (
       <>
-        <TopNavigationBar loggedIn={false} />
+        <Header loggedIn={false} />
         <section className="register">
           <div className="container">
             <h2 className="register__title">Register</h2>
