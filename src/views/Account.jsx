@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import { apiRequest, products, URL } from '../utils'
 import Footer from '../components/Footer'
 import Product from '../components/Product'
 import Header from '../components/Header'
 import PriceChangeForm from '../components/PriceChangeForm'
-import { withRouter } from 'react-router-dom'
+import AccountDetails from '../components/AccountDetails'
+import AccountEditing from '../components/AccountEditing'
 
 function Account({ location }) {
   if (!location.state) window.location.href = '/'
@@ -62,6 +64,12 @@ function Account({ location }) {
     localStorage.clear()
     window.location.href = '/'
   }
+
+  const handleEdit = () => setIsEditing(!isEditing)
+
+  const updateInformation = (user) => setAccountInformation({ ...accountInformation, user})
+
+  console.log(accountInformation)
 
   return (
     <>

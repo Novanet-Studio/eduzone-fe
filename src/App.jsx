@@ -8,6 +8,8 @@ import Prices from './views/Prices'
 import Account from './views/Account'
 import Success from './components/Success'
 
+import './App.scss'
+
 const baseUrl = import.meta.env.MODE === 'production' ? '/eduzonestore/' : '/'
 
 const App = () => (

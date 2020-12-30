@@ -30,8 +30,7 @@ function Login() {
       return
     }
 
-    localStorage.setItem('auth', result.auth)
-    localStorage.setItem('token', result.token)
+    console.log('[LOGING USER]', result.token);
 
     setAccountInformation({ ...result })
 
@@ -78,7 +77,7 @@ function Login() {
             onChange={handleChange}
           />
           <button className="login__button">
-            {loading ? '...loading' : 'Login'}
+            {loading ? 'loading...' : 'Login'}
           </button>
         </form>
         <p className="login__register">
