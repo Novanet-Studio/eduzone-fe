@@ -346,15 +346,15 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
     )
   } else {
     return (
-      <div className="payment-info">
-        <div className="text">
+      <div className="payment">
+        <p className="payment__text">
           Enter your card details. <br />
           Your subscription will start now
-        </div>
-        <p className="subscription-price">
+        </p>
+        <p className="payment__subs-price">
           {'->'} Total due now <span>{productSelected.price}</span>
         </p>
-        <p className="subscription-name">
+        <p className="payment__subs-name">
           {'->'} Subscribing to <span>{productSelected.name}</span>
         </p>
         <div className="form-group">
@@ -368,7 +368,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
             required
           />
         </div>
-        <form id="payment-form" onSubmit={handleSubmit}>
+        <form id="payment-form" className="payment-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Card</label>
             <div className="card-element">
@@ -390,10 +390,8 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
             </div>
             <div className="error">{error ? error : null}</div>
           </div>
-          <button type="submit">
-            <div>
-              <div>{subscribing ? 'Subscribing...' : 'Subscribe'}</div>
-            </div>
+          <button className="error" type="submit">
+            {subscribing ? 'Subscribing...' : 'Subscribe'}
           </button>
         </form>
       </div>

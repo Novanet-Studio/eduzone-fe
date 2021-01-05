@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
+import './PriceChangeForm.scss'
 
 import {
   apiRequest,
   getDateStringFromUnixTimestamp,
   getFormattedAmount,
-  URL
+  URL,
 } from '../utils'
 
 function PriceChangeForm({
@@ -61,49 +62,49 @@ function PriceChangeForm({
     <>
       {newProductSelected !== currentProductSelected && (
         <div className="container">
-          <div className="price">
-            <div style={{ border: '1px solid #ccc', marginTop: '1rem' }}>
-              <span>
-                <b>Current price: </b>
-              </span>
-              <span>{currentProductSelected}</span>
-            </div>
-          </div>
-          <div className="new-price">
-            <div style={{ border: '1px solid #ccc', marginTop: '1rem' }}>
+          <p className="price-current">
+            <span>
+              <b>Current price: </b>
+            </span>
+            <span>{currentProductSelected}</span>
+          </p>
+          <p className="price-new">
+            <div>
               <span>
                 <b>New price: </b>
               </span>
               <span>{newProductSelected}</span>
             </div>
-          </div>
+          </p>
 
-          <div>
-            <p>
-              You will be charged {console.log(invoicePreview)}
-              {(invoicePreview &&
-                getFormattedAmount(invoicePreview.amount_due)) ||
-                ' '}{' '}
-              on{' '}
-              <span>
-                {(invoicePreview.next_payment_attempt &&
-                  getDateStringFromUnixTimestamp(
-                    invoicePreview.next_payment_attempt,
-                  )) ||
-                  ''}
-              </span>
-            </p>
-            <button onClick={() => confirmPriceChange()} type="submit">
-              <div>
-                <span>Confirm Change</span>
-              </div>
-            </button>
-            <button onClick={() => cancelPriceChange()} type="submit">
-              <div>
-                <span>Cancel</span>
-              </div>
-            </button>
-          </div>
+          <p className="change__text">
+            You will be charged {console.log(invoicePreview)}
+            {(invoicePreview &&
+              getFormattedAmount(invoicePreview.amount_due)) ||
+              ' '}{' '}
+            on{' '}
+            <span>
+              {(invoicePreview.next_payment_attempt &&
+                getDateStringFromUnixTimestamp(
+                  invoicePreview.next_payment_attempt,
+                )) ||
+                ''}
+            </span>
+          </p>
+          <button
+            className="change__button"
+            onClick={() => confirmPriceChange()}
+            type="submit"
+          >
+            Confirm Change
+          </button>
+          <button
+            className="change__button"
+            onClick={() => cancelPriceChange()}
+            type="submit"
+          >
+            Cancel
+          </button>
         </div>
       )}
     </>

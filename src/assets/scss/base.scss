@@ -10,8 +10,9 @@ body {
 }
 
 .container {
-  margin-top: 0;
   @include flex;
+  max-width: inherit;
+  margin-top: 0;
 }
 
 /*Text*/

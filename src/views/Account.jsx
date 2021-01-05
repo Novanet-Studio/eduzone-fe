@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { apiRequest, products, URL } from '../utils'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Product from '../components/Product'
-import Header from '../components/Header'
 import PriceChangeForm from '../components/PriceChangeForm'
+import './Account.scss'
 
 function Account({ location }) {
   if (!location.state) window.location.href = '/'
@@ -65,7 +66,8 @@ function Account({ location }) {
 
   const handleEdit = () => setIsEditing(!isEditing)
 
-  const updateInformation = (user) => setAccountInformation({ ...accountInformation, user})
+  const updateInformation = (user) =>
+    setAccountInformation({ ...accountInformation, user })
 
   console.log(accountInformation)
 
@@ -88,72 +90,70 @@ function Account({ location }) {
       ) : (
         <section className="account">
           <div className="container">
-            <h2 className="account__title">Account Settings</h2>
+            <div className="account__info">
+              <h2 className="account__title">Account Settings</h2>
 
-            <div className="account__card">
-              <div className="account__card-header">
-                <h3 className="account__card-title">Account</h3>
-                <hp className="account__prince">Current Price</hp>
-                <span className="account__product">{selectedProduct}</span>
-              </div>
-
-              <div className="account__card-info">
-                <h3 className="account__card-title">Credit Card</h3>
-                <span className="account__card-payment">
-                  {customerPaymentMethod}
-                </span>
-              </div>
-
-              <div
-                className="account__card-info"
-                onClick={() => handleChangePriceForm()}
-              >
-                <span className="account__card-button">
-                  Change pricing plan {'->'}
-                </span>
-              </div>
-
-              <div
-                className="account__card-info"
-                onClick={() => cancelSubscription()}
-              >
-                <span className="account__card-button">
-                  Cancel subscription {'->'}
-                </span>
-              </div>
-            </div>
-
-            {showChangePriceForm ? (
-              <div className="prices-form">
-                <h3>Change pricing plan</h3>
-                <div className="wrapper">
-                  {products.map((product, index) => {
-                    let currentProductSelected = false
-                    if (product.name === selectedProduct) {
-                      currentProductSelected = true
-                    }
-                    return (
-                      <Product
-                        key={index}
-                        product={product}
-                        currentProductSelected={currentProductSelected}
-                        handleClick={handleClick}
-                      />
-                    )
-                  })}
+              <div className="account__card">
+                <div className="account__card-header">
+                  <h3 className="account__card-title">Account</h3>
+                  <p>Current Price</p>
+                  <span className="account__card-data">{selectedProduct}</span>
                 </div>
-                {newProductSelected ? (
-                  <PriceChangeForm
-                    customerId={accountInformation.subscription.customer}
-                    subscriptionId={accountInformation.subscription.id}
-                    currentProductSelected={selectedProduct}
-                    newProductSelected={newProductSelected}
-                    setShowChangePriceForm={setShowChangePriceForm}
-                    setSelectedProduct={setSelectedProduct}
-                  />
-                ) : null}
+                <hr className="account__line" />
+                <div className="account__card-info">
+                  <h3 className="account__card-title">Credit Card</h3>
+                  <span className="account__card-data">
+                    {customerPaymentMethod}
+                  </span>
+                </div>
+
+                <div
+                  className="account__button"
+                  onClick={() => handleChangePriceForm()}
+                >
+                  Change pricing plan {'>'}
+                </div>
+
+                <div
+                  className="account__button"
+                  onClick={() => cancelSubscription()}
+                >
+                  Cancel subscription {'>'}
+                </div>
               </div>
-            ) : null}
+
+              {showChangePriceForm ? (
+                <div className="account__card">
+                 <h2 className="account__title">Change pricing plan</h2>
+                  <div className="wrapper">
+                    {products.map((product, index) => {
+                      let currentProductSelected = false
+                      if (product.name === selectedProduct) {
+                        currentProductSelected = true
+                      }
+                      return (
+                        <Product
+                          key={index}
+                          product={product}
+                          currentProductSelected={currentProductSelected}
+                          handleClick={handleClick}
+                        />
+                      )
+                    })}
+                  </div>
+                  {newProductSelected ? (
+                    <PriceChangeForm
+                      customerId={accountInformation.subscription.customer}
+                      subscriptionId={accountInformation.subscription.id}
+                      currentProductSelected={selectedProduct}
+                      newProductSelected={newProductSelected}
+                      setShowChangePriceForm={setShowChangePriceForm}
+                      setSelectedProduct={setSelectedProduct}
+                    />
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
           </div>
         </section>
       )}

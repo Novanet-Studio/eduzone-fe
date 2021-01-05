@@ -1,22 +1,19 @@
 import React from 'react'
+import './Product.scss'
 
 const Product = ({ product, currentProductSelected, handleClick }) => (
   <div className="product">
-    <h3 className="product__name">{product.name}</h3>
-    <p>{product.price}</p>
-    <div className="product__info">
+    <h4 className="product__name">{product.name}</h4>
+    <p className="product__prices">{product.price}</p>
       <div className="product__interval">Per {product.interval}</div>
       <div className="product__billed">Billed {product.billed}</div>
-    </div>
-    <div className="product__btn-wrapper">
       {currentProductSelected ? (
-        <button type="submit">Selected</button>
+        <button className="product__btn" type="submit">Selected</button>
       ) : (
-        <button onClick={() => handleClick(product.key)} type="submit">
+        <button className="product__btn" onClick={() => handleClick(product.key)} type="submit">
           Selected
         </button>
       )}
-    </div>
   </div>
 )
 
