@@ -76,12 +76,13 @@ function Main() {
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="Email address"
+                    placeholder="Email"
                     value={state.email}
                     onChange={handleChange}
                   />
                   <button className="hero__button" type="submit">
-                    {loading ? 'Loading...' : 'Subscribe'}
+                    Subscribe &nbsp;
+                    {loading ? 'Loading...' : '>'}
                   </button>
                 </form>
               </div>
@@ -94,7 +95,10 @@ function Main() {
                 <h2 className="enjoy__title">Enjoy on your device</h2>
                 <p className="enjoy_text">
                   Access our Ebooks from your favorite web browsers (Chrome,
-                  Safari, Edge, Firefox). Our books are interactive and you can
+                  Safari, Edge, Firefox)
+                </p>
+                <p className="enjoy_text">
+                  Our books are interactive and you can
                   enjoy games, videos, and images while your learn
                 </p>
               </div>
@@ -154,12 +158,13 @@ function Main() {
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="Email address"
+                    placeholder="Email"
                     value={state.email}
                     onChange={handleChange}
                   />
                   <button className="faq__info-button" type="submit">
-                    {loading ? 'Loading...' : 'Subscribe'}
+                    Subscribe &nbsp;
+                    {loading ? 'Loading...' : '>'}
                   </button>
                 </form>
               </div>
