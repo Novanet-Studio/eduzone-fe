@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { Auth, fetchData, URL } from '../utils'
+
+import Footer from '../components/Footer'
 import './Login.scss'
 
 const initialState = {
@@ -12,7 +14,7 @@ function Login() {
   const [state, setState] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
-  const [loadingUser, setLoadingUser] = useState(true)
+  const [loadingUser, setLoadingUser] = useState(false)
   const [userLoaded, setUserLoaded] = useState(false)
   const [accountInformation, setAccountInformation] = useState({})
 
@@ -94,6 +96,7 @@ function Login() {
 
   if (!loadingUser) {
     return (
+      <>
       <section className="login">
         <div className="container">
           <div className="login__info">
@@ -121,12 +124,14 @@ function Login() {
                 {loading ? 'loading...' : 'Login'}
               </button>
             </form>
-            <p className="login__register">
+            <p className="login__text">
               You don't have an account yet? <Link className="login__register" to="/register">register</Link>
             </p>
           </div>
         </div>
       </section>
+              <Footer />
+              </>
     )
   } else {
     ;<section className="loading">
