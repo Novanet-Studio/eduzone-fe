@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { Auth, fetchData, URL } from '../utils'
+import './Login.scss'
 
 const initialState = {
   email: '',
@@ -16,7 +17,7 @@ function Login() {
   const [accountInformation, setAccountInformation] = useState({})
 
   useEffect(() => {
-    console.log('Loading user again ...');
+    console.log('Loading user again ...')
     async function loadUser() {
       const token = Auth.getToken
       if (!token) {
@@ -34,8 +35,8 @@ function Login() {
       try {
         const response = await fetch(`${URL}/api/auth/me`, {
           headers: {
-            'x-access-token': String(token)
-          }
+            'x-access-token': String(token),
+          },
         })
         const result = await response.json()
         setAccountInformation({ ...result })
@@ -67,7 +68,7 @@ function Login() {
       return
     }
 
-    console.log('[LOGING USER]', result.token);
+    console.log('[LOGING USER]', result.token)
     Auth.setToken(result.token)
 
     setAccountInformation({ ...result })
@@ -91,43 +92,44 @@ function Login() {
     )
   }
 
-
   if (!loadingUser) {
     return (
       <section className="login">
-      <div className="container">
-        <h2 className="login__title">Login</h2>
-        <form className="login__form" onSubmit={handleSubmit}>
-          <input
-            className="login__input"
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email address"
-            value={state.email}
-            onChange={handleChange}
-          />
-          <input
-            className="login__input"
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            value={state.password}
-            onChange={handleChange}
-          />
-          <button className="login__button">
-            {loading ? 'loading...' : 'Login'}
-          </button>
-        </form>
-        <p className="login__register">
-          You don't have an account yet? <Link to="/register">register</Link>
-        </p>
-      </div>
-    </section>
+        <div className="container">
+          <div className="login__info">
+            <h2 className="login__title">Login</h2>
+            <form className="login__form" onSubmit={handleSubmit}>
+              <input
+                className="login__input"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email address"
+                value={state.email}
+                onChange={handleChange}
+              />
+              <input
+                className="login__input"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+                value={state.password}
+                onChange={handleChange}
+              />
+              <button className="login__button">
+                {loading ? 'loading...' : 'Login'}
+              </button>
+            </form>
+            <p className="login__register">
+              You don't have an account yet? <Link className="login__register" to="/register">register</Link>
+            </p>
+          </div>
+        </div>
+      </section>
     )
   } else {
-    <section className="loading">
+    ;<section className="loading">
       <p>Loading ...</p>
     </section>
   }

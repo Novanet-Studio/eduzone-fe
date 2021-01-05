@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { fetchData, URL } from '../utils'
+import './Register.scss'
 
 const initialState = {
   email: '',
@@ -71,39 +72,41 @@ function Register() {
         <Header loggedIn={false} />
         <section className="register">
           <div className="container">
-            <h2 className="register__title">Register</h2>
-            <form className="register__form" onSubmit={handleSubmit}>
-              <input
-                className="register__input"
-                type="text"
-                id="email"
-                name="email"
-                value={state.email}
-                onChange={handleChange}
-                placeholder="Email address"
-                required
-              />
-              <input
-                className="register__input"
-                type="password"
-                id="password"
-                name="password"
-                value={state.password}
-                onChange={handleChange}
-                placeholder="Enter password"
-                required
-              />
-              <button
-                className="register__button"
-                type="submit"
-                disabled={loading}
-              >
-                {loading ? 'Loading...' : 'Next'}
-              </button>
-            </form>
-            <p className="register__login">
-              You have an account? <Link to="/">login</Link>
-            </p>
+            <div className="register__info">
+              <h2 className="register__title">Register</h2>
+              <form className="register__form" onSubmit={handleSubmit}>
+                <input
+                  className="register__input"
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={state.email}
+                  onChange={handleChange}
+                  placeholder="Email address"
+                  required
+                />
+                <input
+                  className="register__input"
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={state.password}
+                  onChange={handleChange}
+                  placeholder="Enter password"
+                  required
+                />
+                <button
+                  className="register__button"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? 'Loading...' : 'Next'}
+                </button>
+              </form>
+              <p className="register__text">
+                You have an account? <Link className="register__login" to="/">login</Link>
+              </p>
+            </div>
           </div>
         </section>
         <Footer />

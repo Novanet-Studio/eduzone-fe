@@ -14,10 +14,10 @@ const baseUrl = import.meta.env.MODE === 'production' ? '/eduzonestore/' : '/'
 
 const App = () => (
   <Switch basename={baseUrl}>
-    <Route path="/">
+    <Route path="/main">
       <Main />
     </Route>
-    <Route exact path="/login">
+    <Route exact path="/">
       <Login />
     </Route>
     <Route path="/register">
