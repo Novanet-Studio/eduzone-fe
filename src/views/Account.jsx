@@ -7,14 +7,17 @@ import Footer from '../components/Footer'
 import Product from '../components/Product'
 import PriceChangeForm from '../components/PriceChangeForm'
 import './Account.scss'
+import AccountEditing from '../components/AccountEditing'
+import AccountDetails from '../components/AccountDetails'
 
 function Account({ location }) {
   if (!location.state) window.location.href = '/'
 
-  const [accountInformation] = useState(location.state.accountInformation)
+  const [accountInformation, setAccountInformation] = useState(location.state.accountInformation)
   const [customerPaymentMethod, setCustomerPaymentMethod] = useState(null)
   const [showChangePriceForm, setShowChangePriceForm] = useState(false)
   const [subscriptionCancelled, setSubscriptionCancelled] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
   const [newProductSelected, setNewProductSelected] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(
     accountInformation.priceId,
@@ -93,9 +96,35 @@ function Account({ location }) {
             <div className="account__info">
               <h2 className="account__title">Account Settings</h2>
 
+              {/* User account */}
               <div className="account__card">
                 <div className="account__card-header">
-                  <h3 className="account__card-title">Account</h3>
+                  <h3 className="account__card-title">User account</h3>
+                  <button className="button" onClick={handleEdit}>Edit info</button>
+                </div>
+                <hr className="account__line" />
+                {isEditing ? (
+                  <AccountEditing 
+                    defaults={accountInformation.user}
+                    updateInformation={updateInformation}
+                    editing={setIsEditing}
+                  />
+                ) : (
+                  <AccountDetails
+                    firstname={accountInformation.user.firstname}
+                    lastname={accountInformation.user.lastname}
+                    email={accountInformation.user.userName}
+                    status={accountInformation.user.status}
+                  />
+                )}
+
+              </div>
+
+              {/* Stripe account */}
+
+              <div className="account__card">
+                <div className="account__card-header">
+                  <h3 className="account__card-title">Billing account</h3>
                   <p>Current Price</p>
                   <span className="account__card-data">{selectedProduct}</span>
                 </div>
@@ -122,6 +151,7 @@ function Account({ location }) {
                 </div>
               </div>
 
+              
               {showChangePriceForm ? (
                 <div className="account__card">
                  <h2 className="account__title">Change pricing plan</h2>
