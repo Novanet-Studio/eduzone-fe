@@ -8,6 +8,7 @@ import {
 } from '@stripe/react-stripe-js'
 import { Redirect } from 'react-router-dom'
 import { apiRequest, fetchData, URL } from '../utils'
+import './Payment.scss'
 
 const { SNOWPACK_PUBLIC_STRIPE_PK } = import.meta.env
 
@@ -318,9 +319,8 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
       createUser({
         firstname: firstName,
         userName: formData.email,
-        password: formData.password
+        password: formData.password,
       })
-
     } catch (err) {
       console.log(err)
       throw new TypeError(err)
@@ -329,7 +329,6 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
 
   const handleChange = ({ target }) => setFirstName(target.value)
 
-  
   if (accountInformation && userCreated) {
     console.log('[Account Information]', accountInformation)
     sessionStorage.setItem(
@@ -351,15 +350,15 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
           Enter your card details. <br />
           Your subscription will start now
         </p>
-        <p className="payment__subs-price">
+        <p className="payment__price">
           {'->'} Total due now <span>{productSelected.price}</span>
         </p>
-        <p className="payment__subs-name">
+        <p className="payment__name">
           {'->'} Subscribing to <span>{productSelected.name}</span>
         </p>
-        <div className="form-group">
-          <label htmlFor="name">Full name</label>
+        <div className="payment__form">
           <input
+            className="payment__input"
             type="text"
             id="name"
             name={firstName}
@@ -368,29 +367,21 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
             required
           />
         </div>
-        <form id="payment-form" className="payment-form" onSubmit={handleSubmit}>
-          <div className="form-group">
+        <form
+          id="payment-form"
+          className="payment__form"
+          onSubmit={handleSubmit}
+        >
+          <div className="payment__form-group">
             <label>Card</label>
-            <div className="card-element">
+            <div className="payment__form-element">
               <CardElement
-                options={{
-                  style: {
-                    base: {
-                      fontSize: '16px',
-                      color: '#32325d',
-                      fontFamily: 'Ubuntu',
-                      '::placeholder': {
-                        color: '#a0aec0',
-                      },
-                    },
-                    invalid: { color: '#9e2146' },
-                  },
-                }}
+                options={{}}
               />
             </div>
-            <div className="error">{error ? error : null}</div>
+            <div className="payment__form-error">{error ? error : null}</div>
           </div>
-          <button className="error" type="submit">
+          <button className="payment__button" type="submit">
             {subscribing ? 'Subscribing...' : 'Subscribe'}
           </button>
         </form>

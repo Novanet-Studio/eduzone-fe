@@ -125,7 +125,7 @@ function Account({ location }) {
               {showChangePriceForm ? (
                 <div className="account__card">
                  <h2 className="account__title">Change pricing plan</h2>
-                  <div className="wrapper">
+                  <div className="prices__products">
                     {products.map((product, index) => {
                       let currentProductSelected = false
                       if (product.name === selectedProduct) {

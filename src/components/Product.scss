@@ -4,7 +4,7 @@
 
 
   /*Product*/
-  .wrapper {
+  .prices__products {
     @include flex;
     flex: 0 0 100%;
   }
@@ -101,7 +101,7 @@
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
 @include min-media(1280px) {
   /*Product*/
-  .wrapper {
+  .prices__products {
     padding-top: 2vh;
     padding-bottom: 2vh;
   }
