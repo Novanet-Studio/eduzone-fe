@@ -13,7 +13,9 @@ import AccountDetails from '../components/AccountDetails'
 function Account({ location }) {
   if (!location.state) window.location.href = '/'
 
-  const [accountInformation, setAccountInformation] = useState(location.state.accountInformation)
+  const [accountInformation, setAccountInformation] = useState(
+    location.state.accountInformation,
+  )
   const [customerPaymentMethod, setCustomerPaymentMethod] = useState(null)
   const [showChangePriceForm, setShowChangePriceForm] = useState(false)
   const [subscriptionCancelled, setSubscriptionCancelled] = useState(false)
@@ -78,16 +80,18 @@ function Account({ location }) {
     <>
       <Header loggedIn={true} handleClick={signOut} />
       {subscriptionCancelled ? (
-        <section className="canceled">
+        <section className="account">
           <div className="container">
-            <h2 className="canceled__title">Subscription canceled</h2>
-            <button
-              className="canceled__button"
-              type="button"
-              onClick={() => resetDemo()}
-            >
-              Restart Demo
-            </button>
+            <div className="account__info">
+              <h2 className="cancel__title">Subscription canceled</h2>
+              <button
+                className="cancel__button"
+                type="button"
+                onClick={() => resetDemo()}
+              >
+                Restart Demo
+              </button>
+            </div>
           </div>
         </section>
       ) : (
@@ -100,11 +104,13 @@ function Account({ location }) {
               <div className="account__card">
                 <div className="account__card-header">
                   <h3 className="account__card-title">User account</h3>
-                  <button className="button" onClick={handleEdit}>Edit info</button>
+                  <button className="edit__button" onClick={handleEdit}>
+                    Edit info
+                  </button>
                 </div>
                 <hr className="account__line" />
                 {isEditing ? (
-                  <AccountEditing 
+                  <AccountEditing
                     defaults={accountInformation.user}
                     updateInformation={updateInformation}
                     editing={setIsEditing}
@@ -117,7 +123,6 @@ function Account({ location }) {
                     status={accountInformation.user.status}
                   />
                 )}
-
               </div>
 
               {/* Stripe account */}
@@ -151,10 +156,9 @@ function Account({ location }) {
                 </div>
               </div>
 
-              
               {showChangePriceForm ? (
                 <div className="account__card">
-                 <h2 className="account__title">Change pricing plan</h2>
+                  <h2 className="account__title">Change pricing plan</h2>
                   <div className="prices__products">
                     {products.map((product, index) => {
                       let currentProductSelected = false

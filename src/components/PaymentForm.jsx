@@ -8,7 +8,7 @@ import {
 } from '@stripe/react-stripe-js'
 import { Redirect } from 'react-router-dom'
 import { apiRequest, fetchData, URL } from '../utils'
-import './Payment.scss'
+import './PaymentForm.scss'
 
 const { SNOWPACK_PUBLIC_STRIPE_PK } = import.meta.env
 

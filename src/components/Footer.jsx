@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Logo from '../assets/images/edu-logo.png'
 
 const Footer = () => (
@@ -7,8 +8,12 @@ const Footer = () => (
       <h3 className="footer__title">Contact</h3>
       <p className="footer__email">edu-zone.support@edu-zone.org</p>
       <hr className="footer__line" />
-      <img className="footer__logo" src={Logo} alt="Footer logo" />
-      <p className="footer__copy">© {new Date().getFullYear()} All rights reserverd</p>
+      <Link to="/main">
+        <img className="footer__logo" src={Logo} alt="Footer logo" />
+      </Link>
+      <p className="footer__copy">
+        © {new Date().getFullYear()} All rights reserverd
+      </p>
     </div>
   </div>
 )

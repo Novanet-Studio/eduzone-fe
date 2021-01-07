@@ -1,13 +1,5 @@
 import React from 'react'
-
-const styles = {
-  bold: {
-    fontWeight: 'bold'
-  },
-  normal: {
-    fontWeight: 'normal'
-  }
-}
+import './AccountDetails.scss'
 
 const AccountDetails = ({
   firstname,
@@ -15,28 +7,28 @@ const AccountDetails = ({
   email,
   status,
 }) => (
-  <div className="wrapper">
-    <p style={styles.bold}>
+  <div className="details">
+    <p className="details__text">
       First Name:{' '}
-      <span style={styles.normal}>
+      <span className="details__data">
         {firstname}
       </span>
     </p>
-    <p style={styles.bold}>
+    <p className="details__text">
       Last Name:{' '}
-      <span style={styles.normal}>
+      <span className="details__data">
         {lastname || 'None'}
       </span>
     </p>
-    <p style={styles.bold}>
+    <p className="details__text">
       Email:{' '}
-      <span style={styles.normal}>
+      <span className="details__data">
         {email}
       </span>
     </p>
-    <p style={styles.bold}>
+    <p className="details__text">
       is active:{' '}
-      <span style={styles.normal}>
+      <span className="details__data">
         {status === 'ACT' ? 'active' : 'no active'}
       </span>
     </p>

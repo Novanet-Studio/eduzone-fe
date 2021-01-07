@@ -31,8 +31,9 @@
   &__card {
     @include flex;
     justify-content: space-between;
-    background: #1a1a1a14;
-    &-title {}
+    background: rgb(238, 238, 238);
+    &-title {
+    }
     &-data {
       display: inline-flex;
     }
@@ -48,6 +49,16 @@
     cursor: pointer;
     background-color: $rojo;
     border-radius: 0.4em;
+  }
+  .cancel {
+    &__button {
+      border: none;
+      border-radius: 0;
+      color: #fff;
+      cursor: pointer;
+      background-color: $rojo;
+      border-radius: 0.4em;
+    }
   }
 }
 
@@ -66,10 +77,14 @@
     }
     &__card {
       width: 90%;
-      &-header {}
-      &-info {}
-      &-title {}
-      &-data {}
+      &-header {
+      }
+      &-info {
+      }
+      &-title {
+      }
+      &-data {
+      }
     }
     &__button {
       margin-top: 2vh;
@@ -92,15 +107,31 @@
     }
     &__card {
       width: 75%;
-      &-header {}
-      &-info {}
-      &-title {}
-      &-data {}
+      &-header {
+      }
+      &-info {
+      }
+      &-title {
+      }
+      &-data {
+      }
     }
     &__button {
       flex: 0 0 47%;
       font-size: 1.3rem;
-      padding: 1vh 3vh 1.7vh 3vh;
+      padding: 1vh 3vh;
+    }
+  }
+
+  .cancel {
+    &__title {
+      flex: 0 0 100%;
+      padding-bottom: 2vh;
+    }
+    &__button {
+      flex: 0 0 25%;
+      font-size: 1.3rem;
+      padding: 1vh 3vh;
     }
   }
 }
@@ -115,10 +146,14 @@
     }
     &__card {
       width: 70%;
-      &-header {}
-      &-info {}
-      &-title {}
-      &-data {}
+      &-header {
+      }
+      &-info {
+      }
+      &-title {
+      }
+      &-data {
+      }
     }
   }
 }
@@ -132,12 +167,17 @@
       border-radius: 4em;
     }
     &__card {
-      &-header {}
-      &-info {}
-      &-title {}
-      &-data {}
+      &-header {
+      }
+      &-info {
+      }
+      &-title {
+      }
+      &-data {
+      }
     }
-    &__button {}
+    &__button {
+    }
   }
 }
 
