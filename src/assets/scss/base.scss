@@ -1,0 +1,300 @@
+// Archivos importados
+@import './normalize';
+@import './variables';
+@import './mixins';
+@import './fonts';
+
+/* Contenedores principales */
+body {
+  background-color: #fff;
+}
+
+.container {
+  @include flex;
+  max-width: inherit;
+  margin-top: 0;
+}
+
+/*Text*/
+h2 {padding-bottom:2vh}
+
+p,
+button {
+  font-weight: 400;
+}
+
+/* Header */
+.header {
+  @include flex;
+  align-items: center;
+  background-color: $negro;
+  .container {
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__logo {
+    cursor: pointer;
+  }
+  &__button {
+    font-weight: 300;
+    border: none;
+    color: #fff;
+    background-color: $azul;
+    cursor: pointer;
+    border-radius:0.4em
+  }
+}
+
+/* Footer */
+.footer {
+  @include flex;
+  @include center;
+  text-align: center;
+  color: #fff;
+  background-color: $gris2;
+  .container {
+    justify-content: center;
+  }
+  &__title {
+    flex: 100%;
+    color: #fff;
+    padding-bottom: 1vh;
+  }
+  &__email {
+    flex: 100%;
+    cursor: pointer;
+    color: #fff;
+  }
+  &__line {
+    flex: 100%;
+    border-top: 2px solid #fff;
+  }
+  &__logo {
+    cursor: pointer;
+  }
+  &__copy {
+    flex: 100%;
+    color: #fff;
+  }
+}
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  .container {
+    width: 100vw;
+  }
+
+  /*Text*/
+  h2 {
+    font-size: 2.2rem;
+    line-height: 2.4rem;
+  }
+
+  h3 {
+    font-size: 1.9rem;
+  }
+
+  h4 {
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+  }
+
+  /* Header */
+  .header {
+    padding: 2vh 0;
+    .container {
+      padding: 0 2vh;
+    }
+    &__logo {
+      width: 33vw;
+    }
+    &__button {
+    padding: 0.5vh 3vh;
+    font-size: 0.8rem;
+    }
+  }
+
+  /* Footer */
+  .footer {
+    padding: 3vh 0;
+    .container {
+      padding: 0 6vh;
+    }
+    &__email {
+    font-size: 1rem;
+    }
+    &__line {
+      margin: 2vh 0;
+    }
+    &__logo {
+      width: 45vw;
+    }
+    &__copy {
+      padding-top: 1vh;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  .container {
+    width: 100vw;
+  }
+
+  /*Text*/
+    h2 {
+    font-size: 2.2rem;
+    line-height: 2.4rem;
+  }
+
+  h3 {
+    font-size: 1.9rem;
+  }
+
+  h4 {
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+  }
+
+  /* Header */
+  .header {
+    padding: 4vh 0;
+    .container {
+      padding: 0 4vh;
+    }
+    &__logo {
+      width: 23vw;
+    }
+    &__button {
+      padding: 0.8vh 5vh;
+      font-size: 1rem;
+    }
+  }
+
+  /* Footer */
+  .footer {
+    padding: 4vh 0;
+    .container {
+      padding: 0 14vh;
+    }
+    &__email {
+      font-size: 1.3rem;
+      padding-bottom: 3vh;
+    }
+    &__line {
+      margin: 2vh 0;
+    }
+    &__logo {
+      width: 32vw;
+    }
+    &__copy {
+      padding-top: 1vh;
+      font-size: 1rem;
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  /*Text*/
+  h2 {
+    font-size: 2.7rem;
+line-height: 2.9rem;
+  }
+
+  h3 {
+    font-size: 2.3rem;
+  }
+
+  h4 {
+    font-size: 1.7rem;
+  }
+
+  /* Header */
+  .header {
+    &__logo {
+      width: 20vw;
+    }
+  }
+
+  /* Footer */
+  .footer {
+    &__email {
+      font-size: 1.7rem;
+    }
+    &__copy {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  /*Text*/
+  h2 {
+    font-size: 2.7rem;
+line-height: 2.9rem;
+  }
+
+  h3 {
+    font-size: 2.3rem;
+  }
+
+  h4 {
+    font-size: 1.7rem;
+  }
+
+  /* Header */
+  .header {
+    padding: 2vh 0;
+    &__logo {
+      width: 20vw;
+    }
+  }
+
+  /* Footer */
+  .footer {
+    &__email {
+      font-size: 1.7rem;
+    }
+    &__copy {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+  .container {
+    width: 88vw;
+  }
+
+  /* Header */
+  .header {
+    .container {
+      padding: 0 10vh;
+    }
+    &__logo {
+      width: 14vw;
+    }
+  }
+
+  /* Footer */
+  .footer {
+    .container {
+      padding: 0 18vh;
+    }
+    &__logo {
+      width: 24vw;
+    }
+  }
+}

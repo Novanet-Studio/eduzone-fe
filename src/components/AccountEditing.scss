@@ -1,0 +1,83 @@
+// Archivos importados
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+
+/*dEdit*/
+.edit {
+  &__form {
+    @include flex;
+    justify-content: space-between;
+    &-group {
+      @include flex;
+    }
+    &-label {
+    }
+    &-input {
+      flex: 0 0 100%;
+      border: 1px $gris1 solid;
+      font-weight: 400;
+      color: $negro;
+    }
+  }
+  &__button {
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    background-color: $azul;
+    border-radius: 0.4em;
+    &-update {
+      cursor: pointer;
+      border-radius: 0.4em;
+      border: none;
+      color: #fff;
+      background-color: $rojo;
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+  .edit {
+    &__form {
+      padding-top: 3vh;
+      &-group {
+        margin: 1vh 0;
+        flex: 0 0 48%;
+      }
+      &-label {
+        margin-bottom: 1vh;
+      }
+      &-input {
+        font-size: 1rem;
+        padding: 1vh;
+      }
+    }
+    &__button {
+      margin-top: 1vh;
+      padding: 0.8vh 5vh;
+      font-size: 1rem;
+      &-update {
+        margin-top: 2vh;
+        font-size: 1.3rem;
+        padding: 1vh 3vh;
+      }
+    }
+  }
+}

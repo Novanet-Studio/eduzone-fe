@@ -1,0 +1,125 @@
+// Archivos importados
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+
+  /*Change Price*/
+  .price {
+    &-current {
+    }
+    &-new {
+    }
+  }
+  .change {
+    &__price {
+    }
+    &__text {
+    }
+    &__button {
+      border: none;
+      border-radius: 0;
+      color: #fff;
+      cursor: pointer;
+      background-color: $rojo;
+      border-radius: 0.4em;
+    }
+  }
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  /*Change Price*/
+  .price {
+    &-current {
+    }
+    &-new {
+    }
+  }
+  .change {
+    &__price {
+    }
+    &__text {
+    }
+    &__button {
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  /*Change Price*/
+  .price {
+    &-current {
+    }
+    &-new {
+    }
+  }
+  .change {
+    &__price {
+    }
+    &__text {
+    }
+    &__button {
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  /*Change Price*/
+  .price {
+    &-current {
+    }
+    &-new {
+    }
+  }
+  .change {
+    &__price {
+    }
+    &__text {
+    }
+    &__button {
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  /*Change Price*/
+  .price {
+    &-current {
+    }
+    &-new {
+    }
+  }
+  .change {
+    &__price {
+    }
+    &__text {
+    }
+    &__button {
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+  /*Change Price*/
+  .price {
+    &-current {
+      padding-right: 1vh;
+    }
+    &-new {
+      padding-left: 1vh;
+    }
+  }
+  .change {
+    &__text {
+      flex: 0 0 100%;
+      padding: 2vh 0;
+    }
+    &__button {
+      padding: 0.5vh 2vh;
+      margin:0 1vh;
+      font-size: 1.1rem;
+    }
+  }
+}

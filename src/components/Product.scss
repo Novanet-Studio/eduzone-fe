@@ -1,0 +1,123 @@
+// Archivos importados
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+
+
+  /*Product*/
+  .prices__products {
+    @include flex;
+    flex: 0 0 100%;
+  }
+
+  .product {
+    &__name {
+    }
+    &__prices {
+    }
+    &__interval {
+    }
+    &__billed {
+    }
+    &__btn {
+      border: none;
+      border-radius: 0;
+      color: #fff;
+      cursor: pointer;
+      background-color: $azul;
+      border-radius: 0.4em;
+    }
+  }
+
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  /*Product*/
+  .product {
+    &__name {
+    }
+    &__prices {
+    }
+    &__interval {
+    }
+    &__billed {
+    }
+    &__btn {
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  /*Product*/
+  .product {
+    &__name {
+    }
+    &__prices {
+    }
+    &__interval {
+    }
+    &__billed {
+    }
+    &__btn {
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  /*Product*/
+  .product {
+    &__name {
+    }
+    &__prices {
+    }
+    &__interval {
+    }
+    &__billed {
+    }
+    &__btn {
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+
+  /*Product*/
+  .product {
+    &__name {
+    }
+    &__prices {
+    }
+    &__interval {
+    }
+    &__billed {
+    }
+    &__btn {
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+  /*Product*/
+  .prices__products {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+  }
+
+  .product {
+    flex: 0 0 33%;
+    &__name,
+    &__prices,
+    &__interval,
+    &__billed {
+      padding-bottom: 1vh;
+    }
+    &__btn {
+      margin-top: 1vh;
+      padding: 0.5vh 2vh;
+      font-size: 1.1rem;
+    }
+  }
+}

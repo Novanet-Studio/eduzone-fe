@@ -1,0 +1,140 @@
+// Archivos importados
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+
+/*Payment*/
+.payment {
+  &__text {
+  }
+  &__price,
+  &__name {
+  }
+  &__form {
+    &-group {
+      label {
+        display: none;
+      }
+    }
+    &-element {
+      background: #fff;
+    }
+    &-error {
+      margin-top: 2vh;
+    }
+  }
+  &__input {
+    border: none;
+    font-weight: 400;
+    color: $negro;
+  }
+  &__button {
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    background-color: $rojo;
+  }
+}
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  /*Payment*/
+  .payment {
+    &__text {
+    }
+    &__price,
+    &__name {
+    }
+    &__form {
+    }
+    &__input {
+      width: 100%;
+      font-size: 1rem;
+      padding: 1.4vh 1.2vh 1.1vh 1.2vh;
+    }
+    &__button {
+      margin-top: 2vh;
+      font-size: 1.3rem;
+      padding: 1vh 2vh;
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  /*Payment*/
+  .payment {
+    &__text {
+    }
+    &__price,
+    &__name {
+    }
+    &__form {
+    }
+    &__input {
+      width: 100%;
+      font-size: 1rem;
+      padding: 2vh;
+    }
+    &__button {
+      font-size: 1.3rem;
+      padding: 1vh 3vh 1.7vh 3vh;
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  /*Payment*/
+  .payment {
+    &__text {
+    }
+    &__price,
+    &__name {
+    }
+    &__form {
+    }
+    &__button {
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  /*Payment*/
+  .payment {
+    &__text {
+    }
+    &__price,
+    &__name {
+    }
+    &__form {
+    }
+    &__button {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+  /*Payment*/
+  .payment {
+    flex: 0 0 50%;
+    padding-top: 2vh;
+    &__text {
+    }
+    &__price,
+    &__name {
+      margin: 2vh 0;
+    }
+    &__form {
+      &-group {
+        margin: 2vh 0;
+      }
+      &-element {
+        padding: 2vh;
+      }
+    }
+  }
+}

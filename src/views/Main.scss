@@ -1,0 +1,397 @@
+// Archivos importados
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+
+/* Hero */
+.hero {
+  @include flex;
+  @include center;
+  border-bottom: $rojo 10px solid;
+  background-image: $mozaicoPortadaIngles;
+  background-size:cover;
+  background-position: center;
+  .container {
+    justify-content: center;
+  }
+  &__info {
+    @include flex;
+    @include center;
+    text-align: center;
+    background-color: $amarillo;
+    box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 0px 20px -2px rgba(34, 27, 27, 0.7);
+  }
+  &__title, 
+  &__text {
+    flex: 100%;
+  }
+  &__input {
+    border: none;
+    font-weight: 400;
+    color: $negro;
+  }
+  &__button {
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    background-color: $rojo;
+  }
+}
+
+/* Enjoy */
+.enjoy {
+  @include flex;
+  align-content: center;
+  border-bottom: $azul 10px solid;
+  .container {
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* FAQ */
+.faq {
+  @include flex;
+  text-align: center;
+  border-bottom: $amarillo 10px solid;
+  .container {
+    justify-content: center;
+  }
+  &__title {
+    flex: 0 0 100%;
+  }
+  &__drop {
+    background: $gris1;
+    margin-bottom: 1vh;
+  }
+  &__question,
+  &__answer {
+    font-weight:400;
+    color: #fff;
+  }
+  &__info {
+    @include flex;
+    @include center;
+    text-align: center;
+    background-color: $amarillo;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
+    &-input {
+      border: none;
+      color: $negro;
+    }
+    &-title {
+      flex: 100%;
+      }
+      &-text {
+      flex: 100%;
+      }
+    &-button {
+      border: none;
+      border-radius: 0;
+      color: #fff;
+      cursor: pointer;
+      background-color: $rojo;
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  /* Hero */
+  .hero {
+    height: 93vh;
+    &__info {
+      border-radius: 3em;
+      width: 90vw;
+      padding:2vh 2vh 4vh 2vh;
+    }
+    &__title, 
+    &__text {
+      padding-bottom: 2vh;
+    }
+    &__subs {
+      width: 90%;
+    }
+    &__input {
+    width: 100%;
+    font-size: 1rem;
+    padding:1.4vh 1.2vh 1.1vh 1.2vh;
+    }
+    &__button {
+    margin-top: 2vh;
+    font-size: 1.3rem;
+    padding: 1vh 2vh;
+    }
+  }
+
+  /* Enjoy */
+  .enjoy {
+    padding:4vh 0;
+    .container {
+      padding: 0 4vh;
+    }
+    &__col-left {
+      flex: 0 0 100%;
+    }
+    &__col-right {
+    margin-top: 4vh;
+    flex: 0 0 100%;
+    }
+    &__img {
+      width:100%
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    padding: 5vh 0;
+    &__title {
+      padding-bottom: 5vh;
+    }
+    &__drop {
+      width: 80%;
+      margin-bottom: 1vh;
+      padding: 1vh;
+    }
+    &__answer {
+      padding-top: 1vh;
+    }
+    &__info {
+    width: 87vw;
+    margin-top: 4vh;
+    padding: 2vh 3vh 3vh 3vh;
+    border-radius: 5em;
+      &-title {
+        padding-bottom: 1vh;
+      }
+      &-text {
+        font-size: 1.2rem;
+        padding-bottom: 2vh;
+      }
+      &-subs {
+      width: 95%;
+      }
+      &-input {
+      width: 100%;
+      font-size: 1rem;
+      padding:1.4vh 1.2vh 1.1vh 1.2vh;
+      }
+      &-button {
+      margin-top: 2vh;
+      font-size: 1.3rem;
+      padding: 1vh 2vh;
+      }
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  /* Hero */
+  .hero {
+    height: 90vh;
+    &__info {
+      border-radius: 3em;
+      width: 90vw;
+      padding:4vh 0
+    }
+    &__text {
+      padding-bottom: 2vh;
+    }
+    &__subs {
+      width: 90%;
+    }
+    &__input {
+    width: 65%;
+    font-size: 1rem;
+    padding: 2vh
+    }
+    &__button {
+    font-size: 1.3rem;
+    padding: 1vh 3vh 1.7vh 3vh;
+    }
+  }
+
+  /* Enjoy */
+  .enjoy {
+    padding:7vh 0;
+    .container {
+      padding: 0 7vh;
+    }
+    &__col-left {
+      flex: 0 0 100%;
+    }
+    &__col-right {
+      margin-top: 7vh;
+      flex: 0 0 60%;
+    }
+    &__img {
+      width:100%
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    padding: 5vh 0;
+    &__title {
+      padding-bottom: 5vh;
+    }
+    &__drop {
+      width: 70%;
+      padding: 2vh;
+    }
+    &__answer {
+      padding-top: 2vh;
+    }
+    &__info {
+    width: 87vw;
+    margin-top: 7vh;
+    padding:1vh 0 3vh 0;
+    margin-bottom: 3vh;
+    border-radius: 7em;
+      &-title {
+        padding-bottom: 1.5vh;
+      }
+      &-text {
+        font-size: 1.2rem;
+        padding-bottom: 2vh;
+      }
+      &-subs {
+      width: 90%;
+      }
+      &-input {
+      width: 65%;
+      font-size: 1rem;
+      padding: 2vh
+      }
+      &-button {
+      font-size: 1.3rem;
+      padding: 1vh 3vh 1.7vh 3vh;
+      }
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  /* Hero */
+  .hero {
+    height: 62vh;
+    &__info {
+      border-radius: 4em;
+    }
+    &__subs {
+      width: 70%;
+    }
+    &__input {
+    width: 65%;
+    }
+    &__button {
+    margin: 0;
+    }
+  }
+
+  /* Enjoy */
+  .enjoy {
+    &__col-left {
+      flex: 0 0 50%;
+    }
+    &__col-right {
+      margin-top: 0;
+      flex: 0 0 45%;
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    &__info {
+      width: 80vw;
+      &-subs {
+      width: 90%;
+      }
+      &-input {
+      width: 65%;
+      }
+      &-button {
+      margin: 0;
+      }
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  /* Hero */
+  .hero {
+    height: 72vh;
+    &__info {
+      border-radius: 4em;
+    }
+    &__subs {
+      width: 70%;
+    }
+    &__button {
+      font-size: 1.6rem;
+    }
+  }
+
+  /* Enjoy */
+  .enjoy {
+    &__col-left {
+      flex: 0 0 50%;
+    }
+    &__col-right {
+      margin-top: 0;
+      flex: 0 0 45%;
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    &__drop {
+      width: 55%;
+    }
+    &__info {
+      width: 67vw;
+      margin-top: 4vh;
+      margin-bottom: 0;
+      &-subs {
+        width: 73%;
+      }
+      &-button {
+      font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+  /* Hero */
+  .hero {
+    &__info {
+      width: 53vw;
+    }
+  }
+
+  /* Enjoy */
+  .enjoy {
+    .container {
+      padding: 0 18vh;
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    &__drop {
+      width: 50.5%;
+    }
+    &__info {
+      width: 48vw;
+    }
+  }
+}
