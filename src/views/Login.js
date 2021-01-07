@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
+
+import useLogin from '../hooks/useLogin'
 import { Auth, fetchData, URL } from '../utils'
 import Footer from '../components/Footer'
 import './Login.scss'
@@ -12,45 +14,8 @@ const initialState = {
 function Login() {
   const [state, setState] = useState(initialState)
   const [loading, setLoading] = useState(false)
-  const [isAuth, setIsAuth] = useState(false)
-  const [loadingUser, setLoadingUser] = useState(false)
-  const [userLoaded, setUserLoaded] = useState(false)
   const [accountInformation, setAccountInformation] = useState({})
-
-  useEffect(() => {
-    console.log('Loading user again ...')
-    async function loadUser() {
-      const token = Auth.getToken
-      if (!token) {
-        setLoadingUser(false)
-        console.log('exit')
-        return
-      }
-
-      if (userLoaded) {
-        setLoading(false)
-        console.log('Is loaded')
-        return
-      }
-
-      try {
-        const response = await fetch(`${URL}/api/auth/me`, {
-          headers: {
-            'x-access-token': String(token),
-          },
-        })
-        const result = await response.json()
-        setAccountInformation({ ...result })
-        setLoadingUser(false)
-        setIsAuth(true)
-        setUserLoaded(true)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    loadUser()
-  }, [])
+  const { setIsAuth, isAuth, loadingUser, userInfo } = useLogin()
 
   const handleChange = ({ target }) =>
     setState({ ...state, [target.name]: target.value })
@@ -80,13 +45,17 @@ function Login() {
 
   if (isAuth) {
     console.log(accountInformation.paymentMethodId)
+    let temp = accountInformation.user 
+      ? accountInformation
+      : { ...accountInformation, user: userInfo }
+    // setAccountInformation({ ...userInfo })
     return (
       <Redirect
         to={{
           pathname: '/account',
           state: {
             isAuth,
-            accountInformation,
+            accountInformation: temp,
           },
         }}
       />

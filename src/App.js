@@ -11,6 +11,8 @@ import './App.scss'
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '/eduzonestore/' : '/'
 
+console.log(process.env.NODE_ENV);
+
 const App = () => (
   <Switch basename={baseUrl}>
     <Route exact path="/">
