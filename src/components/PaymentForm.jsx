@@ -27,6 +27,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
   const [firstName, setFirstName] = useState('')
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(null)
+  const [userData, setUserData] = useState(null)
   const [userCreated, setUserCreated] = useState(false)
   const [error, setError] = useState('')
 
@@ -252,9 +253,10 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
         bodyParams,
       )
 
-      if (response.statusCode === 200) {
+      if (response.statusCode === 201) {
         localStorage.setItem('auth', response.data.token)
         setUserCreated(true)
+        setUserData(response.data.user)
       }
     } catch (e) {
       throw new Error(e)
@@ -331,6 +333,10 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
 
   if (accountInformation && userCreated) {
     console.log('[Account Information]', accountInformation)
+    const temp = { ...accountInformation, user: userData }
+    
+    // setAccountInformation({ ...accountInformation, user: userData })
+
     sessionStorage.setItem(
       'paymentMethodId',
       accountInformation.paymentMethodId,
@@ -339,7 +345,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
       <Redirect
         to={{
           pathname: '/account',
-          state: { accountInformation },
+          state: { accountInformation: temp },
         }}
       />
     )
