@@ -28,6 +28,7 @@ const useLogin = () => {
 
       try {
         const response = await fetch(`${URL}/api/auth/me`, {
+          method: 'GET',
           headers: {
             'x-access-token': String(token),
           },
