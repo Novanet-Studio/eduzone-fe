@@ -7,6 +7,8 @@ import Prices from './views/Prices'
 import Account from './views/Account'
 import Success from './components/Success'
 
+import { GlobalProvider, useGlobal } from './context/globalContext';
+
 import './App.scss'
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '/eduzonestore' : '/'
@@ -38,4 +40,8 @@ const App = () => (
   </Router>
 )
 
-export default App
+export default () => (
+  <GlobalProvider>
+    <App />
+  </GlobalProvider>
+)
