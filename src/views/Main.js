@@ -4,6 +4,7 @@ import Ipad from '../assets/images/ipad-libros.png'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Subscribe from '../components/Subscribe'
+import MainDropdown from '../components/MainDropdown'
 import './Main.scss'
 
 
@@ -47,39 +48,7 @@ function Main() {
         <section className="faq">
           <div className="container">
             <h2 className="faq__title">Frequently Asked Questions</h2>
-            <div className="faq__drop">
-              <h4 className="faq__question">What is Edu-zone?</h4>
-              <p className="faq__answer">
-                Lorem ipsum dolor sit amet, consectetur adi
-              </p>
-            </div>
-            <div className="faq__drop">
-              <h4 className="faq__question">
-                What content will i find in the subscription?
-              </h4>
-              <p className="faq__answer">
-                Lorem ipsum dolor sit amet, consectetur adi
-              </p>
-            </div>
-            <div className="faq__drop">
-              <h4 className="faq__question">How much does it cost?</h4>
-              <p className="faq__answer">
-                Lorem ipsum dolor sit amet, consectetur adi
-              </p>
-            </div>
-            <div className="faq__drop">
-              <h4 className="faq__question">Where can i access Edu-zone?</h4>
-              <p className="faq__answer">
-                Lorem ipsum dolor sit amet, consectetur adi
-              </p>
-            </div>
-            <div className="faq__drop">
-              <h4 className="faq__question">How do i cancel?</h4>
-              <p className="faq__answer">
-                Lorem ipsum dolor sit amet, consectetur adi
-              </p>
-            </div>
-
+            <MainDropdown />
             <div className="faq__info">
               <h3 className="faq__info-title">
                 Discover our interactive eBooks
