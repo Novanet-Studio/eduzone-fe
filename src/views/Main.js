@@ -1,63 +1,13 @@
 import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
 import Ipad from '../assets/images/ipad-libros.png'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { fetchData, URL } from '../utils'
+import Subscribe from '../components/Subscribe'
 import './Main.scss'
 
-const initialState = {
-  email: '',
-  password: '',
-}
 
 function Main() {
-  const [state, setState] = useState(initialState)
-  const [loading, setLoading] = useState(false)
-  const [isAuth, setIsAuth] = useState(false)
-  const [accountInformation, setAccountInformation] = useState({})
-
-  const handleChange = ({ target }) =>
-    setState({ ...state, [target.name]: target.value })
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    const result = await fetchData(`${URL}/api/auth/signin`, 'POST', {
-      userName: state.email,
-      password: state.password,
-    })
-
-    if (!result.auth) {
-      console.log(result.message)
-      setLoading(false)
-      return
-    }
-
-    localStorage.setItem('auth', result.auth)
-    localStorage.setItem('token', result.token)
-
-    setAccountInformation({ ...result })
-
-    setLoading(false)
-    setIsAuth(true)
-  }
-
-  if (isAuth) {
-    console.log(accountInformation.paymentMethodId)
-    return (
-      <Redirect
-        to={{
-          pathname: '/account',
-          state: {
-            isAuth,
-            accountInformation,
-          },
-        }}
-      />
-    )
-  }
 
   return (
     <>
@@ -70,21 +20,7 @@ function Main() {
               <p className="hero__text">
                 Subscribe and gain access to our content
               </p>
-              <form className="hero__subs" onSubmit={handleSubmit}>
-                <input
-                  className="hero__input"
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Email"
-                  value={state.email}
-                  onChange={handleChange}
-                />
-                <button className="hero__button" type="submit">
-                  Subscribe &nbsp;
-                  {loading ? 'Loading...' : '>'}
-                </button>
-              </form>
+              <Subscribe />
             </div>
           </div>
         </section>
@@ -151,22 +87,7 @@ function Main() {
               <p className="faq__info-text">
                 Subscribe and gain access to our content
               </p>
-
-              <form className="faq__info-subs" onSubmit={handleSubmit}>
-                <input
-                  className="faq__info-input"
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Email"
-                  value={state.email}
-                  onChange={handleChange}
-                />
-                <button className="faq__info-button" type="submit">
-                  Subscribe &nbsp;
-                  {loading ? 'Loading...' : '>'}
-                </button>
-              </form>
+              <Subscribe parentClass="faq" />
             </div>
           </div>
         </section>
