@@ -7,9 +7,7 @@ import Prices from './views/Prices'
 import Account from './views/Account'
 import Success from './components/Success'
 
-import { GlobalProvider, useGlobal } from './context/globalContext';
-
-import './App.scss'
+import { GlobalProvider } from './context/globalContext';
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '/eduzonestore' : '/'
 
