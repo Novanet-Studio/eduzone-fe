@@ -1,15 +1,12 @@
-import React, { useState } from 'react'
-import Ipad from '../assets/images/ipad-libros.png'
-
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Subscribe from '../components/Subscribe'
 import MainDropdown from '../components/MainDropdown'
+
+import Ipad from '../assets/images/ipad-libros.png'
 import './Main.scss'
 
-
 function Main() {
-
   return (
     <>
       <Header loggedIn={false} />
