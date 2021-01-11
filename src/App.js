@@ -17,10 +17,10 @@ const App = () => (
   <Router basename={baseUrl}>
     <Switch>
       <Route exact path="/">
-        <Login />
-      </Route>
-      <Route exact path="/main">
         <Main />
+      </Route>
+      <Route exact path="/login">
+        <Login />
       </Route>
       <Route exact path="/register">
         <Register />

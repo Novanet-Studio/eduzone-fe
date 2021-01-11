@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Redirect } from 'react-router-dom'
+
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Subscribe from '../components/Subscribe'
@@ -7,6 +10,16 @@ import Ipad from '../assets/images/ipad-libros.png'
 import './Main.scss'
 
 function Main() {
+  const [isSuscribed, setIsSubscribed] = useState(false)
+
+  const subscribe = (value) => setIsSubscribed(value)
+
+  console.log('Is subscribe from main? ', isSuscribed);
+
+  if (isSuscribed) {
+    return <Redirect to="/register" />
+  }
+
   return (
     <>
       <Header loggedIn={false} />
@@ -18,7 +31,7 @@ function Main() {
               <p className="hero__text">
                 Subscribe and gain access to our content
               </p>
-              <Subscribe />
+              <Subscribe subscribe={subscribe} />
             </div>
           </div>
         </section>
@@ -53,7 +66,7 @@ function Main() {
               <p className="faq__info-text">
                 Subscribe and gain access to our content
               </p>
-              <Subscribe parentClass="faq" />
+              <Subscribe parentClass="faq" subscribe={subscribe} />
             </div>
           </div>
         </section>

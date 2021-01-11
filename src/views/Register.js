@@ -3,6 +3,8 @@ import { Link, Redirect } from 'react-router-dom'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { useGlobal } from '../context/globalContext'
+
 import { fetchData, URL } from '../utils'
 import './Register.scss'
 
@@ -15,8 +17,11 @@ function Register() {
   const [state, setState] = useState(initialState)
   const [customer, setCustomer] = useState(null)
   const [loading, setLoading] = useState(false)
+  const { formState } = useGlobal()
   const _isMounted = useRef(true)
   let formData = useRef(null)
+
+  console.log(formState)
 
   useEffect(() => {
     return () => (_isMounted.current = false)

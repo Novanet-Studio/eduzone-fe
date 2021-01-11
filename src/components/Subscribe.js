@@ -1,34 +1,23 @@
-import axios from 'axios'
 import { useState } from 'react'
-import { URL } from '../utils'
+import { useGlobal } from '../context/globalContext'
 
-
-export const Subscribe = ({ parentClass = 'hero' }) => {
+export const Subscribe = ({ parentClass = 'hero', subscribe }) => {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
+  const { updateFormState } = useGlobal()
 
-  const currentClass = parentClass === 'hero' 
-    ? 'hero__'
-    : 'faq__info-'
+  const currentClass = parentClass === 'hero' ? 'hero__' : 'faq__info-'
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+    console.log('Main subscription')
     setLoading(true)
-    try {
-      const { data } = await axios.post(`${URL}/auth/signin`, {
-        userName: email,
-        password: '',
-      })
-
-      console.log(data)
-
-    } catch (error) {
-      console.log(error)
-    }
+    updateFormState({ email })
+    setTimeout(() => subscribe(true), 200)
+    setLoading(false)
   }
 
-  const handleChange = ({ currentTarget }) => 
-    setEmail(currentTarget.value)
+  const handleChange = ({ currentTarget }) => setEmail(currentTarget.value)
 
   return (
     <form className={`${currentClass}subs`} onSubmit={handleSubmit}>
@@ -40,10 +29,10 @@ export const Subscribe = ({ parentClass = 'hero' }) => {
         placeholder="Email"
         value={email}
         onChange={handleChange}
+        required
       />
       <button className={`${currentClass}button`} type="submit">
-        Subscribe &nbsp;
-        {loading ? 'Loading...' : '>'}
+        {loading ? 'Loading...' : `Subscribe`}
       </button>
     </form>
   )

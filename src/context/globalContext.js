@@ -43,12 +43,19 @@ export const GlobalProvider = (props) => {
 
   const setInitialFormState = () => setFormState(initialFormState)
 
+  const updateFormState = (updated = {}) =>
+    setFormState({
+      ...formState,
+      ...updated,
+    })
+
   const value = useMemo(
     () => ({
       userData,
       formState,
       loadingUser,
       setInitialFormState,
+      updateFormState,
     }),
     [userData, formState, loadingUser],
   )
