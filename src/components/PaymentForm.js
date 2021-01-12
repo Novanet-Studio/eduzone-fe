@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import { useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import {
   CardElement,
@@ -7,8 +8,9 @@ import {
   useElements,
 } from '@stripe/react-stripe-js'
 import { Redirect } from 'react-router-dom'
-import { apiRequest, fetchData, URL } from '../utils'
+import { apiRequest, Auth, URL } from '../utils'
 import './PaymentForm.scss'
+import { useGlobal } from '../context/globalContext'
 
 const { REACT_APP_STRIPE_PK } = process.env
 
@@ -21,15 +23,15 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, customer, formData }) => {
+const CheckoutForm = ({ productSelected, customer }) => {
   const stripe = useStripe()
   const elements = useElements()
-  const [firstName, setFirstName] = useState('')
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(null)
   const [userData, setUserData] = useState(null)
   const [userCreated, setUserCreated] = useState(false)
   const [error, setError] = useState('')
+  const { formState, updateFormState } = useGlobal()
 
   async function handlePaymentCustomerAction({
     subscription,
@@ -127,7 +129,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
       invoiceId,
       customer: customer.id,
     }
-
+    // TODO: makes a refactor of this return
     return (
       apiRequest(`${URL}/stripe/retry-invoice`, 'POST', bodyParams)
         // If the card is declined, display an error to the user.
@@ -176,6 +178,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
       localStorage.clear()
     }
 
+    // Update accountInformation with useData (global context)
     setAccountInformation(result)
     // Change your UI to show a success message to your customer.
     // onSubscriptionSampleDemoComplete(result);
@@ -191,7 +194,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
       priceId,
       customerId: customer.id,
     }
-    // return (
+    // TODO: Makes a refactor of this return
     return (
       // apiRequest return the response in JSON format
       apiRequest(`${URL}/stripe/create-subscription`, 'POST', bodyParams)
@@ -236,6 +239,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
   }
 
   // Register new user after subscription
+  // TODO: Extract this function into new file
   async function createUser({ firstname, userName, password }) {
     const bodyParams = {
       firstname,
@@ -247,17 +251,24 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
     console.log(bodyParams)
 
     try {
-      const response = await fetchData(
-        `${URL}/api/auth/signup`,
-        'POST',
-        bodyParams,
-      )
+      const { data: user } = await axios.post(`${URL}/auth/signup`, bodyParams)
 
-      if (response.statusCode === 201) {
-        localStorage.setItem('auth', response.data.token)
-        setUserCreated(true)
-        setUserData(response.data.user)
+      if (!user.auth) {
+        console.log('Cannot register user')
+        return
       }
+
+      Auth.setToken(user.token)
+
+      const { data: me } = await axios.get(`${URL}/auth/me`, {
+        headers: {
+          'x-access-token': user.token
+        }
+      })
+
+      setUserData(me.user)
+      setUserCreated(true)
+
     } catch (e) {
       throw new Error(e)
     }
@@ -315,13 +326,10 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
         paymentMethodId: paymentMethodId,
       })
 
-      console.log('[FORM_DATA]')
-      console.log(formData)
-
       createUser({
-        firstname: firstName,
-        userName: formData.email,
-        password: formData.password,
+        firstname: formState.firstname,
+        userName: formState.email,
+        password: formState.password,
       })
     } catch (err) {
       console.log(err)
@@ -329,13 +337,11 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
     }
   }
 
-  const handleChange = ({ target }) => setFirstName(target.value)
+  const handleChange = ({currentTarget:{ name, value }}) => updateFormState({[name]: value})
 
   if (accountInformation && userCreated) {
     console.log('[Account Information]', accountInformation)
     const temp = { ...accountInformation, user: userData }
-    
-    // setAccountInformation({ ...accountInformation, user: userData })
 
     sessionStorage.setItem(
       'paymentMethodId',
@@ -345,6 +351,7 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
       <Redirect
         to={{
           pathname: '/account',
+          // FIXME: Delete state and use useData
           state: { accountInformation: temp },
         }}
       />
@@ -367,8 +374,19 @@ const CheckoutForm = ({ productSelected, customer, formData }) => {
             className="payment__input"
             type="text"
             id="name"
-            name={firstName}
-            placeholder="First and last name"
+            name="firstname"
+            value={formState.firstname}
+            placeholder="First name"
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="payment__input"
+            type="text"
+            id="name"
+            name="lastname"
+            value={formState.lastname}
+            placeholder="Last name"
             onChange={handleChange}
             required
           />

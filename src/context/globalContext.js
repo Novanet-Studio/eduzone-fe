@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useContext, useState, createContext, useEffect, useMemo } from 'react'
+import { useContext, useState, createContext, useEffect, useMemo, useCallback } from 'react'
 import { Auth } from '../utils'
 
 const GlobalContext = createContext()
@@ -8,6 +8,7 @@ const initialFormState = {
   firstname: '',
   lastname: '',
   email: '',
+  password: '',
 }
 
 export const GlobalProvider = (props) => {
@@ -43,11 +44,11 @@ export const GlobalProvider = (props) => {
 
   const setInitialFormState = () => setFormState(initialFormState)
 
-  const updateFormState = (updated = {}) =>
+  const updateFormState = useCallback((updated = {}) =>
     setFormState({
       ...formState,
       ...updated,
-    })
+    }), [formState])
 
   const value = useMemo(
     () => ({
@@ -57,7 +58,7 @@ export const GlobalProvider = (props) => {
       setInitialFormState,
       updateFormState,
     }),
-    [userData, formState, loadingUser],
+    [userData, formState, loadingUser, updateFormState],
   )
 
   return <GlobalContext.Provider value={value} {...props} />

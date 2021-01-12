@@ -12,7 +12,7 @@ import { products } from '../utils'
 function Prices({ location }) {
   const [productSelected, setProduct] = useState(null)
   const [customer] = useState(location.state.customer)
-  const [formData] = useState(location.state.formData)
+  // const [formData] = useState(location.state.formData)
 
   const handleClick = (key) => setProduct(products[key])
 
@@ -36,7 +36,7 @@ function Prices({ location }) {
               <PaymentForm
                 productSelected={productSelected}
                 customer={customer}
-                formData={formData}
+                // formData={formData}
               />
             )}
           </div>
