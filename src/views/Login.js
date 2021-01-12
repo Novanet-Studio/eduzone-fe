@@ -1,46 +1,57 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 
 import useLogin from '../hooks/useLogin'
-import { Auth, fetchData, URL } from '../utils'
+import { useGlobal } from '../context/globalContext'
+
 import Footer from '../components/Footer'
+import { Auth, URL } from '../utils'
 import './Login.scss'
 
-const initialState = {
-  email: '',
-  password: '',
-}
 
 function Login() {
-  const [state, setState] = useState(initialState)
+  const { formState, updateFormState } = useGlobal()
   const [loading, setLoading] = useState(false)
+  // TODO: Analize if this state could be change into new state or
+  // existing state of useGlobal
   const [accountInformation, setAccountInformation] = useState({})
   const { setIsAuth, isAuth, loadingUser, userInfo } = useLogin()
 
-  const handleChange = ({ target }) =>
-    setState({ ...state, [target.name]: target.value })
+  const handleChange = ({currentTarget:{ name, value }}) => updateFormState({ [name]: value })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    const result = await fetchData(`${URL}/api/auth/signin`, 'POST', {
-      userName: state.email,
-      password: state.password,
-    })
-
-    if (!result.auth) {
-      console.log(result.message)
-      setLoading(false)
-      return
+    
+    const bodyParams = {
+      userName: formState.email,
+      password: formState.password,
     }
 
-    console.log('[LOGING USER]', result.token)
-    Auth.setToken(result.token)
+    try {
+      
+      const { data, status } = await axios.post(`${URL}/auth/signin`, bodyParams)
+      Auth.setToken(data.token)
 
-    setAccountInformation({ ...result })
+      if (status === 200) {
+        const { data } = await axios.get(`${URL}/auth/me`, {
+          headers: {
+            'x-access-token': Auth.getToken
+          }
+        })
+  
+        console.log(data)
+        setAccountInformation({ user: data.user })
+        setLoading(false)
+        setIsAuth(true)
+      }
 
-    setLoading(false)
-    setIsAuth(true)
+    } catch (error) {
+      console.log({ error })
+      console.log(error.response.data.message)
+      setLoading(false)
+    }
   }
 
   if (isAuth) {
@@ -48,12 +59,13 @@ function Login() {
     let temp = accountInformation.user 
       ? accountInformation
       : { ...accountInformation, user: userInfo }
-    // setAccountInformation({ ...userInfo })
-    return (
+
+      return (
       <Redirect
         to={{
           pathname: '/account',
           state: {
+            // Use isAuth throw useGlobal hook
             isAuth,
             accountInformation: temp,
           },
@@ -62,9 +74,17 @@ function Login() {
     )
   }
 
-  if (!loadingUser) {
+  // FIXME: check for true value
+  if (loadingUser) {
     return (
-      <>
+      <section className="loading">
+        <p>Loading ...</p>
+      </section>
+    )
+  }
+
+  return (
+    <>
       <section className="login">
         <div className="container">
           <div className="login__info">
@@ -76,7 +96,7 @@ function Login() {
                 name="email"
                 id="email"
                 placeholder="Email address"
-                value={state.email}
+                value={formState.email}
                 onChange={handleChange}
               />
               <input
@@ -85,7 +105,7 @@ function Login() {
                 name="password"
                 id="password"
                 placeholder="Password"
-                value={state.password}
+                value={formState.password}
                 onChange={handleChange}
               />
               <button className="login__button">
@@ -98,14 +118,16 @@ function Login() {
           </div>
         </div>
       </section>
-              <Footer />
-              </>
-    )
-  } else {
-    ;<section className="loading">
-      <p>Loading ...</p>
-    </section>
-  }
+      <Footer />
+    </>
+  )
+  // if (!loadingUser) {
+    
+  // } else {
+  //   ;<section className="loading">
+  //     <p>Loading ...</p>
+  //   </section>
+  // }
 }
 
 export default Login
