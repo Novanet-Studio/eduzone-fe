@@ -1,16 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { fetchData, URL } from '../utils'
+import axios from 'axios'
+import { useState, useRef, useEffect } from 'react'
+import { URL } from '../utils'
 import './AccountEditing.scss'
 
-const initialState = {
-  firstname: '',
-  lastname: '',
-  email: '',
-  password: '',
-}
 
 const AccountEditing = ({ defaults, updateInformation, editing }) => {
-  const [formState, setFormState] = useState(initialState)
+  const [formState, setFormState] = useState({})
   const _isMounted = useRef(true)
 
   useEffect(() => {
@@ -23,24 +18,22 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const defaultLastname = defaults.lastname || ''
-    const body = {
+    const bodyRequest = {
       firstname: formState.firstname || defaults.firstname,
       lastname: formState.lastname || defaultLastname,
-      userName: formState.email || defaults.userName,
+      userName: formState.email || defaults.username,
       password: formState.password,
     }
 
     try {
-      if (_isMounted.current) {
-        const result = await fetchData(`${URL}/api/auth/update`, 'POST', body)
+      if (!_isMounted.current) return
+      
+      const { data } = await axios.post(`${URL}/user/update`, bodyRequest)
 
-        console.log(result)
-
-        updateInformation({ ...result.user })
-        editing(false)
-        setFormState(initialState)
-        console.log('data sent')
-      }
+      updateInformation({ ...data.user })
+      editing(false)
+      setFormState({})
+      console.log('data sent')
     } catch (e) {
       throw new TypeError(e)
     }
@@ -57,6 +50,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           type="text"
           name="firstname"
           value={formState.firstname}
+          placeholder={defaults.firstname}
           onChange={handleChange}
         />
       </div>
@@ -69,6 +63,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           type="text"
           name="lastname"
           value={formState.lastname}
+          placeholder={defaults.lastname || 'empty'}
           onChange={handleChange}
         />
       </div>
@@ -81,6 +76,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           type="email"
           name="email"
           value={formState.email}
+          placeholder={defaults.userName}
           onChange={handleChange}
         />
       </div>
@@ -93,6 +89,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           type="password"
           name="password"
           value={formState.password}
+          placeholder="••••••••••••"
           onChange={handleChange}
         />
       </div>

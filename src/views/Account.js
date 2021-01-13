@@ -119,7 +119,7 @@ function Account({ location }) {
                   <AccountDetails
                     firstname={accountInformation.user.firstname}
                     lastname={accountInformation.user.lastname}
-                    email={accountInformation.user.userName}
+                    email={accountInformation.user.username}
                     status={accountInformation.user.status}
                   />
                 )}
