@@ -57,7 +57,7 @@ function Account({ location }) {
 
   async function cancelSubscription() {
     console.log(accountInformation.subscription)
-    
+
     await axios.post(`${URL}/stripe/cancel-subscription`, {
       subscriptionId: accountInformation.subscription.id,
     })
@@ -130,34 +130,50 @@ function Account({ location }) {
 
               {/* Stripe account */}
 
-              <div className="account__card">
-                <div className="account__card-header">
-                  <h3 className="account__card-title">Billing account</h3>
-                  <p>Current Price</p>
-                  <span className="account__card-data">{selectedProduct}</span>
-                </div>
-                <hr className="account__line" />
-                <div className="account__card-info">
-                  <h3 className="account__card-title">Credit Card</h3>
-                  <span className="account__card-data">
-                    {customerPaymentMethod}
-                  </span>
-                </div>
+              {accountInformation.subscription ? (
+                <div className="account__card">
+                  <div className="account__card-header">
+                    <h3 className="account__card-title">Billing account</h3>
+                    <p>Current Price</p>
+                    <span className="account__card-data">{selectedProduct}</span>
+                  </div>
+                  <hr className="account__line" />
+                  <div className="account__card-info">
+                    <h3 className="account__card-title">Credit Card</h3>
+                    <span className="account__card-data">
+                      {customerPaymentMethod}
+                    </span>
+                  </div>
 
-                <div
-                  className="account__button"
-                  onClick={() => handleChangePriceForm()}
-                >
-                  Change pricing plan {'>'}
-                </div>
+                  <div
+                    className="account__button"
+                    onClick={() => handleChangePriceForm()}
+                  >
+                    Change pricing plan {'>'}
+                  </div>
 
-                <div
-                  className="account__button"
-                  onClick={() => cancelSubscription()}
-                >
-                  Cancel subscription {'>'}
+                  <div
+                    className="account__button"
+                    onClick={() => cancelSubscription()}
+                  >
+                    Cancel subscription {'>'}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="account__card">
+                  <div className="account__card-header">
+                    <h3 className="account__card-title">You don't have an billing account</h3>
+                    <span className="account__card-data">{selectedProduct}</span>
+                  </div>
+                  <hr className="account__line" />
+                  <div className="account__card-info">
+                    {/* <h3 className="account__card-title">Not billing account</h3> */}
+                    <span className="account__card-data">
+                      <p>Please, select a subscription</p>
+                    </span>
+                  </div>
+                </div>
+              )}
 
               {showChangePriceForm ? (
                 <div className="account__card">
