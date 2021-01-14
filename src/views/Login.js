@@ -2,16 +2,20 @@ import axios from 'axios'
 import { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 
-import useLogin from '../hooks/useLogin'
 import { useGlobal } from '../context/globalContext'
 
+import useLogin from '../hooks/useLogin'
+import useError from '../hooks/useError'
+
 import Footer from '../components/Footer'
+import ErrorMessage from '../components/ErrorMessage'
 import { Auth, URL } from '../utils'
 import './Login.scss'
 
 
 function Login() {
   const { formState, updateFormState } = useGlobal()
+  const { error, showError } = useError(null)
   const [loading, setLoading] = useState(false)
   // TODO: Analize if this state could be change into new state or
   // existing state of useGlobal
@@ -50,6 +54,7 @@ function Login() {
     } catch (error) {
       console.log({ error })
       console.log(error.response.data.message)
+      showError(error.response.data.message)
       setLoading(false)
     }
   }
@@ -89,6 +94,7 @@ function Login() {
         <div className="container">
           <div className="login__info">
             <h2 className="login__title">Login</h2>
+            {error && <ErrorMessage errorMessage={error} /> }
             <form className="login__form" onSubmit={handleSubmit}>
               <input
                 className="login__input"
