@@ -57,7 +57,8 @@ function Account({ location }) {
 
   async function cancelSubscription() {
     console.log(accountInformation.subscription)
-    await apiRequest(`${URL}/stripe/cancel-subscription`, 'POST', {
+    
+    await axios.post(`${URL}/stripe/cancel-subscription`, {
       subscriptionId: accountInformation.subscription.id,
     })
 
