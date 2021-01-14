@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { Auth, URL } from '../utils';
 
@@ -27,15 +28,13 @@ const useLogin = () => {
       }
 
       try {
-        const response = await fetch(`${URL}/api/auth/me`, {
-          method: 'GET',
+        const { data } = await axios.get(`${URL}/auth/me`, {
           headers: {
             'x-access-token': String(token),
           },
         })
-        const result = await response.json()
 
-        setUserInfo({ ...result })
+        setUserInfo({ ...data })
         console.log(userInfo)
 
         // setLoadingUser(false)
@@ -47,7 +46,7 @@ const useLogin = () => {
     }
 
     loadUser()
-  }, [isAuth])
+  }, [isAuth, userInfo, userLoaded])
 
   return {
     loadingUser,
