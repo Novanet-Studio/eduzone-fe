@@ -3,14 +3,14 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { apiRequest, products, URL } from '../utils'
+import { products, URL } from '../utils'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Product from '../components/Product'
 import PriceChangeForm from '../components/PriceChangeForm'
-import './Account.scss'
 import AccountEditing from '../components/AccountEditing'
 import AccountDetails from '../components/AccountDetails'
+import './Account.scss'
 
 function Account({ location }) {
   if (!location.state) window.location.href = '/'
@@ -167,7 +167,6 @@ function Account({ location }) {
                   </div>
                   <hr className="account__line" />
                   <div className="account__card-info">
-                    {/* <h3 className="account__card-title">Not billing account</h3> */}
                     <span className="account__card-data">
                       <p>Please, select a subscription</p>
                     </span>
