@@ -1,3 +1,5 @@
+
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
@@ -60,6 +62,8 @@ function Account({ location }) {
     await apiRequest(`${URL}/stripe/cancel-subscription`, 'POST', {
       subscriptionId: accountInformation.subscription.id,
     })
+
+    await axios.get(`${URL}/user/deactivate/${accountInformation.user.username}`)
 
     setSubscriptionCancelled(true)
   }
