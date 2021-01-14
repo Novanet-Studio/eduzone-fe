@@ -30,20 +30,18 @@ function Account({ location }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const responseBody = await apiRequest(
-          `${URL}/stripe/retrieve-customer-payment-method`,
-          'POST',
-          {
-            paymentMethodId: accountInformation.paymentMethodId,
-          },
-        )
+        const { data } = await axios.post(`${URL}/stripe/retrieve-customer-payment-method`, {
+          paymentMethodId: accountInformation.paymentMethodId,
+        })
+
         const paymentMethod =
-          responseBody.card.brand + ' •••• ' + responseBody.card.last4
+          data.card.brand + ' •••• ' + data.card.last4
 
         setCustomerPaymentMethod(paymentMethod)
-      } catch (e) {
-        console.log(e)
-        throw e
+      } catch (error) {
+        console.log('[CANCEL_SUBSCRIPTION]')
+        console.log(error)
+        throw new Error(error.message)
       }
     }
 
