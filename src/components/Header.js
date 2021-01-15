@@ -5,7 +5,7 @@ import Logo from '../assets/images/edu-logo.png'
 const Header = ({ loggedIn, handleClick }) => (
   <div className="header">
     <div className="container">
-      <Link to="/main">
+      <Link to="/">
         <img className="header__logo" src={Logo} alt="Header logo" />
       </Link>
       <Link to="/">
