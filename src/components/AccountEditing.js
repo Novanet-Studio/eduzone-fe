@@ -1,19 +1,20 @@
 import axios from 'axios'
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { URL } from '../utils'
+import { useGlobal } from '../context/globalContext'
 import './AccountEditing.scss'
 
 
 const AccountEditing = ({ defaults, updateInformation, editing }) => {
-  const [formState, setFormState] = useState({})
+  const { formState, updateFormState, setInitialFormState } = useGlobal()
   const _isMounted = useRef(true)
 
   useEffect(() => {
     return () => (_isMounted.current = false)
   }, [])
 
-  const handleChange = ({ target: { name, value } }) =>
-    setFormState({ ...formState, [name]: value })
+  const handleChange = ({currentTarget:{ name, value }}) =>
+    updateFormState({ [name]: value })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -32,7 +33,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
 
       updateInformation({ ...data.user })
       editing(false)
-      setFormState({})
+      setInitialFormState()
       console.log('data sent')
     } catch (e) {
       throw new TypeError(e)
@@ -89,7 +90,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           type="password"
           name="password"
           value={formState.password}
-          placeholder="••••••••••••"
+          placeholder="•••••••••••"
           onChange={handleChange}
         />
       </div>
