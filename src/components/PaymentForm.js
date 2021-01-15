@@ -23,7 +23,7 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, customer, setSent }) => {
+const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
   const stripe = useStripe()
   const elements = useElements()
   const [subscribing, setSubscribing] = useState(false)
@@ -32,6 +32,8 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
   const [userCreated, setUserCreated] = useState(false)
   const [error, setError] = useState('')
   const { formState, updateFormState } = useGlobal()
+
+  let temp = null
 
   async function handlePaymentCustomerAction({
     subscription,
@@ -347,8 +349,12 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
   const handleChange = ({currentTarget:{ name, value }}) => updateFormState({[name]: value})
 
   if (accountInformation && userCreated) {
+    temp = { ...accountInformation, user: userData }
+  }
+
+  if (accountInformation && userCreated && load) {
     console.log('[Account Information]', accountInformation)
-    const temp = { ...accountInformation, user: userData }
+    // const temp = { ...accountInformation, user: userData }
 
     sessionStorage.setItem(
       'paymentMethodId',
