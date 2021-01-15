@@ -8,7 +8,7 @@ const Footer = () => (
       <h3 className="footer__title">Contact</h3>
       <p className="footer__email">edu-zone.support@edu-zone.org</p>
       <hr className="footer__line" />
-      <Link to="/main">
+      <Link to="/">
         <img className="footer__logo" src={Logo} alt="Footer logo" />
       </Link>
       <p className="footer__copy">

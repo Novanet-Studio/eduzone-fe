@@ -11,6 +11,7 @@ import './Main.scss'
 
 function Main() {
   const [isSuscribed, setIsSubscribed] = useState(false)
+  const [redirectLogin, setRedirectLogin] = useState(false)
 
   const subscribe = (value) => setIsSubscribed(value)
 
@@ -20,9 +21,13 @@ function Main() {
     return <Redirect to="/register" />
   }
 
+  if (redirectLogin) {
+    return <Redirect to='/login' />
+  }
+
   return (
     <>
-      <Header loggedIn={false} />
+      <Header loggedIn={false} handleClick={() => setRedirectLogin(true)} />
       <div>
         <section className="hero">
           <div className="container">

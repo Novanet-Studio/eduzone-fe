@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../assets/images/edu-logo.png'
 
-const TopNavigationBar = ({ loggedIn, handleClick }) => (
+const Header = ({ loggedIn, handleClick }) => (
   <div className="header">
     <div className="container">
       <Link to="/main">
@@ -17,4 +17,4 @@ const TopNavigationBar = ({ loggedIn, handleClick }) => (
   </div>
 )
 
-export default TopNavigationBar
+export default Header

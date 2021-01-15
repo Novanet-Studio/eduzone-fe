@@ -9,7 +9,7 @@ import Success from './components/Success'
 
 import { GlobalProvider } from './context/globalContext';
 
-const baseUrl = process.env.NODE_ENV === 'production' ? '/eduzonestore' : '/'
+export const baseUrl = process.env.NODE_ENV === 'production' ? '/eduzonestore' : '/'
 
 console.log(process.env.NODE_ENV)
 

@@ -3,13 +3,14 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { products, URL } from '../utils'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Product from '../components/Product'
 import PriceChangeForm from '../components/PriceChangeForm'
 import AccountEditing from '../components/AccountEditing'
 import AccountDetails from '../components/AccountDetails'
+import { baseUrl } from '../App'
+import { products, URL } from '../utils'
 import './Account.scss'
 
 function Account({ location }) {
@@ -29,6 +30,7 @@ function Account({ location }) {
 
   useEffect(() => {
     async function fetchData() {
+      if (!accountInformation.paymentMethodId) return
       try {
         const { data } = await axios.post(`${URL}/stripe/retrieve-customer-payment-method`, {
           paymentMethodId: accountInformation.paymentMethodId,
@@ -69,7 +71,7 @@ function Account({ location }) {
 
   const signOut = () => {
     localStorage.clear()
-    window.location.href = '/'
+    window.location.href = baseUrl
   }
 
   const handleEdit = () => setIsEditing(!isEditing)
