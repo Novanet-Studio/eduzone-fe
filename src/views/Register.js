@@ -3,7 +3,9 @@ import { Link, Redirect } from 'react-router-dom'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import ErrorMessage from '../components/ErrorMessage'
 
+import useError from '../hooks/useError'
 import { useGlobal } from '../context/globalContext'
 import { checkUserExists, createCustomer } from '../helpers/register'
 
@@ -11,6 +13,7 @@ import './Register.scss'
 
 function Register() {
   const [customer, setCustomer] = useState(null)
+  const { error, showError } = useError(null)
   const [loading, setLoading] = useState(false)
   const { formState, updateFormState } = useGlobal()
   const _isMounted = useRef(true)
@@ -33,6 +36,7 @@ function Register() {
       if (exists) {
         setLoading(false)
         console.log('User already exists')
+        showError('User already exists')
         return
       } 
 
@@ -41,7 +45,11 @@ function Register() {
       setCustomer(customerCreated)
       setLoading(false)
     } catch (error) {
-      throw new Error(error.message)
+      console.log({ error })
+      console.log(error.response.data.message)
+      showError(error.response.data.message)
+      setLoading(false)
+      // throw new Error(error.message)
     }
   }
 
@@ -63,6 +71,7 @@ function Register() {
         <div className="container">
           <div className="register__info">
             <h2 className="register__title">Register</h2>
+            {error && <ErrorMessage errorMessage={error} /> }
             <form className="register__form" onSubmit={handleSubmit}>
               <input
                 className="register__input"
@@ -94,7 +103,7 @@ function Register() {
             </form>
             <p className="register__text">
               You have an account?{' '}
-              <Link className="register__login" to="/">
+              <Link className="register__login" to="/login">
                 login
               </Link>
             </p>

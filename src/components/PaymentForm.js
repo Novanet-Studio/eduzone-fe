@@ -180,6 +180,7 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
 
     // Update accountInformation with useData (global context)
     setAccountInformation(result)
+    return { subscriptionComplete: true }
     // Change your UI to show a success message to your customer.
     // onSubscriptionSampleDemoComplete(result);
     // Call your backend to grant access to your service based on
@@ -322,15 +323,18 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
       }
 
       // Create the subscription
-      createSubscription({
+      const { subscriptionComplete } = await createSubscription({
         paymentMethodId: paymentMethodId,
       })
 
-      createUser({
-        firstname: formState.firstname,
-        userName: formState.email,
-        password: formState.password,
-      })
+      if (subscriptionComplete) {
+        console.log('Creating user in magic box')
+        createUser({
+          firstname: formState.firstname,
+          userName: formState.email,
+          password: formState.password,
+        })
+      }
 
       setSent()
 
