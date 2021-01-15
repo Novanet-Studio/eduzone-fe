@@ -23,7 +23,7 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, customer }) => {
+const CheckoutForm = ({ productSelected, customer, setSent }) => {
   const stripe = useStripe()
   const elements = useElements()
   const [subscribing, setSubscribing] = useState(false)
@@ -331,6 +331,9 @@ const CheckoutForm = ({ productSelected, customer }) => {
         userName: formState.email,
         password: formState.password,
       })
+
+      setSent()
+
     } catch (err) {
       console.log(err)
       throw new TypeError(err)

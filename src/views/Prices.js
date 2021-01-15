@@ -1,24 +1,30 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import Product from '../components/Product'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import PaymentForm from '../components/PaymentForm'
-import './Prices.scss'
+
+import Modal from '../components/Modal'
+import useModal from '../hooks/useModal'
 
 import { products } from '../utils'
+import './Prices.scss'
 
 function Prices({ location }) {
   const [productSelected, setProduct] = useState(null)
+  const [isOpen, openModal, closeModal] = useModal(false)
   const [customer] = useState(location.state.customer)
-  // const [formData] = useState(location.state.formData)
 
   const handleClick = (key) => setProduct(products[key])
+
+  const setSent = () => openModal()
 
   return (
     <>
       <Header />
+      <Modal isOpen={isOpen} closeModal={closeModal} />
       <section className="prices">
         <div className="container">
           <div className="prices__info">
@@ -36,7 +42,7 @@ function Prices({ location }) {
               <PaymentForm
                 productSelected={productSelected}
                 customer={customer}
-                // formData={formData}
+                setSent={setSent}
               />
             )}
           </div>

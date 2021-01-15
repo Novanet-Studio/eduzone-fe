@@ -14,9 +14,7 @@ const Modal = ({ isOpen, closeModal }) => {
         </p>
         <div className="modal__info">
           <p className="modal__text">Access now!</p>
-          <button className="button">
-            <a href="https://eduzoneserver.com/studentportal/">Click here</a>
-          </button>
+          <a href="https://eduzoneserver.com/studentportal/">Click here</a>
         </div>
       </div>
     </section>
