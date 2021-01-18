@@ -396,7 +396,7 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
           <input
             className="payment__input"
             type="text"
-            id="name"
+            id="lastname"
             name="lastname"
             value={formState.lastname}
             placeholder="Last name"
