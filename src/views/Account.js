@@ -10,11 +10,11 @@ import PriceChangeForm from '../components/PriceChangeForm'
 import AccountEditing from '../components/AccountEditing'
 import AccountDetails from '../components/AccountDetails'
 import { baseUrl } from '../App'
-import { products, URL } from '../utils'
+import { Auth, products, URL } from '../utils'
 import './Account.scss'
 
 function Account({ location }) {
-  if (!location.state) window.location.href = '/'
+  // if (!location.state) window.location.href = '/'
 
   const [accountInformation, setAccountInformation] = useState(
     location.state.accountInformation,
@@ -50,6 +50,28 @@ function Account({ location }) {
     fetchData()
   }, [accountInformation.paymentMethodId])
 
+  useEffect(() => {
+    if (!subscriptionCancelled) return
+
+    async function fetchUser() {
+      try {
+        const { data } =  await axios.get(`${URL}/auth/me`, {
+          headers: {
+            'x-access-token': Auth.getToken,
+          }
+        });
+        setAccountInformation({ ...data })
+        console.log(data)
+      } catch (error) {
+        console.log('ERROR GETTING USER DATA')
+        console.log(error)
+      }
+    }
+
+    fetchUser()
+
+  }, [])
+
   const handleChangePriceForm = () => setShowChangePriceForm(true)
   const handleClick = (key) => setNewProductSelected(products[key].name)
   const resetDemo = () => {
@@ -67,6 +89,7 @@ function Account({ location }) {
     await axios.get(`${URL}/user/deactivate/${accountInformation.user.username}`)
 
     setSubscriptionCancelled(true)
+    alert('Subscription cancelled')
   }
 
   const signOut = () => {
