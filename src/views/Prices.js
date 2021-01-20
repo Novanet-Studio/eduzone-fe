@@ -22,7 +22,7 @@ function Prices({ location }) {
   const handleClick = (key) => setProduct(products[key])
 
   const closeModal = (e) => {
-    setIsOpen(true)
+    setIsOpen(false)
     setLoadAccount(true)
   }
 
