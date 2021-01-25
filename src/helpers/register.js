@@ -19,7 +19,7 @@ export const createCustomer = async (email) => {
       email,
     })
 
-    return data.customer
+    return data
   } catch (error) {
     console.log('[CREATE_CUSTOMER_HELPER]')
     console.error(error.message)
