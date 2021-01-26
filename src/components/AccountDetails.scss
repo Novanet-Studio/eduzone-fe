@@ -9,41 +9,59 @@
   text-align: left;
   &__text {
     font-weight: 400;
-    color:$gris2;
+    color: $gris2;
   }
   &__data {
-    font-weight:600;
-    color:$negro;
+    font-weight: 600;
+    color: $negro;
   }
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
 @include min-media(320px, portrait) {
+  .details {
+    margin-top: 1vh;
+    &__text {
+      margin: 1vh 0;
+    }
+  }
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
 @include min-media(568px, landscape) {
-}
-
-/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
-}
-
-/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
-}
-
-/*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
   /*detalles*/
   .details {
-    padding-top:1vh;    
+    padding-top: 1vh;
     &__text {
       margin: 1vh 0;
-      flex: 0 0 50%;
+      flex: 0 0 100%;
     }
     &__data {
       margin: 0 0.5vh;
     }
   }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  .details {
+    &__text {
+      flex: 0 0 100%;
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  /*detalles*/
+  .details {
+    padding-top: 1vh;
+    &__text {
+      flex: 0 0 50%;
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
 }

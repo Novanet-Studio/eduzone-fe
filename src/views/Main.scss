@@ -43,7 +43,7 @@
 /* Enjoy */
 .enjoy {
   @include flex;
-  align-content: center;
+  @include center;
   border-bottom: $azul 10px solid;
   .container {
     justify-content: space-between;
@@ -54,15 +54,17 @@
 /* FAQ */
 .faq {
   @include flex;
-  text-align: center;
+  @include center;
   border-bottom: $amarillo 10px solid;
   .container {
     justify-content: center;
   }
   &__title {
     flex: 0 0 100%;
+    text-align: center;
   }
   &__drop {
+    text-align: center;
     background: $gris1;
     margin-bottom: 1vh;
   }
