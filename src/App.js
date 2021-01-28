@@ -6,6 +6,7 @@ import Login from './views/Login'
 import Prices from './views/Prices'
 import Account from './views/Account'
 import Success from './components/Success'
+import Example from './Example'
 
 import { GlobalProvider } from './context/globalContext';
 
@@ -34,10 +35,14 @@ const App = () => (
       <Route exact path="/success">
         <Success />
       </Route>
+      <Route exact path="/example">
+        <Example />
+      </Route>
     </Switch>
   </Router>
 )
 
+//eslint-disable-next-line
 export default () => (
   <GlobalProvider>
     <App />
