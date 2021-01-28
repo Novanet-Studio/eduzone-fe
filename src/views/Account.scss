@@ -67,6 +67,7 @@
   /* Account */
   .account {
     min-height: 93vh;
+    padding: 4vh 0;
     &__info {
       border-radius: 3em;
       width: 90vw;
@@ -77,13 +78,23 @@
     }
     &__card {
       width: 90%;
+      margin-top: 3vh;
+      padding: 1vh 4vh 3vh;
+      border-radius: 2em;
       &-header {
+        flex: 0 0 100%;
+        padding-bottom: 2vh;
       }
       &-info {
+        flex: 0 0 100%;
+        padding-top: 1vh;
+        padding-bottom: 2vh;
       }
       &-title {
       }
       &-data {
+        font-size: 1.2rem;
+        padding: 0.5vh 1vh;
       }
     }
     &__button {
@@ -106,14 +117,22 @@
       margin: 4vh;
     }
     &__card {
-      width: 75%;
+      width: 90%;
+      margin-top: 3vh;
+      padding: 1vh 6vh 5vh;
+      border-radius: 2em;
       &-header {
+        flex: 0 0 100%;
+        padding-bottom: 2vh;
       }
       &-info {
-      }
-      &-title {
+        flex: 0 0 100%;
+        padding-top: 1vh;
+        padding-bottom: 2vh;
       }
       &-data {
+        font-size: 1.1rem;
+        padding: 0.5vh 1vh;
       }
     }
     &__button {
@@ -146,14 +165,6 @@
     }
     &__card {
       width: 70%;
-      &-header {
-      }
-      &-info {
-      }
-      &-title {
-      }
-      &-data {
-      }
     }
   }
 }
@@ -166,18 +177,6 @@
     &__info {
       border-radius: 4em;
     }
-    &__card {
-      &-header {
-      }
-      &-info {
-      }
-      &-title {
-      }
-      &-data {
-      }
-    }
-    &__button {
-    }
   }
 }
 
@@ -187,24 +186,6 @@
   .account {
     &__info {
       width: 53vw;
-    }
-    &__card {
-      margin-top: 3vh;
-      padding: 1vh 4vh 3vh;
-      border-radius: 2em;
-      &-header {
-        flex: 0 0 100%;
-        padding-bottom: 2vh;
-      }
-      &-info {
-        flex: 0 0 100%;
-        padding-top: 1vh;
-        padding-bottom: 2vh;
-      }
-      &-data {
-        font-size: 1.2rem;
-        padding: 0.5vh 1vh;
-      }
     }
   }
 }
