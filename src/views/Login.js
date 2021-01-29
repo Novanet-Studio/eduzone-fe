@@ -46,7 +46,7 @@ function Login() {
         })
   
         console.log(data)
-        setAccountInformation({ user: data.user })
+        setAccountInformation({ ...data })
         setLoading(false)
         setIsAuth(true)
       }

@@ -23,7 +23,7 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, customer, setSent }) => {
+const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
   const stripe = useStripe()
   const elements = useElements()
   const [subscribing, setSubscribing] = useState(false)
@@ -32,6 +32,8 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
   const [userCreated, setUserCreated] = useState(false)
   const [error, setError] = useState('')
   const { formState, updateFormState } = useGlobal()
+
+  let temp = null
 
   async function handlePaymentCustomerAction({
     subscription,
@@ -263,13 +265,12 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
 
       const { data: me } = await axios.get(`${URL}/auth/me`, {
         headers: {
-          'x-access-token': user.token
-        }
+          'x-access-token': user.token,
+        },
       })
 
       setUserData(me.user)
       setUserCreated(true)
-
     } catch (e) {
       throw new Error(e)
     }
@@ -337,18 +338,22 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
       }
 
       setSent()
-
     } catch (err) {
       console.log(err)
       throw new TypeError(err)
     }
   }
 
-  const handleChange = ({currentTarget:{ name, value }}) => updateFormState({[name]: value})
+  const handleChange = ({ currentTarget: { name, value } }) =>
+    updateFormState({ [name]: value })
 
   if (accountInformation && userCreated) {
+    temp = { ...accountInformation, user: userData }
+  }
+
+  if (accountInformation && userCreated && load) {
     console.log('[Account Information]', accountInformation)
-    const temp = { ...accountInformation, user: userData }
+    // const temp = { ...accountInformation, user: userData }
 
     sessionStorage.setItem(
       'paymentMethodId',
@@ -390,7 +395,7 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
           <input
             className="payment__input"
             type="text"
-            id="name"
+            id="lastname"
             name="lastname"
             value={formState.lastname}
             placeholder="Last name"
@@ -404,18 +409,25 @@ const CheckoutForm = ({ productSelected, customer, setSent }) => {
           onSubmit={handleSubmit}
         >
           <div className="payment__form-group">
-            <label>Card</label>
+            <label>Card number</label>
             <div className="payment__form-element">
-              <CardElement
-                options={{}}
-              />
+              <CardElement options={{}} />
             </div>
             <div className="payment__form-error">{error ? error : null}</div>
           </div>
           <button className="payment__button" type="submit">
-            {subscribing ? 'Subscribing...' : 'Subscribe'}
+            {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
           </button>
         </form>
+        <p className="payment__text-down">
+          By clicking "Subscribe to Edu-zone", you are confirming that you have
+          read and accept our Terms of Service. You also agree that IXL will
+          save your card details in order to automatically renew your
+          subscription and process future account updates. If we change in any
+          way the way we use the data we store from your card, we will notify
+          you using the email address you provided. This site is protected by
+          reCAPTCHA and subject to Google's Privacy Policy and Terms of Service.
+        </p>
       </div>
     )
   }

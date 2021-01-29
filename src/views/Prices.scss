@@ -8,7 +8,7 @@
   @include center;
   border-bottom: $rojo 10px solid;
   background-image: $mozaicoPortadaIngles;
-  background-size:cover;
+  background-size: cover;
   background-position: center;
   .container {
     justify-content: center;
@@ -38,8 +38,8 @@
     background-color: $rojo;
   }
   &__login {
-    font-weight:600;
-    color:$rojo;
+    font-weight: 600;
+    color: $rojo;
   }
 }
 
@@ -47,28 +47,29 @@
 @include min-media(320px, portrait) {
   /* Prices */
   .prices {
-    min-height:93vh;
+    min-height: 93vh;
+    padding: 4vh 0;
     &__info {
       border-radius: 3em;
       width: 90vw;
-      padding:2vh 2vh 4vh 2vh;
+      padding: 2vh 4vh 4vh 4vh;
     }
-    &__title{
+    &__title {
       padding-bottom: 2vh;
     }
     &__form {
       width: 90%;
     }
     &__input {
-    width: 100%;
-    font-size: 1rem;
-    padding:1.4vh 1.2vh 1.1vh 1.2vh;
-    margin: 2vh 0;
+      width: 100%;
+      font-size: 1rem;
+      padding: 1.4vh 1.2vh 1.1vh 1.2vh;
+      margin: 2vh 0;
     }
     &__button {
-    margin-top: 2vh;
-    font-size: 1.3rem;
-    padding: 1vh 2vh;
+      margin-top: 2vh;
+      font-size: 1.3rem;
+      padding: 1vh 2vh;
     }
   }
 }
@@ -77,7 +78,8 @@
 @include min-media(568px, landscape) {
   /* Prices */
   .prices {
-    min-height:90vh;
+    min-height: 90vh;
+    padding: 4vh 0;
     &__info {
       border-radius: 3em;
       width: 90vw;
@@ -88,15 +90,15 @@
       width: 70%;
     }
     &__input {
-    width: 100%;
-    font-size: 1rem;
-    padding: 2vh;
-    margin: 2vh 0;
+      width: 100%;
+      font-size: 1rem;
+      padding: 2vh;
+      margin: 2vh 0;
     }
     &__button {
-    font-size: 1.3rem;
-    margin-top: 1vh;
-    padding: 1vh 3vh 1.7vh 3vh;
+      font-size: 1.3rem;
+      margin-top: 1vh;
+      padding: 1vh 3vh 1.7vh 3vh;
     }
   }
 }
@@ -105,7 +107,7 @@
 @include min-media(768px, portrait) {
   /* Prices */
   .prices {
-    min-height:62vh;
+    min-height: 62vh;
     &__info {
       border-radius: 4em;
     }
@@ -125,7 +127,7 @@
 @include min-media(1024px, landscape) {
   /* Prices */
   .prices {
-    min-height:72vh;
+    min-height: 72vh;
     &__info {
       border-radius: 4em;
     }

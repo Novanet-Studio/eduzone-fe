@@ -16,7 +16,9 @@ body {
 }
 
 /*Text*/
-h2 {padding-bottom:2vh}
+h2 {
+  padding-bottom: 2vh;
+}
 
 p,
 button {
@@ -36,12 +38,12 @@ button {
     cursor: pointer;
   }
   &__button {
-    font-weight: 300;
+    font-weight: 600;
     border: none;
     color: #fff;
     background-color: $azul;
     cursor: pointer;
-    border-radius:0.4em
+    border-radius: 0.4em;
   }
 }
 
@@ -113,8 +115,8 @@ button {
       width: 33vw;
     }
     &__button {
-    padding: 0.5vh 3vh;
-    font-size: 0.8rem;
+      padding: 0.5vh 3vh;
+      font-size: 0.8rem;
     }
   }
 
@@ -125,7 +127,7 @@ button {
       padding: 0 6vh;
     }
     &__email {
-    font-size: 1rem;
+      font-size: 1rem;
     }
     &__line {
       margin: 2vh 0;
@@ -147,7 +149,7 @@ button {
   }
 
   /*Text*/
-    h2 {
+  h2 {
     font-size: 2.2rem;
     line-height: 2.4rem;
   }
@@ -208,7 +210,7 @@ button {
   /*Text*/
   h2 {
     font-size: 2.7rem;
-line-height: 2.9rem;
+    line-height: 2.9rem;
   }
 
   h3 {
@@ -242,7 +244,7 @@ line-height: 2.9rem;
   /*Text*/
   h2 {
     font-size: 2.7rem;
-line-height: 2.9rem;
+    line-height: 2.9rem;
   }
 
   h3 {

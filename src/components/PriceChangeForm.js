@@ -61,7 +61,7 @@ function PriceChangeForm({
   return (
     <>
       {newProductSelected !== currentProductSelected && (
-        <div className="container">
+        <div className="price container">
           <p className="price-current">
             <span>
               <b>Current price: </b>

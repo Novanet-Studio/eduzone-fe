@@ -1,16 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Logo from '../assets/images/edu-logo.png'
 
 const Footer = () => (
   <div className="footer">
     <div className="container">
       <h3 className="footer__title">Contact</h3>
-      <p className="footer__email">edu-zone.support@edu-zone.org</p>
+      <a href="mailto:edu-zone.support@edu-zone.org">
+        <p className="footer__email">edu-zone.support@edu-zone.org</p>
+      </a>
       <hr className="footer__line" />
-      <Link to="/">
+      <a href="https://www.edu-zone.org/" target="_blank">
         <img className="footer__logo" src={Logo} alt="Footer logo" />
-      </Link>
+      </a>
       <p className="footer__copy">
         © {new Date().getFullYear()} All rights reserverd
       </p>

@@ -7,19 +7,28 @@ import Footer from '../components/Footer'
 import PaymentForm from '../components/PaymentForm'
 
 import Modal from '../components/Modal'
-import useModal from '../hooks/useModal'
+// import useModal from '../hooks/useModal'
 
 import { products } from '../utils'
 import './Prices.scss'
 
 function Prices({ location }) {
   const [productSelected, setProduct] = useState(null)
-  const [isOpen, openModal, closeModal] = useModal(false)
+  // const [isOpen, openModal, closeModal] = useModal(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [loadAccount, setLoadAccount] = useState(false)
   const [customer] = useState(location.state.customer)
 
   const handleClick = (key) => setProduct(products[key])
 
-  const setSent = () => openModal()
+  const closeModal = (e) => {
+    setIsOpen(false)
+    setLoadAccount(true)
+  }
+
+  const setSent = () => {
+    setIsOpen(true)
+  }
 
   return (
     <>
@@ -43,6 +52,7 @@ function Prices({ location }) {
                 productSelected={productSelected}
                 customer={customer}
                 setSent={setSent}
+                load={loadAccount}
               />
             )}
           </div>
