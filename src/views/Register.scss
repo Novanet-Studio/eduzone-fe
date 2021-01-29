@@ -8,7 +8,7 @@
   @include center;
   border-bottom: $rojo 10px solid;
   background-image: $mozaicoPortadaIngles;
-  background-size:cover;
+  background-size: cover;
   background-position: center;
   .container {
     justify-content: center;
@@ -30,17 +30,18 @@
     border: none;
     font-weight: 400;
     color: $negro;
+    border-radius: 0.4rem;
   }
   &__button {
     border: none;
-    border-radius: 0;
+    border-radius: 0.4rem;
     color: #fff;
     cursor: pointer;
     background-color: $rojo;
   }
   &__login {
-    font-weight:600;
-    color:$rojo;
+    font-weight: 600;
+    color: $rojo;
   }
 }
 
@@ -52,9 +53,9 @@
     &__info {
       border-radius: 3em;
       width: 90vw;
-      padding:2vh 2vh 4vh 2vh;
+      padding: 2vh 2vh 4vh 2vh;
     }
-    &__title{
+    &__title {
       padding-bottom: 2vh;
     }
     &__text {
@@ -64,15 +65,20 @@
       width: 90%;
     }
     &__input {
-    width: 100%;
-    font-size: 1rem;
-    padding:1.4vh 1.2vh 1.1vh 1.2vh;
-    margin: 2vh 0;
+      width: 100%;
+      font-size: 1rem;
+      padding: 1vh 1.5vh;
+      margin: 2vh 0;
     }
     &__button {
-    margin-top: 2vh;
-    font-size: 1.3rem;
-    padding: 1vh 2vh;
+      margin-top: 1vh;
+      font-size: 1rem;
+      padding: 1vh 2vh;
+    }
+    &__password {
+      margin-bottom: 1vh;
+      font-size: 1rem;
+      line-height: 1.3rem;
     }
   }
 }
@@ -81,11 +87,11 @@
 @include min-media(568px, landscape) {
   /* Register */
   .register {
-    height: 90vh;
     &__info {
       border-radius: 3em;
       width: 90vw;
-      padding:4vh 0
+      padding: 4vh 0;
+      margin: 4vh 0;
     }
     &__text {
       padding-top: 2vh;
@@ -94,15 +100,20 @@
       width: 70%;
     }
     &__input {
-    width: 100%;
-    font-size: 1rem;
-    padding: 2vh;
-    margin: 2vh 0;
+      width: 100%;
+      font-size: 1rem;
+      padding: 3vh 2vh;
+      margin: 2vh 0;
     }
     &__button {
-    font-size: 1.3rem;
-    margin-top: 1vh;
-    padding: 1vh 3vh 1.7vh 3vh;
+      margin-top: 1vh;
+      font-size: 1.2rem;
+      padding: 1.5vh 5vh;
+    }
+    &__password {
+      margin-bottom: 1vh;
+      font-size: 1.1rem;
+      line-height: 1.3rem;
     }
   }
 }
@@ -111,18 +122,19 @@
 @include min-media(768px, portrait) {
   /* Register */
   .register {
-    height: 62vh;
+    height: 67vh;
     &__info {
       border-radius: 4em;
     }
     &__form {
       width: 70%;
     }
+    &__input,
+    &__button {
+      font-size: 1.3rem;
+    }
     &__input {
       margin: 1.5vh 0;
-    }
-    &__button {
-      margin-top: 1vh;
     }
   }
 }
@@ -138,8 +150,13 @@
     &__form {
       width: 70%;
     }
+    &__input,
     &__button {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
+      padding: 1vh 2vh;
+    }
+    &__button {
+      padding: 1vh 4vh;
     }
   }
 }

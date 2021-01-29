@@ -265,13 +265,12 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
 
       const { data: me } = await axios.get(`${URL}/auth/me`, {
         headers: {
-          'x-access-token': user.token
-        }
+          'x-access-token': user.token,
+        },
       })
 
       setUserData(me.user)
       setUserCreated(true)
-
     } catch (e) {
       throw new Error(e)
     }
@@ -339,14 +338,14 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
       }
 
       setSent()
-
     } catch (err) {
       console.log(err)
       throw new TypeError(err)
     }
   }
 
-  const handleChange = ({currentTarget:{ name, value }}) => updateFormState({[name]: value})
+  const handleChange = ({ currentTarget: { name, value } }) =>
+    updateFormState({ [name]: value })
 
   if (accountInformation && userCreated) {
     temp = { ...accountInformation, user: userData }
@@ -410,18 +409,25 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
           onSubmit={handleSubmit}
         >
           <div className="payment__form-group">
-            <label>Card</label>
+            <label>Card number</label>
             <div className="payment__form-element">
-              <CardElement
-                options={{}}
-              />
+              <CardElement options={{}} />
             </div>
             <div className="payment__form-error">{error ? error : null}</div>
           </div>
           <button className="payment__button" type="submit">
-            {subscribing ? 'Subscribing...' : 'Subscribe'}
+            {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
           </button>
         </form>
+        <p className="payment__text-down">
+          By clicking "Subscribe to Edu-zone", you are confirming that you have
+          read and accept our Terms of Service. You also agree that IXL will
+          save your card details in order to automatically renew your
+          subscription and process future account updates. If we change in any
+          way the way we use the data we store from your card, we will notify
+          you using the email address you provided. This site is protected by
+          reCAPTCHA and subject to Google's Privacy Policy and Terms of Service.
+        </p>
       </div>
     )
   }

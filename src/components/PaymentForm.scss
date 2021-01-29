@@ -4,19 +4,16 @@
 
 /*Payment*/
 .payment {
-  &__text {
-  }
-  &__price,
-  &__name {
-  }
   &__form {
     &-group {
-      label {
-        display: none;
-      }
+      margin: 2vh 0;
+      text-align: left;
     }
     &-element {
+      margin-top: 1vh;
+      padding: 2vh;
       background: #fff;
+      border-radius: 0.4em;
     }
     &-error {
       margin-top: 2vh;
@@ -26,6 +23,7 @@
     border: none;
     font-weight: 400;
     color: $negro;
+    border-radius: 0.4em;
   }
   &__button {
     border: none;
@@ -33,6 +31,10 @@
     color: #fff;
     cursor: pointer;
     background-color: $rojo;
+    border-radius: 0.4em;
+  }
+  &__text-down {
+    margin-top: 3vh;
   }
 }
 
@@ -41,20 +43,21 @@
   /*Payment*/
   .payment {
     &__text {
+      margin: 1vh 0;
     }
     &__price,
     &__name {
+      margin: 2vh 0;
     }
-    &__form {
-    }
+
     &__input {
       width: 100%;
       font-size: 1rem;
-      padding: 1.4vh 1.2vh 1.1vh 1.2vh;
+      padding: 1.4vh 1.2vh;
+      margin: 2vh 0;
     }
     &__button {
-      margin-top: 2vh;
-      font-size: 1.3rem;
+      font-size: 1rem;
       padding: 1vh 2vh;
     }
   }
@@ -64,21 +67,23 @@
 @include min-media(568px, landscape) {
   /*Payment*/
   .payment {
+    margin: 2vh 0;
     &__text {
+      margin: 1vh 0;
     }
     &__price,
     &__name {
-    }
-    &__form {
+      margin: 2vh 0;
     }
     &__input {
       width: 100%;
       font-size: 1rem;
       padding: 2vh;
+      margin: 2vh 0;
     }
     &__button {
-      font-size: 1.3rem;
-      padding: 1vh 3vh 1.7vh 3vh;
+      font-size: 1rem;
+      padding: 1vh 3vh;
     }
   }
 }
@@ -87,14 +92,23 @@
 @include min-media(768px, portrait) {
   /*Payment*/
   .payment {
-    &__text {
-    }
     &__price,
     &__name {
+      margin: 1vh 0;
     }
     &__form {
+      &-group {
+        label {
+          font-size: 1.2rem;
+        }
+      }
     }
+    &__input {
+      margin: 1.5vh 0;
+    }
+    &__input,
     &__button {
+      font-size: 1.2rem;
     }
   }
 }
@@ -103,38 +117,28 @@
 @include min-media(1024px, landscape) {
   /*Payment*/
   .payment {
-    &__text {
-    }
-    &__price,
-    &__name {
-    }
-    &__form {
-    }
-    &__button {
-      font-size: 1.6rem;
-    }
-  }
-}
-
-/*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
-  /*Payment*/
-  .payment {
-    flex: 0 0 50%;
-    padding-top: 2vh;
-    &__text {
-    }
+    flex: 0 0 70%;
     &__price,
     &__name {
       margin: 2vh 0;
     }
     &__form {
       &-group {
-        margin: 2vh 0;
-      }
-      &-element {
-        padding: 2vh;
+        label {
+          font-size: 1.2rem;
+        }
       }
     }
+    &__input {
+      padding: 1vh 2vh;
+    }
+    &__input,
+    &__button {
+      font-size: 1.2rem;
+    }
   }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
 }

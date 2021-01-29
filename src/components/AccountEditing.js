@@ -4,7 +4,6 @@ import { URL } from '../utils'
 import { useGlobal } from '../context/globalContext'
 import './AccountEditing.scss'
 
-
 const AccountEditing = ({ defaults, updateInformation, editing }) => {
   const { formState, updateFormState, setInitialFormState } = useGlobal()
   const _isMounted = useRef(true)
@@ -13,7 +12,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
     return () => (_isMounted.current = false)
   }, [])
 
-  const handleChange = ({currentTarget:{ name, value }}) =>
+  const handleChange = ({ currentTarget: { name, value } }) =>
     updateFormState({ [name]: value })
 
   const handleSubmit = async (e) => {
@@ -28,7 +27,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
 
     try {
       if (!_isMounted.current) return
-      
+
       const { data } = await axios.post(`${URL}/user/update`, bodyRequest)
 
       updateInformation({ ...data.user })
@@ -68,7 +67,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           onChange={handleChange}
         />
       </div>
-      <div className="edit__form-group">
+      <div className="edit__form-group edit__group-full">
         <label className="edit__form-label" htmlFor="email">
           Email
         </label>
@@ -81,7 +80,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           onChange={handleChange}
         />
       </div>
-      <div className="edit__form-group">
+      <div className="edit__form-group edit__group-full">
         <label className="edit__form-label" htmlFor="password">
           Password
         </label>
@@ -93,6 +92,10 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           placeholder="•••••••••••"
           onChange={handleChange}
         />
+        <p className="edit__text-down">
+          The password must be at least 6 characters. The password must be
+          between 6 and 20 characters
+        </p>
       </div>
       <button className="edit__button-update" type="submit">
         Update info

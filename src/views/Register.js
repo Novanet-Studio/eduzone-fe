@@ -32,13 +32,13 @@ function Register() {
       if (!_isMounted.current) return
       const { email } = formState
       const exists = await checkUserExists(email)
-      console.log(exists);
+      console.log(exists)
       if (exists) {
         setLoading(false)
         console.log('User already exists')
         showError('User already exists')
         return
-      } 
+      }
 
       const customerCreated = await createCustomer(email)
       console.log('creating a new customer')
@@ -71,7 +71,7 @@ function Register() {
         <div className="container">
           <div className="register__info">
             <h2 className="register__title">Register</h2>
-            {error && <ErrorMessage errorMessage={error} /> }
+            {error && <ErrorMessage errorMessage={error} />}
             <form className="register__form" onSubmit={handleSubmit}>
               <input
                 className="register__input"
@@ -93,6 +93,18 @@ function Register() {
                 placeholder="Enter password"
                 required
               />
+              <input
+                className="register__input"
+                type="confirmation"
+                id="confirmation"
+                name="confirmation"
+                placeholder="Password confirmation"
+                required
+              />
+              <p className="register__password">
+                The password must be at least 6 characters. The password must be
+                between 6 and 20 characters.
+              </p>
               <button
                 className="register__button"
                 type="submit"
@@ -104,7 +116,7 @@ function Register() {
             <p className="register__text">
               You have an account?{' '}
               <Link className="register__login" to="/login">
-                login
+                Login
               </Link>
             </p>
           </div>

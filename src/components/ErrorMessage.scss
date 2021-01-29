@@ -1,11 +1,6 @@
 .error {
   padding: 1rem;
-  background-color: rgba(219, 13, 13, 0.61);
   text-align: center;
-  border-radius: .8rem;
-
-  &__text {
-    font-size: .9rem;
-    color: #fff;
-  }
+  flex: 0 0 100%;
+  order: 4;
 }

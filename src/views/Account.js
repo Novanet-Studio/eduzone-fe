@@ -139,7 +139,6 @@ function Account({ location }) {
         <div className="container">
           <div className="account__info">
             <h2 className="account__title">Account Settings</h2>
-
             {/* User account */}
             <div className="account__card">
               <div className="account__card-header">
@@ -243,6 +242,17 @@ function Account({ location }) {
                 ) : null}
               </div>
             ) : null}
+            <p className="account__text-down">
+              If you're not satisfied within 30 days, we will not charge you any
+              amount.
+            </p>
+            <a
+              className="account__button"
+              href="https://www.edu-zone.org/"
+              target="_blank"
+            >
+              Go to Edu-Zone
+            </a>
           </div>
         </div>
       </section>
