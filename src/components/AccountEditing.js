@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useRef, useEffect } from 'react'
-import { URL } from '../utils'
 import { useGlobal } from '../context/globalContext'
+import { URL } from '../constants'
 import './AccountEditing.scss'
 
 const AccountEditing = ({ defaults, updateInformation, editing }) => {

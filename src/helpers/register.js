@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { URL } from '../utils'
+import { URL } from '../constants'
 
 export const checkUserExists = async (email) => {
   try {

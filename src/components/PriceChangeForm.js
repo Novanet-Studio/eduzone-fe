@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import './PriceChangeForm.scss'
 
-import {
-  apiRequest,
-  getDateStringFromUnixTimestamp,
-  getFormattedAmount,
-  URL,
-} from '../utils'
+import { getDateStringFromUnixTimestamp, getFormattedAmount } from '../utils'
+import { URL } from '../constants'
+import './PriceChangeForm.scss'
 
 function PriceChangeForm({
   customerId,
@@ -26,9 +23,8 @@ function PriceChangeForm({
         customerId,
         subscriptionId,
       }
-      const result = await apiRequest(
+      const result = await axios.post(
         `${URL}/stripe/retrieve-upcoming-invoice`,
-        'POST',
         bodyParams,
       )
       console.log(result)
@@ -44,9 +40,8 @@ function PriceChangeForm({
       newPriceId: newProductSelected.toUpperCase(),
       subscriptionId,
     }
-    const result = await apiRequest(
+    const result = await axios.post(
       `${URL}/stripe/update-subscription`,
-      'POST',
       bodyParams,
     )
 

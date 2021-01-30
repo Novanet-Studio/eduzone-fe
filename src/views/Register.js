@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -12,6 +12,7 @@ import { checkUserExists, createCustomer } from '../helpers/register'
 import './Register.scss'
 
 function Register() {
+  const history = useHistory()
   const [customer, setCustomer] = useState(null)
   const { error, showError } = useError(null)
   const [loading, setLoading] = useState(false)
@@ -42,6 +43,7 @@ function Register() {
 
       const customerCreated = await createCustomer(email)
       console.log('creating a new customer')
+      console.log(customerCreated);
       setCustomer(customerCreated)
       setLoading(false)
     } catch (error) {
@@ -54,14 +56,7 @@ function Register() {
   }
 
   if (customer) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/prices',
-          state: { customer },
-        }}
-      />
-    )
+    history.push('/prices', { customer })
   }
 
   return (

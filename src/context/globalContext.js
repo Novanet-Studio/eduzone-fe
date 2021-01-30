@@ -1,6 +1,13 @@
 import axios from 'axios'
-import { useContext, useState, createContext, useEffect, useMemo, useCallback } from 'react'
-import { Auth } from '../utils'
+import {
+  useContext,
+  useState,
+  createContext,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react'
+import Auth from '../helpers/auth'
 
 const GlobalContext = createContext()
 
@@ -24,14 +31,7 @@ export const GlobalProvider = (props) => {
       }
 
       try {
-        const { data: user } = await axios.get(
-          'http://localhost:3000/auth/me',
-          {
-            headers: {
-              'x-access-token': Auth.getToken,
-            },
-          },
-        )
+        const { data: user } = await axios.get('http://localhost:3000/auth/me')
         setUserData(user)
         setLoadingUser(false)
       } catch (error) {
@@ -44,11 +44,14 @@ export const GlobalProvider = (props) => {
 
   const setInitialFormState = () => setFormState(initialFormState)
 
-  const updateFormState = useCallback((updated = {}) =>
-    setFormState({
-      ...formState,
-      ...updated,
-    }), [formState])
+  const updateFormState = useCallback(
+    (updated = {}) =>
+      setFormState({
+        ...formState,
+        ...updated,
+      }),
+    [formState],
+  )
 
   const value = useMemo(
     () => ({

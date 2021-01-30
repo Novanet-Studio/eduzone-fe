@@ -1,8 +1,10 @@
-/*export const URL = process.env.NODE_ENV === 'production' 
-  ? 'https://eduzone-server.herokuapp.com'
-  : 'http://localhost:3000'*/
+export const BASE_URL =
+  process.env.NODE_ENV === 'production' ? '/eduzonestore' : '/'
 
-export const URL = 'https://eduzone-server.herokuapp.com'
+export const URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://eduzone-server.herokuapp.com'
+    : 'http://localhost:3000'
 
 export const products = [
   {

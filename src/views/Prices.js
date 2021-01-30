@@ -9,7 +9,7 @@ import PaymentForm from '../components/PaymentForm'
 import Modal from '../components/Modal'
 // import useModal from '../hooks/useModal'
 
-import { products } from '../utils'
+import { products } from '../constants'
 import './Prices.scss'
 
 function Prices({ location }) {

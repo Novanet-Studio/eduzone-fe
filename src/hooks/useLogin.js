@@ -1,18 +1,18 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { Auth, URL } from '../utils';
+import { URL } from '../constants'
+import Auth from '../helpers/auth'
 
 const useLogin = () => {
-  const [loadingUser, setLoadingUser] = useState(false)
+  const [loadingUser, setLoadingUser] = useState(true)
   const [userInfo, setUserInfo] = useState({})
   const [userLoaded, setUserLoaded] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
-    console.log('Loading user again ...')
-
     if (isAuth) return null
 
+    console.log('Loading user again ...')
     async function loadUser() {
       const token = Auth.getToken
       if (!token) {
@@ -28,20 +28,16 @@ const useLogin = () => {
       }
 
       try {
-        const { data } = await axios.get(`${URL}/auth/me`, {
-          headers: {
-            'x-access-token': String(token),
-          },
-        })
+        const { data } = await axios.get(`${URL}/auth/me`)
 
         setUserInfo({ ...data })
         console.log(userInfo)
 
-        // setLoadingUser(false)
-        // setIsAuth(true)
-        // setUserLoaded(true)
-      } catch (err) {
-        console.log(err)
+        setLoadingUser(false)
+        setIsAuth(true)
+        setUserLoaded(true)
+      } catch (error) {
+        console.log(error.message)
       }
     }
 

@@ -8,9 +8,9 @@ import Product from '../components/Product'
 import PriceChangeForm from '../components/PriceChangeForm'
 import AccountEditing from '../components/AccountEditing'
 import AccountDetails from '../components/AccountDetails'
-import { baseUrl } from '../App'
-import { Auth, products, URL } from '../utils'
+import Auth from '../helpers/auth'
 import './Account.scss'
+import { BASE_URL, URL, products } from '../constants'
 
 function Account({ location }) {
   // if (!location.state) window.location.href = '/'
@@ -101,7 +101,7 @@ function Account({ location }) {
 
   const signOut = () => {
     localStorage.clear()
-    window.location.href = baseUrl
+    window.location.href = BASE_URL
   }
 
   const handleEdit = () => setIsEditing(!isEditing)

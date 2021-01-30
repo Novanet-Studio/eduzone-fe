@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -10,6 +10,7 @@ import Ipad from '../assets/images/ipad-libros.png'
 import './Main.scss'
 
 function Main() {
+  const history = useHistory()
   const [isSuscribed, setIsSubscribed] = useState(false)
   const [redirectLogin, setRedirectLogin] = useState(false)
 
@@ -18,11 +19,11 @@ function Main() {
   console.log('Is subscribe from main? ', isSuscribed);
 
   if (isSuscribed) {
-    return <Redirect to="/register" />
+    history.push('/register')
   }
 
   if (redirectLogin) {
-    return <Redirect to='/login' />
+    history.push('/login')
   }
 
   return (

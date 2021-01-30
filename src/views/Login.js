@@ -1,91 +1,59 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { useGlobal } from '../context/globalContext'
 
-import useLogin from '../hooks/useLogin'
 import useError from '../hooks/useError'
 
 import Footer from '../components/Footer'
 import ErrorMessage from '../components/ErrorMessage'
-import { Auth, URL } from '../utils'
+import { URL } from '../constants'
+import Auth from '../helpers/auth'
 import './Login.scss'
 
 
 function Login() {
+  const history = useHistory()
+  const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState(false)
   const { formState, updateFormState } = useGlobal()
   const { error, showError } = useError(null)
-  const [loading, setLoading] = useState(false)
   // TODO: Analize if this state could be change into new state or
   // existing state of useGlobal
-  const [accountInformation, setAccountInformation] = useState({})
-  const { setIsAuth, isAuth, loadingUser, userInfo } = useLogin()
+  const [accountInformation, setAccountInformation] = useState(null)
 
   const handleChange = ({currentTarget:{ name, value }}) => updateFormState({ [name]: value })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    
+
     const bodyParams = {
       userName: formState.email,
       password: formState.password,
     }
 
     try {
-      
-      const { data, status } = await axios.post(`${URL}/auth/signin`, bodyParams)
-      Auth.setToken(data.token)
-
+      const { data: response, status } = await axios.post(`${URL}/auth/signin`, bodyParams)
       if (status === 200) {
-        const { data } = await axios.get(`${URL}/auth/me`, {
-          headers: {
-            'x-access-token': Auth.getToken
-          }
-        })
-  
-        console.log(data)
+        Auth.setToken(response.token)
+        const { data } = await axios.get(`${URL}/auth/me`)
+
         setAccountInformation({ ...data })
+        localStorage.setItem('auth', data.auth)
         setLoading(false)
-        setIsAuth(true)
+        setUser(true)
       }
 
     } catch (error) {
-      console.log({ error })
-      console.log(error.response.data.message)
-      showError(error.response.data.message)
       setLoading(false)
+      showError(error.response.data.message)
     }
   }
 
-  if (isAuth) {
-    console.log(accountInformation.paymentMethodId)
-    let temp = accountInformation.user 
-      ? accountInformation
-      : { ...accountInformation, user: userInfo }
-
-      return (
-      <Redirect
-        to={{
-          pathname: '/account',
-          state: {
-            // Use isAuth throw useGlobal hook
-            isAuth,
-            accountInformation: temp,
-          },
-        }}
-      />
-    )
-  }
-
-  // FIXME: check for true value
-  if (loadingUser) {
-    return (
-      <section className="loading">
-        <p>Loading ...</p>
-      </section>
-    )
+  if (user) {
+    history.push('/account', { accountInformation })
   }
 
   return (
@@ -127,13 +95,6 @@ function Login() {
       <Footer />
     </>
   )
-  // if (!loadingUser) {
-    
-  // } else {
-  //   ;<section className="loading">
-  //     <p>Loading ...</p>
-  //   </section>
-  // }
 }
 
 export default Login

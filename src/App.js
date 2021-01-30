@@ -1,50 +1,55 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Switch, Route, useHistory } from 'react-router-dom'
 
-import Main from './views/Main'
-import Register from './views/Register'
-import Login from './views/Login'
-import Prices from './views/Prices'
-import Account from './views/Account'
-import Success from './components/Success'
-import Example from './Example'
+import { ProtectedRoute, routes } from './router'
 
-import { GlobalProvider } from './context/globalContext';
-
-export const baseUrl = process.env.NODE_ENV === 'production' ? '/eduzonestore' : '/'
+import Auth from './helpers/auth'
+import { GlobalProvider } from './context/globalContext'
+import { AccountProvider } from './context/accountContext'
+import useAuth from './hooks/useAuth'
 
 console.log(process.env.NODE_ENV)
 
-const App = () => (
-  <Router basename={baseUrl}>
+Auth.initAxiosInterceptors()
+
+const App = () => {
+  const history = useHistory()
+  const auth = useAuth()
+
+  if (auth.user) {
+    // Wait 500ms to enter in account, prevent error.
+    setTimeout(() => {
+      history.push('/account', { accountInformation: auth })
+    }, 500)
+  }
+
+  return (
     <Switch>
-      <Route exact path="/">
-        <Main />
-      </Route>
-      <Route exact path="/login">
-        <Login />
-      </Route>
-      <Route exact path="/register">
-        <Register />
-      </Route>
-      <Route exact path="/prices">
-        <Prices />
-      </Route>
-      <Route exact path="/account">
-        <Account />
-      </Route>
-      <Route exact path="/success">
-        <Success />
-      </Route>
-      <Route exact path="/example">
-        <Example />
-      </Route>
+      {routes.map((route, index) =>
+        !route.protected ? (
+          <Route
+            key={index}
+            exact={route.exact}
+            path={route.path}
+            component={route.component}
+          />
+        ) : (
+          <ProtectedRoute
+            key={index}
+            exact={route.exact}
+            path={route.path}
+            children={route.component}
+          />
+        ),
+      )}
     </Switch>
-  </Router>
-)
+  )
+}
 
 //eslint-disable-next-line
 export default () => (
   <GlobalProvider>
-    <App />
+    <AccountProvider>
+      <App />
+    </AccountProvider>
   </GlobalProvider>
 )

@@ -7,10 +7,11 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js'
+import Auth from '../helpers/auth'
 import { Redirect } from 'react-router-dom'
-import { apiRequest, Auth, URL } from '../utils'
-import './PaymentForm.scss'
 import { useGlobal } from '../context/globalContext'
+import { URL } from '../constants'
+import './PaymentForm.scss'
 
 const { REACT_APP_STRIPE_PK } = process.env
 
@@ -28,12 +29,9 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
   const elements = useElements()
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(null)
-  const [userData, setUserData] = useState(null)
   const [userCreated, setUserCreated] = useState(false)
   const [error, setError] = useState('')
   const { formState, updateFormState } = useGlobal()
-
-  let temp = null
 
   async function handlePaymentCustomerAction({
     subscription,
@@ -124,49 +122,43 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
     }
   }
 
-  function retryInvoiceWithNewPaymentMethod({ paymentMethodId, invoiceId }) {
+  async function retryInvoiceWithNewPaymentMethod({
+    paymentMethodId,
+    invoiceId,
+  }) {
     const priceId = productSelected.name.toUpperCase()
     const bodyParams = {
       paymentMethodId,
       invoiceId,
       customer: customer.id,
     }
-    // TODO: makes a refactor of this return
-    return (
-      apiRequest(`${URL}/stripe/retry-invoice`, 'POST', bodyParams)
-        // If the card is declined, display an error to the user.
-        .then((result) => {
-          if (result.error) {
-            // The card had an error when trying to attach it to a customer.
-            throw result
-          }
-          return result
-        })
-        // Normalize the result to contain the object returned by Stripe.
-        // Add the addional details we need.
-        .then((result) => {
-          return {
-            // Use the Stripe 'object' property on the
-            // returned result to understand what object is returned.
-            invoice: result,
-            paymentMethodId: paymentMethodId,
-            priceId: priceId,
-            isRetry: true,
-          }
-        })
-        // Some payment methods require a customer to be on session
-        // to complete the payment process. Check the status of the
-        // payment intent to handle these actions.
-        .then(handlePaymentCustomerAction)
-        // No more actions required. Provision your service for the user.
-        .then(onSubscriptionComplete)
-        .catch((error) => {
-          console.log(error)
-          // An error has happened. Display the failure to the user here.
-          setSubscribing(false)
-          setError(error && error.error && error.error.decline_code)
-        })
-    )
+
+    try {
+      const { data: retryInvoiceResponse } = await axios.post(
+        `${URL}/stripe/retry-invoice`,
+        bodyParams,
+      )
+      // Normalize the result to contain the object returned by Stripe.
+      // Add the addional details we need.
+      const handlePaymentCustomerActionBody = {
+        priceId,
+        paymentMethodId,
+        invoice: retryInvoiceResponse,
+        isRetry: true,
+      }
+      // Some payment methods require a customer to be on session
+      // to complete the payment process. Check the status of the
+      // payment intent to handle these actions.
+      const handlePaymentCustomerActionResponse = handlePaymentCustomerAction(
+        handlePaymentCustomerActionBody,
+      )
+      return onSubscriptionComplete(handlePaymentCustomerActionResponse)
+    } catch (error) {
+      // If the card is declined, display an error to the user.
+      // An error has happened. Display the failure to the user here.
+      setSubscribing(false)
+      setError(error && error.error && error.error.decline_code)
+    }
   }
 
   function onSubscriptionComplete(result) {
@@ -190,55 +182,36 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
     // Get the product by using result.subscription.price.product
   }
 
-  function createSubscription({ paymentMethodId }) {
+  async function createSubscription({ paymentMethodId }) {
     const priceId = productSelected.name.toUpperCase()
     const bodyParams = {
       paymentMethodId,
       priceId,
       customerId: customer.id,
     }
-    // TODO: Makes a refactor of this return
-    return (
-      // apiRequest return the response in JSON format
-      apiRequest(`${URL}/stripe/create-subscription`, 'POST', bodyParams)
-        // If the card is declined, display an error to the user.
-        .then((result) => {
-          if (result.error) {
-            // The card had an error when trying to attach it to a customer
-            throw result
-          }
-          return result
-        })
-        // Normalize the result to contain the object returned
-        // by Stripe. Add the addional details we need.
-        .then((result) => {
-          return {
-            // Use the Stripe 'object' property on the
-            // returned result to understand what object is returned.
-            subscription: result,
-            paymentMethodId: paymentMethodId,
-            priceId: productSelected.name,
-          }
-        })
-        // Some payment methods require a customer to do additional
-        // authentication with their financial institution.
-        // Eg: 2FA for cards.
-        .then(handlePaymentCustomerAction)
-        // If attaching this card to a Customer object succeeds,
-        // but attempts to charge the customer fail. You will
-        // get a requires_payment_method error.
-        .then(handleRequiresPaymentMethod)
-        // No more actions required. Provision your service for the user.
-        .then(onSubscriptionComplete)
-        .catch((error) => {
-          console.log(error)
-          // An error has happened. Display the failure to the user here.
-          // We utilize the HTML element we created.
-          setSubscribing(false)
-          setError(error.message || error.error.decline_code)
-        })
-    )
-    // )
+
+    try {
+      const { data } = await axios.post(
+        `${URL}/stripe/create-subscription`,
+        bodyParams,
+      )
+      const result = {
+        paymentMethodId,
+        subscription: data,
+        priceId: productSelected.name,
+      }
+      const paymentCustomerActionResult = await handlePaymentCustomerAction(
+        result,
+      )
+      const handlePaymentMethodResult = handleRequiresPaymentMethod(
+        paymentCustomerActionResult,
+      )
+      return onSubscriptionComplete(handlePaymentMethodResult)
+    } catch (error) {
+      console.log({ error })
+      setSubscribing(false)
+      setError(error.message || error.error.decline_code)
+    }
   }
 
   // Register new user after subscription
@@ -263,13 +236,10 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
 
       Auth.setToken(user.token)
 
-      const { data: me } = await axios.get(`${URL}/auth/me`, {
-        headers: {
-          'x-access-token': user.token,
-        },
-      })
+      const { data: me } = await axios.get(`${URL}/auth/me`)
 
-      setUserData(me.user)
+      localStorage.setItem('auth', me.auth)
+      setAccountInformation(me)
       setUserCreated(true)
     } catch (e) {
       throw new Error(e)
@@ -338,22 +308,17 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
       }
 
       setSent()
-    } catch (err) {
-      console.log(err)
-      throw new TypeError(err)
+    } catch (error) {
+      console.log({ error })
+      // throw new TypeError(err)
     }
   }
 
   const handleChange = ({ currentTarget: { name, value } }) =>
     updateFormState({ [name]: value })
 
-  if (accountInformation && userCreated) {
-    temp = { ...accountInformation, user: userData }
-  }
-
   if (accountInformation && userCreated && load) {
     console.log('[Account Information]', accountInformation)
-    // const temp = { ...accountInformation, user: userData }
 
     sessionStorage.setItem(
       'paymentMethodId',
@@ -364,73 +329,68 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
         to={{
           pathname: '/account',
           // FIXME: Delete state and use useData
-          state: { accountInformation: temp },
+          state: { accountInformation },
         }}
       />
     )
-  } else {
-    return (
-      <div className="payment">
-        <p className="payment__text">
-          Enter your card details. <br />
-          Your subscription will start now
-        </p>
-        <p className="payment__price">
-          {'->'} Total due now <span>{productSelected.price}</span>
-        </p>
-        <p className="payment__name">
-          {'->'} Subscribing to <span>{productSelected.name}</span>
-        </p>
-        <div className="payment__form">
-          <input
-            className="payment__input"
-            type="text"
-            id="name"
-            name="firstname"
-            value={formState.firstname}
-            placeholder="First name"
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="payment__input"
-            type="text"
-            id="lastname"
-            name="lastname"
-            value={formState.lastname}
-            placeholder="Last name"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <form
-          id="payment-form"
-          className="payment__form"
-          onSubmit={handleSubmit}
-        >
-          <div className="payment__form-group">
-            <label>Card number</label>
-            <div className="payment__form-element">
-              <CardElement options={{}} />
-            </div>
-            <div className="payment__form-error">{error ? error : null}</div>
-          </div>
-          <button className="payment__button" type="submit">
-            {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
-          </button>
-        </form>
-        <p className="payment__text-down">
-          By clicking "Subscribe to Edu-zone", you are confirming that you have
-          read and accept our Terms of Service. You also agree that IXL will
-          save your card details in order to automatically renew your
-          subscription and process future account updates. If we change in any
-          way the way we use the data we store from your card, we will notify
-          you using the email address you provided. This site is protected by
-          reCAPTCHA and subject to Google's Privacy Policy and Terms of Service.
-        </p>
-      </div>
-    )
   }
+  return (
+    <div className="payment">
+      <p className="payment__text">
+        Enter your card details. <br />
+        Your subscription will start now
+      </p>
+      <p className="payment__price">
+        {'->'} Total due now <span>{productSelected.price}</span>
+      </p>
+      <p className="payment__name">
+        {'->'} Subscribing to <span>{productSelected.name}</span>
+      </p>
+      <div className="payment__form">
+        <input
+          className="payment__input"
+          type="text"
+          id="name"
+          name="firstname"
+          value={formState.firstname}
+          placeholder="First name"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="payment__input"
+          type="text"
+          id="lastname"
+          name="lastname"
+          value={formState.lastname}
+          placeholder="Last name"
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <form id="payment-form" className="payment__form" onSubmit={handleSubmit}>
+        <div className="payment__form-group">
+          <label>Card number</label>
+          <div className="payment__form-element">
+            <CardElement options={{}} />
+          </div>
+          <div className="payment__form-error">{error ? error : null}</div>
+        </div>
+        <button className="payment__button" type="submit">
+          {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
+        </button>
+      </form>
+      <p className="payment__text-down">
+        By clicking "Subscribe to Edu-zone", you are confirming that you have
+        read and accept our Terms of Service. You also agree that IXL will save
+        your card details in order to automatically renew your subscription and
+        process future account updates. If we change in any way the way we use
+        the data we store from your card, we will notify you using the email
+        address you provided. This site is protected by reCAPTCHA and subject to
+        Google's Privacy Policy and Terms of Service.
+      </p>
+    </div>
+  )
 }
 
 const PaymentForm = (props) => (
