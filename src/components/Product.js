@@ -1,4 +1,3 @@
-import React from 'react'
 import './Product.scss'
 
 const Product = ({ product, currentProductSelected, handleClick }) => (

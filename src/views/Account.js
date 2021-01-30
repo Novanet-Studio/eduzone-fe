@@ -8,13 +8,10 @@ import Product from '../components/Product'
 import PriceChangeForm from '../components/PriceChangeForm'
 import AccountEditing from '../components/AccountEditing'
 import AccountDetails from '../components/AccountDetails'
-import Auth from '../helpers/auth'
-import './Account.scss'
 import { BASE_URL, URL, products } from '../constants'
+import './Account.scss'
 
 function Account({ location }) {
-  // if (!location.state) window.location.href = '/'
-
   const [accountInformation, setAccountInformation] = useState(
     location.state.accountInformation,
   )
@@ -57,15 +54,9 @@ function Account({ location }) {
 
     async function fetchUser() {
       try {
-        const { data } = await axios.get(`${URL}/auth/me`, {
-          headers: {
-            'x-access-token': Auth.getToken,
-          },
-        })
-        console.log(accountInformation)
+        const { data } = await axios.get(`${URL}/auth/me`)
         setAccountInformation(data)
         setLoadingContent(false)
-        console.log(data)
       } catch (error) {
         setLoadingContent(false)
         console.log('ERROR GETTING USER DATA')
@@ -109,7 +100,7 @@ function Account({ location }) {
   const updateInformation = (user) =>
     setAccountInformation({ ...accountInformation, user })
 
-  console.log(accountInformation)
+  console.log('account view: ', accountInformation)
 
   if (loadingContent) {
     return (

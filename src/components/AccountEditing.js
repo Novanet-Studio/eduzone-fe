@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useRef, useEffect } from 'react'
+
 import { useGlobal } from '../context/globalContext'
 import { URL } from '../constants'
 import './AccountEditing.scss'
@@ -34,8 +35,10 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
       editing(false)
       setInitialFormState()
       console.log('data sent')
-    } catch (e) {
-      throw new TypeError(e)
+    } catch (error) {
+      console.log('[EDITING_ACCOUNT]')
+      console.error({ error })
+      throw new TypeError(error)
     }
   }
 

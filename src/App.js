@@ -1,11 +1,10 @@
 import { Switch, Route, useHistory } from 'react-router-dom'
 
-import { ProtectedRoute, routes } from './router'
-
 import Auth from './helpers/auth'
+import useAuth from './hooks/useAuth'
 import { GlobalProvider } from './context/globalContext'
 import { AccountProvider } from './context/accountContext'
-import useAuth from './hooks/useAuth'
+import { ProtectedRoute, routes } from './router'
 
 console.log(process.env.NODE_ENV)
 

@@ -1,13 +1,11 @@
-import axios from 'axios'
 import {
   useContext,
   useState,
   createContext,
-  useEffect,
   useMemo,
   useCallback,
 } from 'react'
-import Auth from '../helpers/auth'
+import useChangeLocation from '../hooks/useChangeLocation'
 
 const GlobalContext = createContext()
 
@@ -16,33 +14,17 @@ const initialFormState = {
   lastname: '',
   email: '',
   password: '',
+  confirmPassword: '',
 }
 
 export const GlobalProvider = (props) => {
   const [formState, setFormState] = useState(initialFormState)
-  const [userData, setUserData] = useState(null)
-  const [loadingUser, setLoadingUser] = useState(false)
+  const [setIsTyping, changeLocation] = useChangeLocation(false)
 
-  useEffect(() => {
-    async function loadUser() {
-      if (!Auth.getToken) {
-        setLoadingUser(false)
-        return
-      }
-
-      try {
-        const { data: user } = await axios.get('http://localhost:3000/auth/me')
-        setUserData(user)
-        setLoadingUser(false)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    loadUser()
-  }, [])
-
-  const setInitialFormState = () => setFormState(initialFormState)
+  const setInitialFormState = useCallback(
+    () => setFormState(initialFormState),
+    [],
+  )
 
   const updateFormState = useCallback(
     (updated = {}) =>
@@ -53,15 +35,31 @@ export const GlobalProvider = (props) => {
     [formState],
   )
 
+  const handleTypingChange = useCallback(
+    ({ currentTarget: { name, value } }) => {
+      setIsTyping(true)
+      updateFormState({ [name]: value })
+    },
+    [setIsTyping, updateFormState],
+  )
+
   const value = useMemo(
     () => ({
-      userData,
       formState,
-      loadingUser,
-      setInitialFormState,
+      setIsTyping,
+      changeLocation,
       updateFormState,
+      handleTypingChange,
+      setInitialFormState,
     }),
-    [userData, formState, loadingUser, updateFormState],
+    [
+      formState,
+      setIsTyping,
+      changeLocation,
+      updateFormState,
+      handleTypingChange,
+      setInitialFormState,
+    ],
   )
 
   return <GlobalContext.Provider value={value} {...props} />

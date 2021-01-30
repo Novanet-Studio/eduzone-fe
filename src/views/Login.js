@@ -1,32 +1,38 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, Prompt, useLocation } from 'react-router-dom'
 
-import { useGlobal } from '../context/globalContext'
-
-import useError from '../hooks/useError'
-
+import Auth from '../helpers/auth'
 import Footer from '../components/Footer'
+import useError from '../hooks/useError'
 import ErrorMessage from '../components/ErrorMessage'
 import { URL } from '../constants'
-import Auth from '../helpers/auth'
+import { useGlobal } from '../context/globalContext'
 import './Login.scss'
-
 
 function Login() {
   const history = useHistory()
+  const location = useLocation()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState(false)
-  const { formState, updateFormState } = useGlobal()
-  const { error, showError } = useError(null)
-  // TODO: Analize if this state could be change into new state or
-  // existing state of useGlobal
   const [accountInformation, setAccountInformation] = useState(null)
+  const { error, showError } = useError(null)
+  const {
+    formState,
+    setIsTyping,
+    setInitialFormState,
+    handleTypingChange,
+    changeLocation,
+  } = useGlobal()
 
-  const handleChange = ({currentTarget:{ name, value }}) => updateFormState({ [name]: value })
+  if (location.state && location.state.transition) {
+    setInitialFormState()
+    location.state.transition = false
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsTyping(false)
     setLoading(true)
 
     const bodyParams = {
@@ -35,7 +41,10 @@ function Login() {
     }
 
     try {
-      const { data: response, status } = await axios.post(`${URL}/auth/signin`, bodyParams)
+      const { data: response, status } = await axios.post(
+        `${URL}/auth/signin`,
+        bodyParams,
+      )
       if (status === 200) {
         Auth.setToken(response.token)
         const { data } = await axios.get(`${URL}/auth/me`)
@@ -45,7 +54,6 @@ function Login() {
         setLoading(false)
         setUser(true)
       }
-
     } catch (error) {
       setLoading(false)
       showError(error.response.data.message)
@@ -58,11 +66,12 @@ function Login() {
 
   return (
     <>
+      <Prompt message={changeLocation} />
       <section className="login">
         <div className="container">
           <div className="login__info">
             <h2 className="login__title">Login</h2>
-            {error && <ErrorMessage errorMessage={error} /> }
+            {error && <ErrorMessage errorMessage={error} />}
             <form className="login__form" onSubmit={handleSubmit}>
               <input
                 className="login__input"
@@ -71,7 +80,7 @@ function Login() {
                 id="email"
                 placeholder="Email address"
                 value={formState.email}
-                onChange={handleChange}
+                onChange={handleTypingChange}
               />
               <input
                 className="login__input"
@@ -80,14 +89,17 @@ function Login() {
                 id="password"
                 placeholder="Password"
                 value={formState.password}
-                onChange={handleChange}
+                onChange={handleTypingChange}
               />
               <button className="login__button">
                 {loading ? 'loading...' : 'Login'}
               </button>
             </form>
             <p className="login__text">
-              You don't have an account yet? <Link className="login__register" to="/register">register</Link>
+              You don't have an account yet?{' '}
+              <Link className="login__register" to="/register">
+                register
+              </Link>
             </p>
           </div>
         </div>

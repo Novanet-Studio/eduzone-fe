@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
-import { getDateStringFromUnixTimestamp, getFormattedAmount } from '../utils'
 import { URL } from '../constants'
+import { getDateStringFromUnixTimestamp, getFormattedAmount } from '../utils'
 import './PriceChangeForm.scss'
 
 function PriceChangeForm({

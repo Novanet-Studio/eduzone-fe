@@ -1,4 +1,3 @@
-import React from 'react'
 import Logo from '../assets/images/edu-logo.png'
 
 const Footer = () => (
@@ -9,7 +8,7 @@ const Footer = () => (
         <p className="footer__email">edu-zone.support@edu-zone.org</p>
       </a>
       <hr className="footer__line" />
-      <a href="https://www.edu-zone.org/" target="_blank">
+      <a href="https://www.edu-zone.org/" target="_blank" rel="noreferrer">
         <img className="footer__logo" src={Logo} alt="Footer logo" />
       </a>
       <p className="footer__copy">

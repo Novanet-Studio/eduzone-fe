@@ -1,37 +1,55 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, Prompt, useHistory, useLocation } from 'react-router-dom'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ErrorMessage from '../components/ErrorMessage'
-
 import useError from '../hooks/useError'
 import { useGlobal } from '../context/globalContext'
 import { checkUserExists, createCustomer } from '../helpers/register'
-
 import './Register.scss'
 
 function Register() {
   const history = useHistory()
+  const location = useLocation()
   const [customer, setCustomer] = useState(null)
-  const { error, showError } = useError(null)
   const [loading, setLoading] = useState(false)
-  const { formState, updateFormState } = useGlobal()
+  const { error, showError } = useError(null)
+  const {
+    formState,
+    setIsTyping,
+    setInitialFormState,
+    handleTypingChange,
+    changeLocation,
+  } = useGlobal()
   const _isMounted = useRef(true)
+
+  if (location.state && location.state.transition) {
+    setInitialFormState()
+    location.state.transition = false
+  }
 
   useEffect(() => {
     return () => (_isMounted.current = false)
   }, [])
 
-  const handleChange = ({ currentTarget: el }) =>
-    updateFormState({ [el.name]: el.value })
-
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsTyping(false)
     setLoading(true)
     try {
       if (!_isMounted.current) return
-      const { email } = formState
+      let { email, password, confirmPassword } = formState
+
+      if (password !== confirmPassword) {
+        console.log('Passwords not match')
+        password = ''
+        confirmPassword = ''
+        showError('Passwords not match')
+        setLoading(false)
+        return
+      }
+
       const exists = await checkUserExists(email)
       console.log(exists)
       if (exists) {
@@ -43,15 +61,13 @@ function Register() {
 
       const customerCreated = await createCustomer(email)
       console.log('creating a new customer')
-      console.log(customerCreated);
       setCustomer(customerCreated)
       setLoading(false)
     } catch (error) {
       console.log({ error })
       console.log(error.response.data.message)
-      showError(error.response.data.message)
       setLoading(false)
-      // throw new Error(error.message)
+      showError(error.response.data.message)
     }
   }
 
@@ -61,6 +77,7 @@ function Register() {
 
   return (
     <>
+      <Prompt message={changeLocation} />
       <Header loggedIn={false} />
       <section className="register">
         <div className="container">
@@ -74,7 +91,7 @@ function Register() {
                 id="email"
                 name="email"
                 value={formState.email}
-                onChange={handleChange}
+                onChange={handleTypingChange}
                 placeholder="Email address"
                 required
               />
@@ -84,15 +101,21 @@ function Register() {
                 id="password"
                 name="password"
                 value={formState.password}
-                onChange={handleChange}
+                minLength="6"
+                maxLength="20"
+                onChange={handleTypingChange}
                 placeholder="Enter password"
                 required
               />
               <input
                 className="register__input"
-                type="confirmation"
-                id="confirmation"
-                name="confirmation"
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formState.confirmPassword}
+                minLength="6"
+                maxLength="20"
+                onChange={handleTypingChange}
                 placeholder="Password confirmation"
                 required
               />

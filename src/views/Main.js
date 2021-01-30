@@ -5,7 +5,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Subscribe from '../components/Subscribe'
 import MainDropdown from '../components/MainDropdown'
-
 import Ipad from '../assets/images/ipad-libros.png'
 import './Main.scss'
 
@@ -15,6 +14,8 @@ function Main() {
   const [redirectLogin, setRedirectLogin] = useState(false)
 
   const subscribe = (value) => setIsSubscribed(value)
+
+  const handleClick = () => setRedirectLogin(true)
 
   console.log('Is subscribe from main? ', isSuscribed);
 
@@ -26,9 +27,10 @@ function Main() {
     history.push('/login')
   }
 
+
   return (
     <>
-      <Header loggedIn={false} handleClick={() => setRedirectLogin(true)} />
+      <Header loggedIn={false} handleClick={handleClick} />
       <div>
         <section className="hero">
           <div className="container">

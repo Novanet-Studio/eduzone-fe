@@ -7,8 +7,11 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js'
+
 import Auth from '../helpers/auth'
-import { Redirect } from 'react-router-dom'
+import ErrorMessage from './ErrorMessage'
+import useError from '../hooks/useError'
+import { useHistory } from 'react-router-dom'
 import { useGlobal } from '../context/globalContext'
 import { URL } from '../constants'
 import './PaymentForm.scss'
@@ -26,11 +29,12 @@ if (!REACT_APP_STRIPE_PK) {
 
 const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
   const stripe = useStripe()
+  const history = useHistory()
   const elements = useElements()
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(null)
   const [userCreated, setUserCreated] = useState(false)
-  const [error, setError] = useState('')
+  const { error, showError } = useError(null)
   const { formState, updateFormState } = useGlobal()
 
   async function handlePaymentCustomerAction({
@@ -116,6 +120,8 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
         'latestInvoicePaymentIntentStatus',
         subscription.latest_invoice.payment_intent.status,
       )
+      showError('Your card was declined.')
+      setSubscribing(false)
       throw new Error('Your card was declined.')
     } else {
       return { subscription, priceId, paymentMethodId }
@@ -157,7 +163,7 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
       // If the card is declined, display an error to the user.
       // An error has happened. Display the failure to the user here.
       setSubscribing(false)
-      setError(error && error.error && error.error.decline_code)
+      showError(error && error.error && error.error.decline_code)
     }
   }
 
@@ -210,7 +216,7 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
     } catch (error) {
       console.log({ error })
       setSubscribing(false)
-      setError(error.message || error.error.decline_code)
+      showError(error.message || error.error.decline_code)
     }
   }
 
@@ -241,8 +247,10 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
       localStorage.setItem('auth', me.auth)
       setAccountInformation(me)
       setUserCreated(true)
-    } catch (e) {
-      throw new Error(e)
+    } catch (error) {
+      setSubscribing(false)
+      showError(error.response.data.message)
+      throw new Error(error)
     }
   }
 
@@ -278,7 +286,7 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
       if (error) {
         console.log('[createPaymentMethod error]', error)
         setSubscribing(false)
-        setError(error && error.message)
+        showError(error && error.message)
         return
       }
       console.log('[PaymentMethod]', paymentMethod)
@@ -305,12 +313,14 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
           userName: formState.email,
           password: formState.password,
         })
+        setSent()
       }
 
-      setSent()
     } catch (error) {
       console.log({ error })
-      // throw new TypeError(err)
+      setSubscribing(false)
+      showError(error.message)
+      throw new Error(error)
     }
   }
 
@@ -324,18 +334,13 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
       'paymentMethodId',
       accountInformation.paymentMethodId,
     )
-    return (
-      <Redirect
-        to={{
-          pathname: '/account',
-          // FIXME: Delete state and use useData
-          state: { accountInformation },
-        }}
-      />
-    )
+
+    history.push('/account', { accountInformation })
   }
+  
   return (
     <div className="payment">
+      {error && <ErrorMessage errorMessage={error} />}
       <p className="payment__text">
         Enter your card details. <br />
         Your subscription will start now
@@ -374,7 +379,7 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
           <div className="payment__form-element">
             <CardElement options={{}} />
           </div>
-          <div className="payment__form-error">{error ? error : null}</div>
+          {/* <div className="payment__form-error">{error ? error : null}</div> */}
         </div>
         <button className="payment__button" type="submit">
           {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
