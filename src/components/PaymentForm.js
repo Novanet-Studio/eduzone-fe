@@ -13,13 +13,10 @@ import ErrorMessage from './ErrorMessage'
 import useError from '../hooks/useError'
 import { useHistory } from 'react-router-dom'
 import { useGlobal } from '../context/globalContext'
-<<<<<<< HEAD
 import { useAccount } from '../hooks/useAccount'
 import { URL } from '../constants'
 import './PaymentForm.scss'
-=======
 import Logo from '../assets/images/lock-solid-01.png'
->>>>>>> 018a824c3bb3b97f3c22e11b761143e1a3f09621
 
 const { REACT_APP_STRIPE_PK } = process.env
 
