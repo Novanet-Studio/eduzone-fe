@@ -6,15 +6,16 @@ import Footer from '../components/Footer'
 import ErrorMessage from '../components/ErrorMessage'
 import useError from '../hooks/useError'
 import { useGlobal } from '../context/globalContext'
+import { useAccount } from '../hooks/useAccount'
 import { checkUserExists, createCustomer } from '../helpers/register'
 import './Register.scss'
 
 function Register() {
   const history = useHistory()
   const location = useLocation()
-  const [customer, setCustomer] = useState(null)
   const [loading, setLoading] = useState(false)
   const { error, showError } = useError(null)
+  const { accountInformation, updateAccountInformation } = useAccount()
   const {
     formState,
     setIsTyping,
@@ -61,7 +62,7 @@ function Register() {
 
       const customerCreated = await createCustomer(email)
       console.log('creating a new customer')
-      setCustomer(customerCreated)
+      updateAccountInformation('customer', customerCreated)
       setLoading(false)
     } catch (error) {
       console.log({ error })
@@ -71,8 +72,8 @@ function Register() {
     }
   }
 
-  if (customer) {
-    history.push('/prices', { customer })
+  if (accountInformation.customer) {
+    history.push('/prices')
   }
 
   return (

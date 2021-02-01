@@ -9,11 +9,10 @@ import PaymentForm from '../components/PaymentForm'
 import { products } from '../constants'
 import './Prices.scss'
 
-function Prices({ location }) {
+function Prices() {
   const [productSelected, setProduct] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
   const [loadAccount, setLoadAccount] = useState(false)
-  const [customer] = useState(location.state.customer)
 
   const handleClick = (key) => setProduct(products[key])
 
@@ -46,7 +45,6 @@ function Prices({ location }) {
             {productSelected && (
               <PaymentForm
                 productSelected={productSelected}
-                customer={customer}
                 setSent={setSent}
                 load={loadAccount}
               />

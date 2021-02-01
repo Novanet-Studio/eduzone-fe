@@ -22,11 +22,14 @@ export const AccountProvider = (props) => {
   const updateAccountInformation = (name, value) =>
     setAccountInformation({ ...accountInformation, [name]: value })
 
+  const updateAll = (data) => setAccountInformation(data)
+
   const value = useMemo(
     () => ({
       accountInformation,
       resetAccountInformation,
-      updateAccountInformation
+      updateAccountInformation,
+      updateAll
     }),
     [accountInformation],
   )

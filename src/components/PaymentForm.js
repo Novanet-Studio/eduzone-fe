@@ -13,6 +13,7 @@ import ErrorMessage from './ErrorMessage'
 import useError from '../hooks/useError'
 import { useHistory } from 'react-router-dom'
 import { useGlobal } from '../context/globalContext'
+import { useAccount } from '../hooks/useAccount'
 import { URL } from '../constants'
 import './PaymentForm.scss'
 
@@ -27,7 +28,7 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
+const CheckoutForm = ({ productSelected, setSent, load }) => {
   const stripe = useStripe()
   const history = useHistory()
   const elements = useElements()
@@ -36,6 +37,8 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
   const [userCreated, setUserCreated] = useState(false)
   const { error, showError } = useError(null)
   const { formState, updateFormState } = useGlobal()
+  const { accountInformation: account, updateAccountInformation } = useAccount()
+  const { customer } = account
 
   async function handlePaymentCustomerAction({
     subscription,

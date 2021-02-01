@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { withRouter } from 'react-router-dom'
+import { useLocation, withRouter } from 'react-router-dom'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -8,13 +8,22 @@ import Product from '../components/Product'
 import PriceChangeForm from '../components/PriceChangeForm'
 import AccountEditing from '../components/AccountEditing'
 import AccountDetails from '../components/AccountDetails'
-import { BASE_URL, URL, products } from '../constants'
+import { URL, products } from '../constants'
+import { useAccount } from '../hooks/useAccount'
 import './Account.scss'
 
-function Account({ location }) {
-  const [accountInformation, setAccountInformation] = useState(
-    location.state.accountInformation,
-  )
+function Account() {
+  const location = useLocation()
+  const { accountInformation: account } = useAccount()
+  let tempLocation = null
+
+  if (!location.state.accountInformation) {
+    tempLocation = account
+  } else {
+    tempLocation = location.state.accountInformation
+  }
+
+  const [accountInformation, setAccountInformation] = useState(tempLocation)
   const [customerPaymentMethod, setCustomerPaymentMethod] = useState(null)
   const [showChangePriceForm, setShowChangePriceForm] = useState(false)
   const [subscriptionCancelled, setSubscriptionCancelled] = useState(false)
@@ -92,7 +101,7 @@ function Account({ location }) {
 
   const signOut = () => {
     localStorage.clear()
-    window.location.href = BASE_URL
+    window.location.href = '/'
   }
 
   const handleEdit = () => setIsEditing(!isEditing)

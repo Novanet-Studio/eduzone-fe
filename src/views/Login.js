@@ -8,6 +8,7 @@ import useError from '../hooks/useError'
 import ErrorMessage from '../components/ErrorMessage'
 import { URL } from '../constants'
 import { useGlobal } from '../context/globalContext'
+import { useAccount } from '../hooks/useAccount'
 import './Login.scss'
 
 function Login() {
@@ -15,8 +16,8 @@ function Login() {
   const location = useLocation()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState(false)
-  const [accountInformation, setAccountInformation] = useState(null)
   const { error, showError } = useError(null)
+  const { updateAll } = useAccount()
   const {
     formState,
     setIsTyping,
@@ -49,7 +50,7 @@ function Login() {
         Auth.setToken(response.token)
         const { data } = await axios.get(`${URL}/auth/me`)
 
-        setAccountInformation({ ...data })
+        updateAll(data)
         localStorage.setItem('auth', data.auth)
         setLoading(false)
         setUser(true)
@@ -61,7 +62,7 @@ function Login() {
   }
 
   if (user) {
-    history.push('/account', { accountInformation })
+    history.push('/account')
   }
 
   return (
