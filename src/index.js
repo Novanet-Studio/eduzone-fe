@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
-import { BASE_URL } from './constants'
+// import { BASE_URL } from './constants'
 import './assets/scss/base.scss'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter basename={BASE_URL}>
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>,

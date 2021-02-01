@@ -3,7 +3,7 @@
   "description": "Eduzone Store",
   "version": "0.2.0",
   "author": "Novanet Studio <info@novanet.studio>",
-  "homepage": "https://edu-zone.org/eduzonestore",
+  "homepage": "https://eduzonestore.edu-zone.org",
   "private": true,
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.2",
