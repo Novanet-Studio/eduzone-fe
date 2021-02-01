@@ -36,6 +36,11 @@
   &__text-down {
     margin-top: 3vh;
   }
+  &__secure {
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
@@ -49,7 +54,6 @@
     &__name {
       margin: 2vh 0;
     }
-
     &__input {
       width: 100%;
       font-size: 1rem;
@@ -59,6 +63,18 @@
     &__button {
       font-size: 1rem;
       padding: 1vh 2vh;
+    }
+    &__secure {
+      margin-top: 4vh;
+      margin-bottom: 4vh;
+      &-lock {
+        width: 2.5vh;
+        margin-right: 1vh;
+      }
+    }
+    &__text-down {
+      font-size: 1.1rem;
+      line-height: 1.3rem;
     }
   }
 }
@@ -82,8 +98,20 @@
       margin: 2vh 0;
     }
     &__button {
-      font-size: 1rem;
-      padding: 1vh 3vh;
+      font-size: 1.1rem;
+      padding: 2vh 3vh;
+    }
+    &__secure {
+      margin-top: 4vh;
+      margin-bottom: 4vh;
+      &-lock {
+        width: 5vh;
+        margin-right: 2vh;
+      }
+    }
+    &__text-down {
+      font-size: 1.1rem;
+      line-height: 1.3rem;
     }
   }
 }
@@ -109,6 +137,16 @@
     &__input,
     &__button {
       font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+
+    &__secure {
+      font-size: 1.2rem;
+      margin-top: 2vh;
+      margin-bottom: 2vh;
+      &-lock {
+        width: 2vh;
+      }
     }
   }
 }
@@ -117,7 +155,7 @@
 @include min-media(1024px, landscape) {
   /*Payment*/
   .payment {
-    flex: 0 0 70%;
+    flex: 0 0 90%;
     &__price,
     &__name {
       margin: 2vh 0;
@@ -135,6 +173,19 @@
     &__input,
     &__button {
       font-size: 1.2rem;
+    }
+
+    &__secure {
+      font-size: 1.2rem;
+      &-lock {
+        width: 3vh;
+        margin-right: 1.5vh;
+      }
+    }
+
+    &__text-down {
+      font-size: 1.2rem;
+      line-height: 1.5rem;
     }
   }
 }

@@ -11,6 +11,7 @@ import { Redirect } from 'react-router-dom'
 import { apiRequest, Auth, URL } from '../utils'
 import './PaymentForm.scss'
 import { useGlobal } from '../context/globalContext'
+import Logo from '../assets/images/lock-solid-01.png'
 
 const { REACT_APP_STRIPE_PK } = process.env
 
@@ -414,6 +415,10 @@ const CheckoutForm = ({ productSelected, customer, setSent, load }) => {
               <CardElement options={{}} />
             </div>
             <div className="payment__form-error">{error ? error : null}</div>
+          </div>
+          <div className="payment__secure">
+          <img className="payment__secure-lock" src={Logo} alt="Footer logo" />
+            Server is secure
           </div>
           <button className="payment__button" type="submit">
             {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
