@@ -239,8 +239,9 @@ function Account({ location }) {
             </p>
             <a
               className="account__button"
-              href="https://www.edu-zone.org/"
+              href="https://www.eduzoneserver.com/studentportal/"
               target="_blank"
+              rel="noreferrer"
             >
               Go to Edu-Zone
             </a>

@@ -18,7 +18,7 @@ const Modal = ({ isOpen, closeModal }) => {
           reference.
         </p>
         <button className="modal__button modal__button-blue">
-          <a href="https://www.eduzoneserver.com/" target="_blank">
+          <a href="https://www.eduzoneserver.com/" target="_blank" rel="noreferrer">
             Access now
           </a>
         </button>

@@ -79,7 +79,7 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           type="email"
           name="email"
           value={formState.email}
-          placeholder={defaults.userName}
+          placeholder={defaults.username}
           onChange={handleChange}
         />
       </div>
