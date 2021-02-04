@@ -6,12 +6,14 @@ const Modal = ({ isOpen, closeModal }) => {
   return (
     <section className={`modal ${isOpen && 'modal-open'}`} onClick={closeModal}>
       <div className="modal__info" onClick={handleModalDialogClick}>
-        <button
-          onClick={closeModal}
-          className="modal__button modal__button-red"
-        >
-          <span>&#10006;</span> Close
-        </button>
+        <div className="modal__head">
+          <button
+            onClick={closeModal}
+            className="modal__button modal__button-red"
+          >
+            <span>&#10006;</span>
+          </button>
+        </div>
         <h2 className="modal__title">¡Thanks for you subscription!</h2>
         <p className="modal__text">
           We have sent you an email with your access credentials for future
