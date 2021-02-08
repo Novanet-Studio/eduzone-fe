@@ -1,4 +1,4 @@
-const faqSection = [
+const faqData = [
   {
     question: 'What is Edu-zone?',
     answer: 'Lorem ipsum dolor sit amet, consectetur adi'
@@ -21,8 +21,8 @@ const faqSection = [
   },
 ]
 
-export const MainDropdown = () => (
-  faqSection.map((faq, index) => (
+export const FaqAccordion = () => (
+  faqData.map((faq, index) => (
     <div className="faq__drop" key={index}>
       <h4 className="faq__question">{faq.question}</h4>
       <p className="faq__answer">{faq.answer}</p>
@@ -30,4 +30,4 @@ export const MainDropdown = () => (
   ))
 );
 
-export default MainDropdown
+export default FaqAccordion

@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
-import { URL } from '../constants'
-import { getDateStringFromUnixTimestamp, getFormattedAmount } from '../utils'
+import { URL } from '../../constants'
+import { useInvoicePreview } from '../../hooks'
+import {
+  getDateStringFromUnixTimestamp,
+  getFormattedAmount,
+} from '../../utils/unitsFormat'
 import './PriceChangeForm.scss'
 
 function PriceChangeForm({
@@ -14,26 +17,13 @@ function PriceChangeForm({
   setShowChangePriceForm,
   setSelectedProduct,
 }) {
-  let [invoicePreview, setInvoicePreview] = useState({})
+  const invoicePreview = useInvoicePreview({
+    customerId,
+    subscriptionId,
+    newProductSelected,
+  })
 
-  useEffect(() => {
-    async function fetchData() {
-      const bodyParams = {
-        newPriceId: newProductSelected.toUpperCase(),
-        customerId,
-        subscriptionId,
-      }
-      const result = await axios.post(
-        `${URL}/stripe/retrieve-upcoming-invoice`,
-        bodyParams,
-      )
-      console.log(result)
-      setInvoicePreview(result)
-    }
-    fetchData()
-  }, [customerId, subscriptionId, newProductSelected])
-
-  console.log(invoicePreview)
+  console.log('invoicePreview: ', invoicePreview)
 
   async function confirmPriceChange() {
     const bodyParams = {

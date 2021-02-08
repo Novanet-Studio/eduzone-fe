@@ -1,84 +1,70 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link, Prompt, useHistory, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, Prompt, useHistory } from 'react-router-dom'
 
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import ErrorMessage from '../components/ErrorMessage'
-import useError from '../hooks/useError'
-import { useGlobal } from '../context/globalContext'
-import { useAccount } from '../hooks/useAccount'
+import { Header, Footer } from '../layout'
+
+import { ErrorMessage } from '../components/share'
+import { useError, useFormInput } from '../hooks'
 import { checkUserExists, createCustomer } from '../helpers/register'
+import { setUserCredentials } from '../utils/common'
 import './Register.scss'
 
 function Register() {
   const history = useHistory()
-  const location = useLocation()
+  const email = useFormInput('')
+  const password = useFormInput('')
+  const confirmPassword = useFormInput('')
   const [loading, setLoading] = useState(false)
-  const { error, showError } = useError(null)
-  const { accountInformation, updateAccountInformation } = useAccount()
-  const {
-    formState,
-    setIsTyping,
-    setInitialFormState,
-    handleTypingChange,
-    changeLocation,
-  } = useGlobal()
-  const _isMounted = useRef(true)
+  const [error, showError] = useError()
 
-  if (location.state && location.state.transition) {
-    setInitialFormState()
-    location.state.transition = false
+  const isTyping = () =>
+    email.isTyping || password.isTyping || confirmPassword.isTyping
+
+  const resetInput = () => {
+    email.reset()
+    password.reset()
+    confirmPassword.reset()
   }
-
-  useEffect(() => {
-    return () => (_isMounted.current = false)
-  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsTyping(false)
     setLoading(true)
     try {
-      if (!_isMounted.current) return
-      let { email, password, confirmPassword } = formState
-
-      if (password !== confirmPassword) {
-        console.log('Passwords not match')
-        password = ''
-        confirmPassword = ''
+      if (password.value !== confirmPassword.value) {
+        password.reset()
+        confirmPassword.reset()
         showError('Passwords not match')
         setLoading(false)
         return
       }
 
-      const exists = await checkUserExists(email)
-      console.log(exists)
+      const exists = await checkUserExists(email.value)
       if (exists) {
         setLoading(false)
-        console.log('User already exists')
         showError('User already exists')
         return
       }
 
-      const customerCreated = await createCustomer(email)
-      console.log('creating a new customer')
-      updateAccountInformation('customer', customerCreated)
+      const customer = await createCustomer(email.value)
       setLoading(false)
+      // Set in sessionStorage to send to create user
+      setUserCredentials(email.value, password.value)
+      resetInput()
+      setLoading(false)
+      history.push('/prices', { customer })
     } catch (error) {
-      console.log({ error })
-      console.log(error.response.data.message)
+      resetInput()
       setLoading(false)
       showError(error.response.data.message)
     }
   }
 
-  if (accountInformation.customer) {
-    history.push('/prices')
-  }
-
   return (
     <>
-      <Prompt message={changeLocation} />
+      <Prompt
+        when={isTyping()}
+        message="Are you secure do you want to leave?"
+      />
       <Header loggedIn={false} />
       <section className="register">
         <div className="container">
@@ -91,9 +77,9 @@ function Register() {
                 type="text"
                 id="email"
                 name="email"
-                value={formState.email}
-                onChange={handleTypingChange}
                 placeholder="Email address"
+                value={email.value}
+                onChange={email.onChange}
                 required
               />
               <input
@@ -101,11 +87,11 @@ function Register() {
                 type="password"
                 id="password"
                 name="password"
-                value={formState.password}
                 minLength="6"
                 maxLength="20"
-                onChange={handleTypingChange}
                 placeholder="Enter password"
+                value={password.value}
+                onChange={password.onChange}
                 required
               />
               <input
@@ -113,11 +99,11 @@ function Register() {
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
-                value={formState.confirmPassword}
                 minLength="6"
                 maxLength="20"
-                onChange={handleTypingChange}
                 placeholder="Password confirmation"
+                value={confirmPassword.value}
+                onChange={confirmPassword.onChange}
                 required
               />
               <p className="register__password">

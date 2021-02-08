@@ -1,14 +1,13 @@
 import { useState } from 'react'
 
-const useError = (initialState) => {
-  const [error, setError] = useState(initialState)
+const useError = (initialValue) => {
+  const [error, setError] = useState(initialValue)
 
-  const showError = (message) => {
-    setError(message)
-    setTimeout(() => setError(null), 3000)
-  }
+  const showError = (message) => setError(message)
 
-  return { error, showError }
+  setTimeout(() => setError(null), 5000)
+
+  return [error, showError]
 }
 
 export default useError

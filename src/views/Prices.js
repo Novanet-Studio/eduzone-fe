@@ -1,34 +1,20 @@
 import { useState } from 'react'
-import { withRouter } from 'react-router-dom'
-
-import Product from '../components/Product'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Modal from '../components/Modal'
-import PaymentForm from '../components/PaymentForm'
+import { useLocation } from 'react-router-dom'
+import { Header, Footer } from '../layout'
+import { PaymentForm, Product } from '../components/payment'
 import { products } from '../constants'
 import './Prices.scss'
 
 function Prices() {
-  const [productSelected, setProduct] = useState(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const [loadAccount, setLoadAccount] = useState(false)
+  const location = useLocation()
+  const [productSelected, setProductSelected] = useState(null)
 
-  const handleClick = (key) => setProduct(products[key])
+  const handleClick = (key) => setProductSelected(products[key])
 
-  const closeModal = (e) => {
-    setIsOpen(false)
-    setLoadAccount(true)
-  }
-
-  const setSent = () => {
-    setIsOpen(true)
-  }
 
   return (
     <>
       <Header />
-      <Modal isOpen={isOpen} closeModal={closeModal} />
       <section className="prices">
         <div className="container">
           <div className="prices__info">
@@ -45,8 +31,7 @@ function Prices() {
             {productSelected && (
               <PaymentForm
                 productSelected={productSelected}
-                setSent={setSent}
-                load={loadAccount}
+                customer={location.state.customer}
               />
             )}
           </div>
@@ -57,4 +42,4 @@ function Prices() {
   )
 }
 
-export default withRouter(Prices)
+export default Prices

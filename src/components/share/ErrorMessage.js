@@ -1,8 +1,8 @@
 import './ErrorMessage.scss'
 
-const ErrorMessage = ({ errorMessage }) => (
+const ErrorMessage = ({ error }) => (
   <div className="error">
-    <p className="error__text">{errorMessage}</p>
+    <p className="error__text">{error}</p>
   </div>
 )
 

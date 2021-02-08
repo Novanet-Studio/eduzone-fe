@@ -1,36 +1,23 @@
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Subscribe from '../components/Subscribe'
-import MainDropdown from '../components/MainDropdown'
+import { Header, Footer } from '../layout'
+import { FaqAccordion, Subscribe } from '../components/home'
 import Ipad from '../assets/images/ipad-libros.png'
-import './Main.scss'
+import './Home.scss'
 
-function Main() {
-  const history = useHistory()
-  const [isSuscribed, setIsSubscribed] = useState(false)
-  const [redirectLogin, setRedirectLogin] = useState(false)
+function Home() {
+  const [login, setLogin] = useState(false)
 
-  const subscribe = (value) => setIsSubscribed(value)
+  const changeLocation = () => setLogin(true)
 
-  const handleClick = () => setRedirectLogin(true)
-
-  console.log('Is subscribe from main? ', isSuscribed);
-
-  if (isSuscribed) {
-    history.push('/register')
+  if (login) {
+    return <Redirect to="/login" />
   }
-
-  if (redirectLogin) {
-    history.push('/login')
-  }
-
 
   return (
     <>
-      <Header loggedIn={false} handleClick={handleClick} />
+      <Header loggedIn={false} onClick={changeLocation} />
       <div>
         <section className="hero">
           <div className="container">
@@ -39,7 +26,7 @@ function Main() {
               <p className="hero__text">
                 Subscribe and gain access to our content
               </p>
-              <Subscribe subscribe={subscribe} />
+              <Subscribe />
             </div>
           </div>
         </section>
@@ -66,7 +53,7 @@ function Main() {
         <section className="faq">
           <div className="container">
             <h2 className="faq__title">Frequently Asked Questions</h2>
-            <MainDropdown />
+            <FaqAccordion />
             <div className="faq__info">
               <h3 className="faq__info-title">
                 Discover our interactive eBooks
@@ -74,7 +61,7 @@ function Main() {
               <p className="faq__info-text">
                 Subscribe and gain access to our content
               </p>
-              <Subscribe parentClass="faq" subscribe={subscribe} />
+              <Subscribe parentClass="faq" />
             </div>
           </div>
         </section>
@@ -84,4 +71,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Home

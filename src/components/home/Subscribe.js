@@ -1,34 +1,34 @@
 import { useState } from 'react'
-import { useGlobal } from '../context/globalContext'
+import { useHistory } from 'react-router-dom'
+import useFormInput from '../../hooks/useFormInput'
 
-export const Subscribe = ({ parentClass = 'hero', subscribe }) => {
-  const [email, setEmail] = useState('')
+const Subscribe = ({ parentClass = 'hero' }) => {
+  const history = useHistory()
+  const email = useFormInput('')
   const [loading, setLoading] = useState(false)
-  const { updateFormState } = useGlobal()
 
   const currentClass = parentClass === 'hero' ? 'hero__' : 'faq__info-'
 
-  const handleSubmit = (e) => {
+  const handleSubscribe = (e) => {
     e.preventDefault()
-    console.log('Main subscription')
     setLoading(true)
-    updateFormState({ email })
-    setTimeout(() => subscribe(true), 200)
+    setTimeout(() => {
+      sessionStorage.setItem('email', email.value)
+      history.push('/register')
+    }, 200)
     setLoading(false)
   }
 
-  const handleChange = ({ currentTarget }) => setEmail(currentTarget.value)
-
   return (
-    <form className={`${currentClass}subs`} onSubmit={handleSubmit}>
+    <form className={`${currentClass}subs`} onSubmit={handleSubscribe}>
       <input
         className={`${currentClass}input`}
         type="email"
         name="email"
         id="email"
         placeholder="Email"
-        value={email}
-        onChange={handleChange}
+        value={email.value}
+        onChange={email.onChange}
         required
       />
       <button className={`${currentClass}button`} type="submit">

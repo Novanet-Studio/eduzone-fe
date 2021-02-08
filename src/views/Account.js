@@ -1,120 +1,88 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useLocation, withRouter } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Product from '../components/Product'
-import PriceChangeForm from '../components/PriceChangeForm'
-import AccountEditing from '../components/AccountEditing'
-import AccountDetails from '../components/AccountDetails'
-import { URL, products } from '../constants'
-import { useAccount } from '../hooks/useAccount'
+// Layout
+import { Header, Footer } from '../layout'
+import { AccountEditing, AccountDetails } from '../components/account'
+import { Product, PriceChangeForm } from '../components/payment'
+import {
+  getUser,
+  getUserAccount,
+  removeUserSession,
+  setUserSession,
+} from '../utils/common'
+import { useRetrieveCustomerPaymentMethod, useModal } from '../hooks'
+import { products, URL } from '../constants'
+import { Modal } from '../components/share'
 import './Account.scss'
 
 function Account() {
-  const location = useLocation()
-  const { accountInformation: account } = useAccount()
-  let tempLocation = null
-
-  if (!location.state.accountInformation) {
-    tempLocation = account
-  } else {
-    tempLocation = location.state.accountInformation
-  }
-
-  const [accountInformation, setAccountInformation] = useState(tempLocation)
-  const [customerPaymentMethod, setCustomerPaymentMethod] = useState(null)
+  const history = useHistory()
+  const account = getUserAccount()
+  const user = getUser()
+  const customerPaymentMethod = useRetrieveCustomerPaymentMethod(
+    account.paymentMethodId,
+  )
+  const [isEditing, setIsEditing] = useState(false)
   const [showChangePriceForm, setShowChangePriceForm] = useState(false)
   const [subscriptionCancelled, setSubscriptionCancelled] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
   const [newProductSelected, setNewProductSelected] = useState('')
-  const [selectedProduct, setSelectedProduct] = useState(
-    accountInformation.priceId,
-  )
+  const [selectedProduct, setSelectedProduct] = useState(account.priceId)
   const [loadingContent, setLoadingContent] = useState(false)
-
-  useEffect(() => {
-    async function fetchData() {
-      if (!accountInformation.paymentMethodId) return
-      try {
-        const { data } = await axios.post(
-          `${URL}/stripe/retrieve-customer-payment-method`,
-          {
-            paymentMethodId: accountInformation.paymentMethodId,
-          },
-        )
-
-        const paymentMethod = data.card.brand + ' •••• ' + data.card.last4
-
-        setCustomerPaymentMethod(paymentMethod)
-      } catch (error) {
-        console.log('[CANCEL_SUBSCRIPTION]')
-        console.log(error)
-        throw new Error(error.message)
-      }
-    }
-
-    fetchData()
-  }, [accountInformation.paymentMethodId])
+  const [isOpen, closeModal] = useModal(false)
 
   useEffect(() => {
     if (!subscriptionCancelled) return
-
-    async function fetchUser() {
+    const fetchUser = async () => {
+      setLoadingContent(true)
       try {
-        const { data } = await axios.get(`${URL}/auth/me`)
-        setAccountInformation(data)
+        const {
+          data: { user },
+        } = await axios.get(`${URL}/auth/me`)
+        setUserSession(user)
         setLoadingContent(false)
       } catch (error) {
+        console.log({ error })
         setLoadingContent(false)
-        console.log('ERROR GETTING USER DATA')
-        console.log(error)
+        throw new Error('Error getting updated user data')
       }
     }
 
     fetchUser()
   }, [subscriptionCancelled])
 
-  const handleChangePriceForm = () => setShowChangePriceForm(true)
-  const handleClick = (key) => setNewProductSelected(products[key].name)
+  const handleLogout = () => {
+    removeUserSession()
+    history.push('/login')
+  }
 
-  async function cancelSubscription() {
+  const handleCancelSubscription = async () => {
     setLoadingContent(true)
+
     try {
       await axios.post(`${URL}/stripe/cancel-subscription`, {
-        subscriptionId: accountInformation.subscription.id,
+        subscriptionId: account.subscription.id,
       })
 
-      await axios.get(
-        `${URL}/user/deactivate/${accountInformation.user.username}`,
-      )
-
+      await axios.get(`${URL}/user/deactivate/${user.username}`)
       setSubscriptionCancelled(true)
       alert('Subscription cancelled')
     } catch (error) {
-      setLoadingContent(false)
-      console.log('[CANCEL_SUBSCRIPTION]')
-      console.log(error.message)
+      setLoadingContent(true)
+      console.log({ error })
+      throw new Error('Error while cancel subscription')
     }
   }
 
-  const signOut = () => {
-    localStorage.clear()
-    window.location.href = '/'
-  }
-
+  const handleChangePriceForm = () => setShowChangePriceForm(true)
+  const handleClick = (key) => setNewProductSelected(products[key].name)
   const handleEdit = () => setIsEditing(!isEditing)
-
-  const updateInformation = (user) =>
-    setAccountInformation({ ...accountInformation, user })
-
-  console.log('account view: ', accountInformation)
 
   if (loadingContent) {
     return (
       <>
-        <Header loggedIn={true} handleClick={signOut} />
+        <Header loggedIn={true} handleClick={handleLogout} />
         <section className="account">
           <div className="container">
             <div className="account__info">
@@ -134,7 +102,8 @@ function Account() {
 
   return (
     <>
-      <Header loggedIn={true} handleClick={signOut} />
+      <Header loggedIn={true} onClick={handleLogout} />
+      <Modal isOpen={isOpen} closeModal={closeModal} />
       <section className="account">
         <div className="container">
           <div className="account__info">
@@ -149,24 +118,15 @@ function Account() {
               </div>
               <hr className="account__line" />
               {isEditing ? (
-                <AccountEditing
-                  defaults={accountInformation.user}
-                  updateInformation={updateInformation}
-                  editing={setIsEditing}
-                />
+                <AccountEditing editing={setIsEditing} />
               ) : (
-                <AccountDetails
-                  firstname={accountInformation.user.firstname}
-                  lastname={accountInformation.user.lastname}
-                  email={accountInformation.user.username}
-                  status={accountInformation.user.status}
-                />
+                <AccountDetails />
               )}
             </div>
 
             {/* Stripe account */}
 
-            {accountInformation.subscription ? (
+            {account.subscription.id ? (
               <div className="account__card">
                 <div className="account__card-header">
                   <h3 className="account__card-title">Billing account</h3>
@@ -190,7 +150,7 @@ function Account() {
 
                 <div
                   className="account__button"
-                  onClick={() => cancelSubscription()}
+                  onClick={() => handleCancelSubscription()}
                 >
                   Cancel subscription {'>'}
                 </div>
@@ -232,8 +192,8 @@ function Account() {
                 </div>
                 {newProductSelected ? (
                   <PriceChangeForm
-                    customerId={accountInformation.subscription.customer}
-                    subscriptionId={accountInformation.subscription.id}
+                    customerId={account.subscription.customer}
+                    subscriptionId={account.subscription.id}
                     currentProductSelected={selectedProduct}
                     newProductSelected={newProductSelected}
                     setShowChangePriceForm={setShowChangePriceForm}
@@ -262,4 +222,4 @@ function Account() {
   )
 }
 
-export default withRouter(Account)
+export default Account

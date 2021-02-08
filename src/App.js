@@ -1,54 +1,66 @@
-import { Switch, Route, useHistory } from 'react-router-dom'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { Route, Switch, useHistory } from 'react-router-dom'
 
-import Auth from './helpers/auth'
-import useAuth from './hooks/useAuth'
-import { GlobalProvider } from './context/globalContext'
-import { AccountProvider } from './context/accountContext'
-import { ProtectedRoute, routes } from './router'
+import Home from './views/Home'
+import Account from './views/Account'
+import Login from './views/Login'
+import Register from './views/Register'
+import Prices from './views/Prices'
+import PublicRoute from './routes/PublicRoute'
+import PrivateRoute from './routes/PrivateRoute'
+import { URL } from './constants'
+import {
+  getToken,
+  initAxiosInterceptors,
+  removeUserSession,
+  setAccount,
+  setUserSession,
+} from './utils/common'
 
-console.log(process.env.NODE_ENV)
+initAxiosInterceptors()
 
-Auth.initAxiosInterceptors()
-
-const App = () => {
+function App() {
   const history = useHistory()
-  const auth = useAuth()
+  const [authLoading, setAuthLoading] = useState(true)
 
-  if (auth.user) {
-    // Wait 500ms to enter in account, prevent error.
-    setTimeout(() => {
-      history.push('/account', { accountInformation: auth })
-    }, 500)
+  useEffect(() => {
+    const loadUser = async () => {
+      const token = getToken()
+      if (!token) {
+        return
+      }
+
+      try {
+        const {
+          data: { priceId, paymentMethodId, subscription, user },
+        } = await axios.get(`${URL}/auth/me`)
+        setAccount({ priceId, paymentMethodId, subscription })
+        setUserSession(user)
+        setTimeout(() => history.push('/account'), 200)
+        setAuthLoading(false)
+      } catch (error) {
+        removeUserSession()
+        setAuthLoading(false)
+      }
+    }
+
+    loadUser()
+  }, [history])
+
+  if (authLoading && getToken()) {
+    return <div className="content">Checking Authentication...</div>
   }
 
   return (
     <Switch>
-      {routes.map((route, index) =>
-        !route.protected ? (
-          <Route
-            key={index}
-            exact={route.exact}
-            path={route.path}
-            component={route.component}
-          />
-        ) : (
-          <ProtectedRoute
-            key={index}
-            exact={route.exact}
-            path={route.path}
-            children={route.component}
-          />
-        ),
-      )}
+      <Route exact path="/" component={Home} />
+      <PublicRoute path="/login" component={Login} />
+      <PublicRoute path="/register" component={Register} />
+      <PublicRoute path="/prices" component={Prices} />
+      <PrivateRoute path="/account" component={Account} />
     </Switch>
   )
 }
 
-//eslint-disable-next-line
-export default () => (
-  <GlobalProvider>
-    <AccountProvider>
-      <App />
-    </AccountProvider>
-  </GlobalProvider>
-)
+export default App

@@ -1,87 +1,86 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { Link, useHistory, Prompt, useLocation } from 'react-router-dom'
+import { useHistory, Link, Prompt } from 'react-router-dom'
 
-import Auth from '../helpers/auth'
-import Footer from '../components/Footer'
-import useError from '../hooks/useError'
-import ErrorMessage from '../components/ErrorMessage'
+import { Footer } from '../layout'
+
+import { ErrorMessage } from '../components/share'
+import { useError, useFormInput } from '../hooks'
+import { setAccount, setToken, setUserSession } from '../utils/common'
 import { URL } from '../constants'
-import { useGlobal } from '../context/globalContext'
-import { useAccount } from '../hooks/useAccount'
 import './Login.scss'
 
 function Login() {
   const history = useHistory()
-  const location = useLocation()
+  const email = useFormInput('')
+  const password = useFormInput('')
+  const [error, showError] = useError()
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState(false)
-  const { error, showError } = useError(null)
-  const { updateAll } = useAccount()
-  const {
-    formState,
-    setIsTyping,
-    setInitialFormState,
-    handleTypingChange,
-    changeLocation,
-  } = useGlobal()
 
-  if (location.state && location.state.transition) {
-    setInitialFormState()
-    location.state.transition = false
+  const isTyping = () => email.isTyping || password.isTyping
+
+  const resetInput = () => {
+    email.reset()
+    password.reset()
   }
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    setIsTyping(false)
     setLoading(true)
-
-    const bodyParams = {
-      userName: formState.email,
-      password: formState.password,
+    const signinParams = {
+      userName: email.value,
+      password: password.value,
     }
-
     try {
-      const { data: response, status } = await axios.post(
-        `${URL}/auth/signin`,
-        bodyParams,
-      )
-      if (status === 200) {
-        Auth.setToken(response.token)
-        const { data } = await axios.get(`${URL}/auth/me`)
+      const { data } = await axios.post(`${URL}/auth/signin`, signinParams)
+      setToken(data.token)
 
-        updateAll(data)
-        localStorage.setItem('auth', data.auth)
-        setLoading(false)
-        setUser(true)
-      }
+      const { data: me } = await axios.get(`${URL}/auth/me`)
+      const { priceId, paymentMethodId, subscription, user } = me
+
+      setUserSession(user)
+      setAccount({
+        priceId,
+        paymentMethodId,
+        subscription,
+      })
+      setLoading(false)
+      resetInput()
+      history.push('/account')
     } catch (error) {
       setLoading(false)
-      showError(error.response.data.message)
-    }
-  }
+      console.log({ error })
 
-  if (user) {
-    history.push('/account')
+      if (error.response.status === 401) {
+        showError(error.response.data.message)
+      }
+
+      showError('Somenthing went wrong. Please try again later.')
+      resetInput()
+    }
   }
 
   return (
     <>
-      <Prompt message={changeLocation} />
+      <Prompt
+        when={isTyping()}
+        message="Are you secure do you want to leave?"
+      />
       <section className="login">
         <div className="container">
           <div className="login__info">
             <h2 className="login__title">Login</h2>
-            {error && <ErrorMessage errorMessage={error} />}
-            <form className="login__form" onSubmit={handleSubmit}>
+            {error && <ErrorMessage error={error} />}
+            <form className="login__form" onSubmit={handleLogin}>
               <input
                 className="login__input"
                 type="email"
                 name="email"
                 id="email"
                 placeholder="Email address"
-                value={formState.email}
-                onChange={handleTypingChange}
+                autoComplete="new-email"
+                value={email.value}
+                onChange={email.onChange}
               />
               <input
                 className="login__input"
@@ -89,11 +88,12 @@ function Login() {
                 name="password"
                 id="password"
                 placeholder="Password"
-                value={formState.password}
-                onChange={handleTypingChange}
+                autoComplete="new-password"
+                value={password.value}
+                onChange={password.onChange}
               />
-              <button className="login__button">
-                {loading ? 'loading...' : 'Login'}
+              <button className="login__button" disabled={loading}>
+                {loading ? 'Loading...' : 'Login'}
               </button>
             </form>
             <p className="login__text">

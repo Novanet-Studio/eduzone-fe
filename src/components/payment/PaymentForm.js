@@ -1,26 +1,30 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
+import { useHistory } from 'react-router-dom'
 import {
   CardElement,
   Elements,
-  useStripe,
   useElements,
+  useStripe,
 } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 
-import Auth from '../helpers/auth'
-import ErrorMessage from './ErrorMessage'
-import useError from '../hooks/useError'
-import { useHistory } from 'react-router-dom'
-import { useGlobal } from '../context/globalContext'
-import { useAccount } from '../hooks/useAccount'
-import { URL } from '../constants'
+import { ErrorMessage } from '../share'
+import { useError, useFormInput } from '../../hooks'
+import { URL } from '../../constants'
+import {
+  getUserCredentials,
+  removeUserCredentials,
+  setAccount,
+  setToken,
+  setUserSession,
+} from '../../utils/common'
+
 import './PaymentForm.scss'
-import Logo from '../assets/images/lock-solid-01.png'
 
 const { REACT_APP_STRIPE_PK } = process.env
 
-// Load stripe with Public Key
+// Load stripe with Public key
 const stripePromise = loadStripe(REACT_APP_STRIPE_PK)
 
 if (!REACT_APP_STRIPE_PK) {
@@ -29,17 +33,16 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, setSent, load }) => {
+const CheckoutForm = ({ productSelected, customer }) => {
+  const [userCreated, setUserCreated] = useState(false)
   const stripe = useStripe()
   const history = useHistory()
   const elements = useElements()
+  const firstname = useFormInput('')
+  const lastname = useFormInput('')
   const [subscribing, setSubscribing] = useState(false)
-  const [accountInformation, setAccountInformation] = useState(null)
-  const [userCreated, setUserCreated] = useState(false)
-  const { error, showError } = useError(null)
-  const { formState, updateFormState } = useGlobal()
-  const { accountInformation: account, updateAccountInformation } = useAccount()
-  const { customer } = account
+  const [error, showError] = useError(null)
+  const [accountInformation, setAccountInformation] = useState(false)
 
   async function handlePaymentCustomerAction({
     subscription,
@@ -226,9 +229,10 @@ const CheckoutForm = ({ productSelected, setSent, load }) => {
 
   // Register new user after subscription
   // TODO: Extract this function into new file
-  async function createUser({ firstname, userName, password }) {
+  async function createUser({ firstname, lastname, userName, password }) {
     const bodyParams = {
       firstname,
+      lastname,
       userName,
       password,
     }
@@ -237,31 +241,37 @@ const CheckoutForm = ({ productSelected, setSent, load }) => {
     console.log(bodyParams)
 
     try {
-      const { data: user } = await axios.post(`${URL}/auth/signup`, bodyParams)
+      const { data } = await axios.post(`${URL}/auth/signup`, bodyParams)
 
-      if (!user.auth) {
+      if (!data.auth) {
         console.log('Cannot register user')
+        showError('Cannot register user')
         return
       }
 
-      Auth.setToken(user.token)
+      setToken(data.token)
 
       const { data: me } = await axios.get(`${URL}/auth/me`)
-
-      localStorage.setItem('auth', me.auth)
-      setAccountInformation(me)
+      const { priceId, paymentMethodId, subscription, user } = me
+      
+      setUserSession(user)
+      setAccount({
+        priceId,
+        paymentMethodId,
+        subscription,
+      })
       setUserCreated(true)
+      setAccountInformation(me)
     } catch (error) {
       setSubscribing(false)
+      console.log({ error })
       showError(error.response.data.message)
       throw new Error(error)
     }
   }
 
   const handleSubmit = async (e) => {
-    // Block native form submission.
     e.preventDefault()
-
     setSubscribing(true)
 
     if (!stripe || !elements) {
@@ -293,6 +303,7 @@ const CheckoutForm = ({ productSelected, setSent, load }) => {
         showError(error && error.message)
         return
       }
+
       console.log('[PaymentMethod]', paymentMethod)
       const paymentMethodId = paymentMethod.id
       if (latestInvoicePaymentIntentStatus === 'requires_payment_method') {
@@ -312,14 +323,19 @@ const CheckoutForm = ({ productSelected, setSent, load }) => {
 
       if (subscriptionComplete) {
         console.log('Creating user in magic box')
-        createUser({
-          firstname: formState.firstname,
-          userName: formState.email,
-          password: formState.password,
-        })
-        setSent()
-      }
+        const { email, password } = getUserCredentials()
 
+        createUser({
+          firstname: firstname.value,
+          lastname: lastname.value,
+          userName: email,
+          password: password,
+        })
+
+        sessionStorage.setItem('paymentMethodId', paymentMethodId)
+        sessionStorage.setItem('new::user', true)
+        removeUserCredentials()
+      }
     } catch (error) {
       console.log({ error })
       setSubscribing(false)
@@ -327,78 +343,78 @@ const CheckoutForm = ({ productSelected, setSent, load }) => {
       throw new Error(error)
     }
   }
-
-  const handleChange = ({ currentTarget: { name, value } }) =>
-    updateFormState({ [name]: value })
-
-  if (accountInformation && userCreated && load) {
-    console.log('[Account Information]', accountInformation)
-
-    sessionStorage.setItem(
-      'paymentMethodId',
-      accountInformation.paymentMethodId,
-    )
-
-    history.push('/account', { accountInformation })
-  }
   
+  if (accountInformation && userCreated) {
+    console.log('[Account Information]', accountInformation)
+    history.push('/account')
+  }
+
   return (
-    <div className="payment">
-      {error && <ErrorMessage errorMessage={error} />}
-      <p className="payment__text">
-        Enter your card details. <br />
-        Your subscription will start now
-      </p>
-      <p className="payment__price">
-        {'->'} Total due now <span>{productSelected.price}</span>
-      </p>
-      <p className="payment__name">
-        {'->'} Subscribing to <span>{productSelected.name}</span>
-      </p>
-      <div className="payment__form">
-        <input
-          className="payment__input"
-          type="text"
-          id="name"
-          name="firstname"
-          value={formState.firstname}
-          placeholder="First name"
-          onChange={handleChange}
-          required
-        />
-        <input
-          className="payment__input"
-          type="text"
-          id="lastname"
-          name="lastname"
-          value={formState.lastname}
-          placeholder="Last name"
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <form id="payment-form" className="payment__form" onSubmit={handleSubmit}>
-        <div className="payment__form-group">
-          <label>Card number</label>
-          <div className="payment__form-element">
-            <CardElement options={{}} />
-          </div>
-          {/* <div className="payment__form-error">{error ? error : null}</div> */}
+    <>
+      <div className="payment">
+        {error && <ErrorMessage errorMessage={error} />}
+        <p className="payment__text">
+          Enter your card details. <br />
+          Your subscription will start now
+        </p>
+        <p className="payment__price">
+          {'->'} Total due now <span>{productSelected.price}</span>
+        </p>
+        <p className="payment__name">
+          {'->'} Subscribing to <span>{productSelected.name}</span>
+        </p>
+        <div className="payment__form">
+          <input
+            className="payment__input"
+            type="text"
+            id="name"
+            name="firstname"
+            placeholder="First name"
+            value={firstname.value}
+            onChange={firstname.onChange}
+            required
+          />
+          <input
+            className="payment__input"
+            type="text"
+            id="lastname"
+            name="lastname"
+            placeholder="Last name"
+            value={lastname.value}
+            onChange={lastname.onChange}
+            required
+          />
         </div>
-        <button className="payment__button" type="submit">
-          {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
-        </button>
-      </form>
-      <p className="payment__text-down">
-        By clicking "Subscribe to Edu-zone", you are confirming that you have
-        read and accept our Terms of Service. You also agree that IXL will save
-        your card details in order to automatically renew your subscription and
-        process future account updates. If we change in any way the way we use
-        the data we store from your card, we will notify you using the email
-        address you provided. This site is protected by reCAPTCHA and subject to
-        Google's Privacy Policy and Terms of Service.
-      </p>
-    </div>
+        <form
+          id="payment-form"
+          className="payment__form"
+          onSubmit={handleSubmit}
+        >
+          <div className="payment__form-group">
+            <label>Card number</label>
+            <div className="payment__form-element">
+              <CardElement options={{}} />
+            </div>
+          </div>
+          <button
+            className="payment__button"
+            type="submit"
+            disabled={subscribing}
+          >
+            {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
+          </button>
+        </form>
+        <p className="payment__text-down">
+          By clicking "Subscribe to Edu-zone", you are confirming that you have
+          read and accept our Terms of Service. You also agree that Eduzone will
+          save your card details in order to automatically renew your
+          subscription and process future account updates. If we change in any
+          way the way we use the data we store from your card, we will notify
+          you using the email address you provided. This site is protected by
+          reCAPTCHA and subject to Google's Privacy Policy and Terms of Service.
+        </p>
+      </div>
+    </>
   )
 }
 

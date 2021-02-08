@@ -1,43 +1,49 @@
 import axios from 'axios'
-import { useRef, useEffect } from 'react'
-
-import { useGlobal } from '../context/globalContext'
-import { URL } from '../constants'
+import { useFormInput } from '../../hooks'
+import { getUser, setUserSession } from '../../utils/common'
+import { URL } from '../../constants'
 import './AccountEditing.scss'
 
-const AccountEditing = ({ defaults, updateInformation, editing }) => {
-  const { formState, updateFormState, setInitialFormState } = useGlobal()
-  const _isMounted = useRef(true)
+const AccountEditing = ({ editing }) => {
+  const current = getUser()
+  const firstname = useFormInput('')
+  const lastname  = useFormInput('')
+  const email  = useFormInput('')
+  const password  = useFormInput('')
+  // const confirmPassword  = useFormInput('')
 
-  useEffect(() => {
-    return () => (_isMounted.current = false)
-  }, [])
-
-  const handleChange = ({ currentTarget: { name, value } }) =>
-    updateFormState({ [name]: value })
+  const resetInputs = () => {
+    firstname.reset()
+    lastname.reset()
+    email.reset()
+    password.reset()
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const defaultLastname = defaults.lastname || ''
+    const defaultLastname = current.lastname || ''
     const bodyRequest = {
-      firstname: formState.firstname || defaults.firstname,
-      lastname: formState.lastname || defaultLastname,
-      userName: formState.email || defaults.username,
-      password: formState.password,
+      firstname: firstname.value || current.firstname,
+      lastname: lastname.value || defaultLastname,
+      userName: email.value || current.username,
+      password: password.value || null,
     }
 
     try {
-      if (!_isMounted.current) return
+      // if (!_isMounted.current) return
 
       const { data } = await axios.post(`${URL}/user/update`, bodyRequest)
 
-      updateInformation({ ...data.user })
+      // updateInformation({ ...data.user })
+      setUserSession(data.user)
       editing(false)
-      setInitialFormState()
+      // setInitialFormState()
+      resetInputs()
       console.log('data sent')
     } catch (error) {
       console.log('[EDITING_ACCOUNT]')
       console.error({ error })
+      resetInputs()
       throw new TypeError(error)
     }
   }
@@ -52,9 +58,9 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           className="edit__form-input"
           type="text"
           name="firstname"
-          value={formState.firstname}
-          placeholder={defaults.firstname}
-          onChange={handleChange}
+          value={firstname.value}
+          placeholder={current.firstname}
+          onChange={firstname.onChange}
         />
       </div>
       <div className="edit__form-group">
@@ -65,9 +71,9 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           className="edit__form-input"
           type="text"
           name="lastname"
-          value={formState.lastname}
-          placeholder={defaults.lastname || 'empty'}
-          onChange={handleChange}
+          value={lastname.value}
+          placeholder={current.lastname || 'empty'}
+          onChange={lastname.onChange}
         />
       </div>
       <div className="edit__form-group edit__group-full">
@@ -78,9 +84,9 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           className="edit__form-input"
           type="email"
           name="email"
-          value={formState.email}
-          placeholder={defaults.username}
-          onChange={handleChange}
+          value={email.value}
+          placeholder={current.username}
+          onChange={email.onChange}
         />
       </div>
       <div className="edit__form-group edit__group-full">
@@ -91,9 +97,9 @@ const AccountEditing = ({ defaults, updateInformation, editing }) => {
           className="edit__form-input"
           type="password"
           name="password"
-          value={formState.password}
+          value={password.value}
           placeholder="•••••••••••"
-          onChange={handleChange}
+          onChange={password.onChange}
         />
         <p className="edit__text-down">
           The password must be at least 6 characters. The password must be
