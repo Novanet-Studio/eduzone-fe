@@ -32,6 +32,11 @@ function Account() {
   const [loadingContent, setLoadingContent] = useState(false)
   const [isOpen, closeModal] = useModal(false)
 
+  const productName = (name) => {
+    const product = products.filter(product => product.type === name)
+    return product[0].name
+  }
+
   useEffect(() => {
     if (!subscriptionCancelled) return
     const fetchUser = async () => {
@@ -59,12 +64,13 @@ function Account() {
 
   const handleCancelSubscription = async () => {
     setLoadingContent(true)
+    const bodyParams = {
+      email: user.username,
+      subscriptionId: account.subscription.id,
+    }
 
     try {
-      await axios.post(`${URL}/stripe/cancel-subscription`, {
-        subscriptionId: account.subscription.id,
-      })
-
+      await axios.post(`${URL}/stripe/cancel-subscription`, bodyParams)
       await axios.get(`${URL}/user/deactivate/${user.username}`)
       setSubscriptionCancelled(true)
       alert('Subscription cancelled')
@@ -76,7 +82,7 @@ function Account() {
   }
 
   const handleChangePriceForm = () => setShowChangePriceForm(true)
-  const handleClick = (key) => setNewProductSelected(products[key].name)
+  const handleClick = (key) => setNewProductSelected(products[key].type)
   const handleEdit = () => setIsEditing(!isEditing)
 
   if (loadingContent) {
@@ -131,7 +137,7 @@ function Account() {
                 <div className="account__card-header">
                   <h3 className="account__card-title">Billing account</h3>
                   <p>Current Price</p>
-                  <span className="account__card-data">{selectedProduct}</span>
+                  <span className="account__card-data">{productName(selectedProduct)}</span>
                 </div>
                 <hr className="account__line" />
                 <div className="account__card-info">

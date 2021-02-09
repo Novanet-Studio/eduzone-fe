@@ -14,7 +14,7 @@ const useRetrieveCustomerPaymentMethod = (paymentMethodId) => {
           paymentMethodId,
         })
         const paymentMethod = data.card.brand + ' •••• ' + data.card.last4
-        setCustomerPaymentMethod(paymentMethod)
+        setCustomerPaymentMethod(paymentMethod) 
       } catch (error) {
         console.log('[RETRIEVE_CUSTOMER_PAYMENT_METHOD]')
         console.log({ error })

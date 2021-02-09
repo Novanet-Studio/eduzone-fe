@@ -139,7 +139,7 @@ const CheckoutForm = ({ productSelected, customer }) => {
     paymentMethodId,
     invoiceId,
   }) {
-    const priceId = productSelected.name.toUpperCase()
+    const priceId = productSelected.type.toUpperCase()
     const bodyParams = {
       paymentMethodId,
       invoiceId,
@@ -196,7 +196,7 @@ const CheckoutForm = ({ productSelected, customer }) => {
   }
 
   async function createSubscription({ paymentMethodId }) {
-    const priceId = productSelected.name.toUpperCase()
+    const priceId = productSelected.type.toUpperCase()
     const bodyParams = {
       paymentMethodId,
       priceId,
@@ -211,7 +211,7 @@ const CheckoutForm = ({ productSelected, customer }) => {
       const result = {
         paymentMethodId,
         subscription: data,
-        priceId: productSelected.name,
+        priceId: productSelected.type,
       }
       const paymentCustomerActionResult = await handlePaymentCustomerAction(
         result,
@@ -229,12 +229,13 @@ const CheckoutForm = ({ productSelected, customer }) => {
 
   // Register new user after subscription
   // TODO: Extract this function into new file
-  async function createUser({ firstname, lastname, userName, password }) {
+  async function createUser({ firstname, lastname, userName, password, type }) {
     const bodyParams = {
       firstname,
       lastname,
       userName,
       password,
+      type,
     }
 
     console.log('[BODY_PARAMS]')
@@ -330,6 +331,7 @@ const CheckoutForm = ({ productSelected, customer }) => {
           lastname: lastname.value,
           userName: email,
           password: password,
+          type: productSelected.type,
         })
 
         sessionStorage.setItem('paymentMethodId', paymentMethodId)
