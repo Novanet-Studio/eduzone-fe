@@ -6,26 +6,62 @@ export const URL =
 export const products = [
   {
     key: 0,
-    price: '$6.00',
-    name: 'Basic Math 1-6',
+    price: '$8.95',
+    name: 'Math',
     type: 'math',
     interval: 'month',
-    billed: 'mounthy',
+    billed: 'monthly',
+    content: [
+      'Math',
+      'Grades 1 to 6',
+    ]
   },
   {
     key: 1,
-    price: '$9.00',
-    name: 'Language Arts 1-5',
+    price: '$8.95',
+    name: 'Language Arts',
     type: 'arts',
     interval: 'month',
-    billed: 'mounthy',
+    billed: 'monthly',
+    content: [
+      'English Language',
+      'Grades 1 to 5'
+    ]
   },
   {
     key: 2,
-    price: '$12.00',
-    name: 'Combo package ELA-Math',
+    price: '$12.95',
+    name: 'Combo package',
     type: 'ela',
     interval: 'month',
-    billed: 'mounthy',
+    billed: 'monthly',
+    content: [
+      'Math & English Language',
+      'ELA Grades 1 to 5',
+      'Math Grades 1 to 6',
+    ]
+  },
+]
+
+export const faq = [
+  {
+    title: 'What is Edu-zone?',
+    body: 'Lorem ipsum dolor sit amet, consectetur adi'
+  },
+  {
+    title: 'What content will i find in the subscription?',
+    body: 'Lorem ipsum dolor sit amet, consectetur adi'
+  },
+  {
+    title: 'How much does it cost?',
+    body: 'Lorem ipsum dolor sit amet, consectetur adi'
+  },
+  {
+    title: 'Where can i access Edu-zone?',
+    body: 'Lorem ipsum dolor sit amet, consectetur adi'
+  },
+  {
+    title: 'How do i cancel?',
+    body: 'Lorem ipsum dolor sit amet, consectetur adi'
   },
 ]

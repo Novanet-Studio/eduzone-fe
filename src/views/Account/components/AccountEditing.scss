@@ -1,0 +1,153 @@
+// Archivos importados
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/mixins';
+
+/*dEdit*/
+.edit {
+  &__form {
+    @include flex;
+    justify-content: space-between;
+    &-group {
+      @include flex;
+    }
+    &-label {
+      margin-bottom: 1vh;
+    }
+    &-input {
+      flex: 0 0 100%;
+      border: 1px $gris1 solid;
+      font-weight: 400;
+      color: $negro;
+      border-radius: 0.4em;
+    }
+  }
+  &__button {
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    background-color: $azul;
+    border-radius: 0.4em;
+    margin-top: 1vh;
+    font-size: 1rem;
+    padding: 1vh 1vh;
+    &-update {
+      cursor: pointer;
+      border-radius: 0.4em;
+      border: none;
+      color: #fff;
+      background-color: $rojo;
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  .edit {
+    &__form {
+      &-group {
+        margin: 2vh 0;
+        flex: 0 0 100%;
+      }
+      &-input {
+        font-size: 1rem;
+        padding: 1vh;
+      }
+    }
+    &__button {
+      &-update {
+        font-size: 1rem;
+        padding: 1vh 2vh;
+      }
+    }
+    &__text-down {
+      margin: 1vh 0 0 0;
+      font-size: 1rem;
+      line-height: 1.3rem;
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  .edit {
+    &__form {
+      padding-top: 1vh;
+      &-group {
+        margin: 3vh 0;
+        flex: 0 0 100%;
+      }
+      &-label {
+        margin-bottom: 1vh;
+      }
+      &-input {
+        font-size: 1rem;
+        padding: 2vh;
+      }
+    }
+    &__button {
+      &-update {
+        margin-top: 2vh;
+        font-size: 1rem;
+        padding: 1vh 3vh;
+      }
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  .edit {
+    &__form {
+      &-group {
+        margin: 1vh 0;
+      }
+      &-input {
+        font-size: 1.2rem;
+      }
+    }
+    &__button {
+      &-update {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  .edit {
+    &__form {
+      &-group {
+        margin: 1vh 0;
+        flex: 0 0 48%;
+      }
+      &__input-full {
+        flex: 0 0 100%;
+      }
+      &-input {
+        padding: 1vh;
+      }
+    }
+    &__button {
+      padding: 0.8vh 5vh;
+      font-size: 1rem;
+      &-update {
+        font-size: 1.2rem;
+        margin-top: 1vh;
+      }
+    }
+    &__group-full {
+      flex: 0 0 100%;
+    }
+    &__text-down {
+      margin-top: 2vh;
+      font-size: 1.1rem;
+      line-height: 1.3rem;
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+}
