@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Logo from '../assets/images/edu-logo.png'
+import Logo from '@images/edu-logo.png'
 
 const Header = ({ loggedIn, onClick }) => {
   return (

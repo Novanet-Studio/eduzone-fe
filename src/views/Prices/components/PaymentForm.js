@@ -9,16 +9,16 @@ import {
 } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 
-import ErrorMessage from '../../../components/ErrorMessage';
-import { useError, useFormInput } from '../../../hooks'
-import { URL } from '../../../constants'
+import ErrorMessage from '@components/ErrorMessage';
+import { useError, useFormInput } from '@hooks'
+import { URL } from '@constants'
 import {
   getUserCredentials,
   removeUserCredentials,
   setAccount,
   setToken,
   setUserSession,
-} from '../../../utils/common'
+} from '@utils/common'
 
 import './PaymentForm.scss'
 

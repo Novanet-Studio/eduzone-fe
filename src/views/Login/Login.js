@@ -2,12 +2,12 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useHistory, Link, Prompt } from 'react-router-dom'
 
-import { Footer } from '../../layout'
+import { Footer } from '@layout'
 
-import ErrorMessage from '../../components/ErrorMessage'
-import { useError, useFormInput } from '../../hooks'
-import { setAccount, setToken, setUserSession } from '../../utils/common'
-import { URL } from '../../constants'
+import ErrorMessage from '@components/ErrorMessage'
+import { useError, useFormInput } from '@hooks'
+import { setAccount, setToken, setUserSession } from '@utils/common'
+import { URL } from '@constants'
 import './Login.scss'
 
 function Login() {

@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
-import { URL } from '../../../constants'
-import { useInvoicePreview } from '../../../hooks'
+import { URL } from '@constants'
+import { useInvoicePreview } from '@hooks'
 import {
   getDateStringFromUnixTimestamp,
   getFormattedAmount,
-} from '../../../utils/unitsFormat'
+} from '@utils/unitsFormat'
 import './PriceChangeForm.scss'
 
 function PriceChangeForm({

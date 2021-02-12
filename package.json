@@ -6,6 +6,7 @@
   "homepage": "https://eduzonestore.edu-zone.org",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.1",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -24,10 +25,10 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "cross-env PORT=4000 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "cross-env PORT=4000 craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "clean": "rm -rf ./build"
   },
   "eslintConfig": {

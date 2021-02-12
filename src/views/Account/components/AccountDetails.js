@@ -1,4 +1,4 @@
-import { getUser } from '../../../utils/common'
+import { getUser } from '@utils/common'
 import './AccountDetails.scss'
 
 const AccountDetails = () => {

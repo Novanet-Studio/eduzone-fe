@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Header, Footer } from '../../layout'
+import { Header, Footer } from '@layout'
 import { PaymentForm } from './components'
-import Product from '../../components/Product'
-import { products } from '../../constants'
+import Product from '@components/Product'
+import { products } from '@constants'
 import './Prices.scss'
 
 function Prices() {

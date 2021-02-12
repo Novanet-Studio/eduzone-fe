@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { URL } from '../constants'
+import { URL } from '@constants'
 
 const useInvoicePreview = ({
   customerId,

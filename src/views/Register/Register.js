@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Link, Prompt } from 'react-router-dom'
 
-import { Header } from '../../layout'
+import { Header, Footer } from '@layout'
 
-import ErrorMessage from '../../components/ErrorMessage'
-import { useError, useFormInput } from '../../hooks'
-import { products } from '../../constants'
-import Product from '../../components/Product'
+import ErrorMessage from '@components/ErrorMessage'
+import { useError, useFormInput } from '@hooks'
+import { products } from '@constants';
+import Product from '@components/Product'
 import PaymentForm from './components/PaymentForm'
 import './Register.scss'
 

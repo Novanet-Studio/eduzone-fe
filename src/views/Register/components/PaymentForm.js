@@ -8,13 +8,13 @@ import {
 } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 
-import { useFormInput } from '../../../hooks'
+import { useFormInput } from '@hooks'
 import {
   checkUserExists,
   createCustomer,
   createUser,
-} from '../../../services/eduzoneServer'
-import { createSubscription, retryInvoiceWithNewPaymentMethod } from '../../../services/stripe'
+} from '@services/eduzoneServer'
+import { createSubscription, retryInvoiceWithNewPaymentMethod } from '@services/stripe'
 import './PaymentForm.scss'
 
 // TODO: clean sessionStorage after to go to account

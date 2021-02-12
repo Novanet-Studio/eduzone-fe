@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { URL } from '../constants'
+import { URL } from '@constants'
 
 const useRetrieveCustomerPaymentMethod = (paymentMethodId) => {
   const [customerPaymentMethod, setCustomerPaymentMethod] = useState(null)

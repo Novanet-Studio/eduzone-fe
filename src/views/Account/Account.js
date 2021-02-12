@@ -1,17 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import Modal from '../../components/Modal'
-import Product from '../../components/Product'
-import { products, URL } from '../../constants'
-import { Footer, Header } from '../../layout'
-import { useModal, useRetrieveCustomerPaymentMethod } from '../../hooks'
+import Modal from '@components/Modal'
+import Product from '@components/Product'
+import { products, URL } from '@constants'
+import { Footer, Header } from '@layout'
+import { useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
 import {
   getUser,
   getUserAccount,
   removeUserSession,
   setUserSession
-} from '../../utils/common'
+} from '@utils/common'
 import { AccountDetails, AccountEditing, PriceChangeForm } from './components'
 import './Account.scss'
 

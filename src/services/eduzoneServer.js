@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { URL } from '../constants'
-import { setAccount, setToken, setUserSession } from '../utils/common'
+import { URL } from '@constants'
+import { setAccount, setToken, setUserSession } from '@utils/common'
 
 export const checkUserExists = async (email) => {
   if (typeof email !== 'string') throw new Error('Incorrect email provided')

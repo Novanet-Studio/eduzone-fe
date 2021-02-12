@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import Accordion from '../../components/Accordion'
-import { Header, Footer } from '../../layout'
-import { Subscribe, CarouselItems } from './components'
-import { faq, products } from '../../constants'
-import Ipad from '../../assets/images/ipad-libros.png'
-import Product from '../../components/Product'
-import Carousel from '../../components/Carousel'
+
+import Accordion from '@components/Accordion'
+import Product from '@components/Product'
+import Carousel from '@components/Carousel'
+import { Header, Footer } from '@layout'
+import { Subscribe } from './components'
+import { faq, products } from '@constants'
+import Ipad from '@images/ipad-libros.png'
 import './Home.scss'
 
 function Home() {

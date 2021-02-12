@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import useFormInput from '../../../hooks/useFormInput'
+import useFormInput from '@hooks/useFormInput'
 
 const Subscribe = ({ parentClass = 'hero' }) => {
   const history = useHistory()

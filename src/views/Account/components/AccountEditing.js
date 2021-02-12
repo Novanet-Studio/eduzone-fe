@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { useFormInput } from '../../../hooks'
-import { getUser, setUserSession } from '../../../utils/common'
-import { URL } from '../../../constants'
+import { useFormInput } from '@hooks'
+import { getUser, setUserSession } from '@utils/common'
+import { URL } from '@constants'
 import './AccountEditing.scss'
 
 const AccountEditing = ({ editing }) => {
