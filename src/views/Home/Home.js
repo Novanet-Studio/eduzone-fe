@@ -7,6 +7,9 @@ import { Subscribe } from './components'
 import { faq, products } from '../../constants'
 import Ipad from '../../assets/images/ipad-libros.png'
 import Product from '../../components/Product'
+import Carrusel from '../../components/Carrusel'
+import CarruselItems from "./components/CarruselItems"
+
 import './Home.scss'
 
 const faqClasses = {
@@ -36,7 +39,7 @@ function Home() {
       <div>
         <section className="hero">
           <div className="container">
-            {/* Carousel goes here */}
+           <Carrusel array={CarruselItems} />
           </div>
         </section>
 
