@@ -1,22 +1,14 @@
 import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-
-import Accordion from '../../components/Accordion'
+import Acordion from '../../components/Acordion'
 import { Header, Footer } from '../../layout'
 import { Subscribe } from './components'
 import { faq, products } from '../../constants'
 import Ipad from '../../assets/images/ipad-libros.png'
 import Product from '../../components/Product'
 import Carrusel from '../../components/Carrusel'
-import CarruselItems from "./components/CarruselItems"
-
+import CarruselItems from './components/CarruselItems'
 import './Home.scss'
-
-const faqClasses = {
-  parent: 'faq__drop',
-  title: 'faq__question',
-  body: 'faq__answer',
-}
 
 function Home() {
   const [login, setLogin] = useState(false)
@@ -39,7 +31,7 @@ function Home() {
       <div>
         <section className="hero">
           <div className="container">
-           <Carrusel array={CarruselItems} />
+            <Carrusel array={CarruselItems} />
           </div>
         </section>
 
@@ -62,7 +54,7 @@ function Home() {
           </div>
         </section>
 
-        <section style={{ backgroundColor: 'gray', padding: '1rem'}}>
+        <section style={{ backgroundColor: 'gray', padding: '1rem' }}>
           <h2>Choose a plan</h2>
           <div className="products">
             {products.map((product) => (
@@ -80,7 +72,7 @@ function Home() {
         <section className="faq">
           <div className="container">
             <h2 className="faq__title">Frequently Asked Questions</h2>
-            <Accordion data={faq} classes={faqClasses} />
+            <Acordion data={faq} />
           </div>
         </section>
       </div>

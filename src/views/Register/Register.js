@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Link, Prompt } from 'react-router-dom'
 
-import { Header, Footer } from '../../layout'
+import { Header } from '../../layout'
 
 import ErrorMessage from '../../components/ErrorMessage'
 import { useError, useFormInput } from '../../hooks'
-import { products } from '../../constants';
+import { products } from '../../constants'
 import Product from '../../components/Product'
 import PaymentForm from './components/PaymentForm'
 import './Register.scss'
@@ -112,7 +112,6 @@ function Register() {
           </div>
         </div>
       </section>
-      {/* <Footer /> */}
     </>
   )
 }

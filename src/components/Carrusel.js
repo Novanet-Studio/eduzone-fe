@@ -3,11 +3,10 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 export default function Carrusel(array) {
-
-  const imagePath = [];
-  Object.keys(array).forEach(i => {
+  const imagePath = []
+  Object.keys(array).forEach((i) => {
     imagePath.push(...array[i])
-  });
+  })
 
   const settings = {
     dots: true,
