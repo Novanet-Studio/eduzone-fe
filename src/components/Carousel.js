@@ -2,7 +2,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-export default function Carrusel({ items }) {
+export default function Carousel({ items }) {
   const settings = {
     dots: true,
     arrows: true,

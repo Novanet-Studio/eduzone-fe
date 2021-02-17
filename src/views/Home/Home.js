@@ -6,7 +6,7 @@ import { Subscribe, CarouselItems } from './components'
 import { faq, products } from '../../constants'
 import Ipad from '../../assets/images/ipad-libros.png'
 import Product from '../../components/Product'
-import Carrusel from '../../components/Carrusel'
+import Carousel from '../../components/Carousel'
 import './Home.scss'
 
 function Home() {
@@ -30,7 +30,7 @@ function Home() {
       <div>
         <section className="hero">
           <div className="container">
-            <Carrusel items={CarouselItems} />
+            <Carousel items={CarouselItems} />
           </div>
         </section>
 
