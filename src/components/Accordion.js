@@ -1,5 +1,5 @@
 import {
-  Accordion,
+  Accordion as AccordionWrapper,
   AccordionItem,
   AccordionItemHeading,
   AccordionItemButton,
@@ -14,9 +14,9 @@ const options = {
   allowZeroExpanded: true,
 }
 
-const Acordion = ({ data }) =>
+const Accordion = ({ data }) =>
   data.map((item, index) => (
-    <Accordion key={index} {...options}>
+    <AccordionWrapper key={index} {...options}>
       <AccordionItem>
         <AccordionItemHeading>
           <AccordionItemButton>{item.title}</AccordionItemButton>
@@ -25,7 +25,7 @@ const Acordion = ({ data }) =>
           <p>{item.body}</p>
         </AccordionItemPanel>
       </AccordionItem>
-    </Accordion>
+    </AccordionWrapper>
   ))
 
-export default Acordion
+export default Accordion

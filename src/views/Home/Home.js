@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import Acordion from '../../components/Acordion'
+import Accordion from '../../components/Accordion'
 import { Header, Footer } from '../../layout'
 import { Subscribe, CarouselItems } from './components'
 import { faq, products } from '../../constants'
@@ -71,7 +71,7 @@ function Home() {
         <section className="faq">
           <div className="container">
             <h2 className="faq__title">Frequently Asked Questions</h2>
-            <Acordion data={faq} />
+            <Accordion data={faq} />
           </div>
         </section>
       </div>
