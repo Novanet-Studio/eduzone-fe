@@ -2,12 +2,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-export default function Carrusel(array) {
-  const imagePath = []
-  Object.keys(array).forEach((i) => {
-    imagePath.push(...array[i])
-  })
-
+export default function Carrusel({ items }) {
   const settings = {
     dots: true,
     arrows: true,
@@ -20,7 +15,7 @@ export default function Carrusel(array) {
   }
   return (
     <Slider className="slider" {...settings}>
-      {imagePath.map((imagen, i) => (
+      {items.map((imagen, i) => (
         <div key={i}>
           <img src={imagen} alt="Alt de la imagen" />
         </div>
