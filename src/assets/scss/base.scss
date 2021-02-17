@@ -53,7 +53,7 @@ button {
   @include center;
   text-align: center;
   color: #fff;
-  background-color: $gris2;
+  background-color: $negro;
   .container {
     justify-content: center;
   }
@@ -102,7 +102,7 @@ button {
 
   p {
     font-size: 1.2rem;
-    line-height: 1.4rem;
+    line-height: 1.5rem;
   }
 
   /* Header */
@@ -224,7 +224,7 @@ button {
   /* Header */
   .header {
     &__logo {
-      width: 20vw;
+      width: 23vw;
     }
   }
 
@@ -282,11 +282,8 @@ button {
 
   /* Header */
   .header {
-    .container {
-      padding: 0 10vh;
-    }
     &__logo {
-      width: 14vw;
+      width: 15vw;
     }
   }
 
