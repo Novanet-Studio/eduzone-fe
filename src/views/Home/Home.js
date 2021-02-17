@@ -2,12 +2,11 @@ import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import Acordion from '../../components/Acordion'
 import { Header, Footer } from '../../layout'
-import { Subscribe } from './components'
+import { Subscribe, CarouselItems } from './components'
 import { faq, products } from '../../constants'
 import Ipad from '../../assets/images/ipad-libros.png'
 import Product from '../../components/Product'
 import Carrusel from '../../components/Carrusel'
-import CarruselItems from './components/CarruselItems'
 import './Home.scss'
 
 function Home() {
@@ -31,7 +30,7 @@ function Home() {
       <div>
         <section className="hero">
           <div className="container">
-            <Carrusel array={CarruselItems} />
+            <Carrusel items={CarouselItems} />
           </div>
         </section>
 
