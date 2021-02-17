@@ -15,13 +15,8 @@
       "@utils/*": ["src/utils/*"],
       "@views/*": ["src/views/*"],
       "@images/*": ["src/assets/images/*"]
-    },
+    }
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "build"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build"]
 }
