@@ -51,6 +51,11 @@
           background: $amarillo;
         }
       }
+      .products__data {
+        &-img {
+          width: 83%;
+        }
+      }
     }
   }
   &__title {
@@ -100,11 +105,11 @@
       margin-bottom: 7vh;
     }
     &__head {
-      padding: 3vh 0;
+      padding: 2vh 0;
       border-radius: 2.5em 2.5em 0 0;
     }
     &__title {
-      font-size: 1.9rem;
+      font-size: 1.7rem;
     }
     &__data {
       margin-top: 2vh;
@@ -141,6 +146,12 @@
     }
     &__data {
       margin: 4vh 1vh 0;
+      &-name,
+      &-description,
+      &-price {
+        font-size: 1rem;
+        line-height: 1.4rem;
+      }
     }
     &__check {
       margin-top: 4vh;
@@ -158,7 +169,7 @@
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
 @include min-media(768px, portrait) {
   .products {
-    padding-bottom: 3vh;
+    padding-bottom: 6vh;
     padding-left: 3vh;
     padding-right: 3vh;
     &__card {
@@ -187,14 +198,15 @@
       border-radius: 3.5em 3.5em 0 0;
     }
     &__title {
-      font-size: 2.1rem;
+      font-size: 1.9rem;
     }
     &__data {
       &-name,
       &-description,
       &-price {
-        font-size: 1.4rem;
-        line-height: 1.8rem;
+        font-size: 1.3rem;
+        line-height: 1.5rem;
+        margin-bottom: 0.5vh;
       }
     }
     &__check {

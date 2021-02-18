@@ -35,26 +35,50 @@
     background-color: $rojo;
     border-radius: 0.4em;
   }
-  &__text-down {
-    margin-top: 3vh;
+  &__data {
+    margin-top: 1vh;
   }
   &__secure {
     text-align: left;
     display: flex;
     align-items: center;
   }
+  &__data {
+    @include flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__price,
+  &__name {
+    color: #fff;
+    font-weight: 300;
+    border-radius: 0.4em;
+    font-weight: 400;
+    span {
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+  &__price {
+    background-color: $azul;
+  }
+  &__name {
+    background-color: $verde;
+  }
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
 @include min-media(320px, portrait) {
-  /*Payment*/
+    /*Payment*/
   .payment {
     &__text {
       margin: 1vh 0;
     }
     &__price,
     &__name {
+      padding:1vh 2vh;
       margin: 2vh 0;
+      font-size: 1rem;
     }
     &__input {
       width: 100%;
@@ -63,6 +87,7 @@
       margin: 2vh 0;
     }
     &__button {
+      margin-bottom: 3vh;
       font-size: 1rem;
       padding: 1vh 2vh;
     }
@@ -81,27 +106,33 @@
   }
 }
 
+
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
 @include min-media(568px, landscape) {
   /*Payment*/
   .payment {
     margin: 2vh 0;
+    flex: 0 0 83%;
     &__text {
       margin: 1vh 0;
     }
     &__price,
     &__name {
-      margin: 2vh 0;
+      margin: 2vh !important;
+      padding:1vh 2vh;
+      font-size: 1rem;
     }
     &__input {
       width: 100%;
       font-size: 1rem;
-      padding: 2vh;
+      padding: 3vh 2vh;
       margin: 2vh 0;
     }
     &__button {
+      margin-top: 3vh;
       font-size: 1.1rem;
       padding: 2vh 3vh;
+      margin-bottom: 2vh;
     }
     &__secure {
       margin-top: 4vh;
@@ -122,9 +153,11 @@
 @include min-media(768px, portrait) {
   /*Payment*/
   .payment {
+    flex: 0 0 80%;
     &__price,
     &__name {
-      margin: 1vh 0;
+      margin:2vh 1vh !important;
+      padding: 0.5vh 1vh;
     }
     &__form {
       &-group {
@@ -135,6 +168,7 @@
     }
     &__input {
       margin: 1.5vh 0;
+      padding: 1vh 1.5vh;
     }
     &__input,
     &__button {
@@ -157,11 +191,7 @@
 @include min-media(1024px, landscape) {
   /*Payment*/
   .payment {
-    flex: 0 0 90%;
-    &__price,
-    &__name {
-      margin: 2vh 0;
-    }
+    flex: 0 0 65% !important;
     &__form {
       &-group {
         label {
@@ -178,6 +208,10 @@
       margin: 0 1.5vh;
     }
     &__button {
+      font-size: 1.2rem;
+    }
+    &__price,
+    &__name {
       font-size: 1.2rem;
     }
 

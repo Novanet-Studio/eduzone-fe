@@ -14,7 +14,10 @@ import {
   createCustomer,
   createUser,
 } from '@services/eduzoneServer'
-import { createSubscription, retryInvoiceWithNewPaymentMethod } from '@services/stripe'
+import {
+  createSubscription,
+  retryInvoiceWithNewPaymentMethod,
+} from '@services/stripe'
 import './PaymentForm.scss'
 
 // TODO: clean sessionStorage after to go to account
@@ -117,7 +120,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
           invoiceId,
           customerId,
           paymentMethodId,
-          priceId: productSelected.type.toUpperCase()
+          priceId: productSelected.type.toUpperCase(),
         })
         return
       }
@@ -165,16 +168,16 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
 
   return (
     <div className="payment">
-      <p className="payment__text">
-        Enter your card details. <br />
-        Your subscription will start now
-      </p>
-      <p className="payment__price">
-        {'»'} Total due now <span>{productSelected.price}</span>
-      </p>
-      <p className="payment__name">
-        {'»'} Subscribing to <span>{productSelected.name}</span>
-      </p>
+      <h2 className="payment__title">Enter your card details</h2>
+      <h3 className="payment__subtitle">Your subscription will start now</h3>
+      <div className="payment__data">
+        <p className="payment__price">
+          {'»'} Total due now <span>{productSelected.price}</span>
+        </p>
+        <p className="payment__name">
+          {'»'} Subscribing to <span>{productSelected.name}</span>
+        </p>
+      </div>
       <div className="payment__form">
         <input
           className="payment__input"
@@ -204,7 +207,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
             <CardElement options={{}} />
           </div>
         </div>
-        <p className="payment__text-down">
+        <p className="payment__text">
           By clicking <b>Subscribe to Edu-zone</b>, you are confirming that you
           have read and accept our Terms of Service. You also agree that Eduzone
           will save your card details in order to automatically renew your
