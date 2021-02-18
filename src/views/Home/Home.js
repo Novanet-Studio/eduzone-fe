@@ -75,7 +75,7 @@ function Home() {
             <p className="plan__text">
               All our subscriptions include a 30-day free trial, we will not
               charge anything until 30 days after the subscription date you can
-              cancel your subscription at any time
+              cancel your subscription at any time.
             </p>
             <Subscribe />
           </div>

@@ -49,11 +49,10 @@
 @include min-media(320px, portrait) {
   /* Register */
   .register {
-    height: 93vh;
+    padding: 5vh 0;
     &__info {
       border-radius: 3em;
-      width: 90vw;
-      padding: 2vh 2vh 4vh 2vh;
+      padding: 2vh 0 4vh;
     }
     &__title {
       padding-bottom: 2vh;
@@ -62,10 +61,10 @@
       padding-top: 3vh;
     }
     &__form {
-      width: 90%;
+      width: 100%;
     }
     &__input {
-      width: 100%;
+      width: 90%;
       font-size: 1rem;
       padding: 1vh 1.5vh;
       margin: 2vh 0;
@@ -89,21 +88,17 @@
   .register {
     &__info {
       border-radius: 3em;
-      width: 90vw;
       padding: 4vh 0;
-      margin: 4vh 0;
+      margin: 5vh;
     }
     &__text {
       padding-top: 2vh;
     }
-    &__form {
-      width: 70%;
-    }
     &__input {
-      width: 100%;
+      width: 95%;
       font-size: 1rem;
       padding: 3vh 2vh;
-      margin: 2vh 0;
+      margin: 2vh 0 6vh 0;
     }
     &__button {
       margin-top: 1vh;
@@ -122,19 +117,16 @@
 @include min-media(768px, portrait) {
   /* Register */
   .register {
-    height: 67vh;
+    padding: 5vh 3vh;
     &__info {
       border-radius: 4em;
-    }
-    &__form {
-      width: 70%;
     }
     &__input,
     &__button {
       font-size: 1.3rem;
     }
     &__input {
-      margin: 1.5vh 0;
+      margin: 1.5vh 0 4vh;
     }
   }
 }
@@ -143,15 +135,13 @@
 @include min-media(1024px, landscape) {
   /* Register */
   .register {
-    height: 72vh;
     &__info {
       border-radius: 4em;
     }
-    &__form {
-      width: 70%;
-    }
     &__input,
     &__button {
+      width: 30%;
+      margin: 0 1.5vh 4vh;
       font-size: 1.4rem;
       padding: 1vh 2vh;
     }
@@ -166,7 +156,7 @@
   /* Register */
   .register {
     &__info {
-      width: 53vw;
+      width: 80vw;
     }
   }
 }

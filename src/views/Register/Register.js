@@ -78,8 +78,8 @@ function Register() {
                 onChange={confirmPassword.onChange}
                 required
               />
-              <section>
-                <h2>Choose a plan</h2>
+              <section className="plan">
+                <h2 className="plan__title">Choose a plan</h2>
                 <div className="products">
                   {products.map((product) => (
                     <Product

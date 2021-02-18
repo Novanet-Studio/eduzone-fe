@@ -4,9 +4,10 @@
 
 /*Payment*/
 .payment {
+  padding: 3vh 4vh 0;
   &__form {
     &-group {
-      margin: 2vh 0;
+      margin: 2vh;
       text-align: left;
     }
     &-element {
@@ -26,6 +27,7 @@
     border-radius: 0.4em;
   }
   &__button {
+    margin-top: 2vh;
     border: none;
     border-radius: 0;
     color: #fff;
@@ -170,7 +172,11 @@
     &__input {
       padding: 1vh 2vh;
     }
-    &__input,
+    &__input {
+      font-size: 1.2rem;
+      width: 47.5%;
+      margin: 0 1.5vh;
+    }
     &__button {
       font-size: 1.2rem;
     }
