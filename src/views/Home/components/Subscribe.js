@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import useFormInput from '@hooks/useFormInput'
 
-const Subscribe = ({ parentClass = 'hero' }) => {
+const Subscribe = ({ parentClass = 'square-subs' }) => {
   const history = useHistory()
   const email = useFormInput('')
   const [loading, setLoading] = useState(false)
 
-  const currentClass = parentClass === 'hero' ? 'hero__' : 'faq__info-'
+  const currentClass = parentClass === 'square-subs' ? 'square-subs__' : 'square-subs-'
 
   const handleSubscribe = (e) => {
     e.preventDefault()
@@ -20,6 +20,9 @@ const Subscribe = ({ parentClass = 'hero' }) => {
   }
 
   return (
+    <div className={`${currentClass}info`}>
+      <h3 className={`${currentClass}title`}>Discover our interactive eBooks</h3>
+      <p className={`${currentClass}text`}>Ready to learn? Enter your email to create or restart your membership</p>
     <form className={`${currentClass}subs`} onSubmit={handleSubscribe}>
       <input
         className={`${currentClass}input`}
@@ -35,6 +38,7 @@ const Subscribe = ({ parentClass = 'hero' }) => {
         {loading ? 'Loading...' : `Get started »`}
       </button>
     </form>
+    </div>
   )
 }
 

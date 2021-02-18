@@ -7,7 +7,7 @@ import Carousel from '@components/Carousel'
 import { Header, Footer } from '@layout'
 import { CarouselItems, Subscribe } from './components'
 import { faq, products } from '@constants'
-import Ipad from '@images/ipad-libros.png'
+import LogoEnjoy from '@images/edu-zone-enjoy.png'
 import './Home.scss'
 
 function Home() {
@@ -39,34 +39,47 @@ function Home() {
           <div className="container">
             <div className="enjoy__col-left">
               <h2 className="enjoy__title">Enjoy on your device</h2>
-              <p className="enjoy_text">
-                Access our Ebooks from your favorite web browsers (Chrome,
-                Safari, Edge, Firefox)
-              </p>
-              <p className="enjoy_text">
-                Our books are interactive and you can enjoy games, videos, and
-                images while your learn
+              <p className="enjoy__text">
+                Edu-zone’s digital subscrip,on provides access to more than
+                3,000 pages of digital content, English Language & Arts and Math
+                for K1-6: enriched with illustra,ons, photos, videos, games and
+                prac,ce ques,ons, ideal for students, parents, teachers and
+                educa,onal ins,tu,ons. All our contents are aligned with the
+                common core standards. Our plaaorm is an essen,al tool for the
+                development of literacy and numeracy skills and abili,es in ELA
+                and MATH at levels 1 to 6.
               </p>
             </div>
             <div className="enjoy__col-right">
-              <img className="enjoy__img" src={Ipad} alt="Enjoy ipad" />
+              <img
+                className="enjoy__img"
+                src={LogoEnjoy}
+                alt="Logo Eduzone Enjoy"
+              />
             </div>
           </div>
         </section>
 
-        <section style={{ backgroundColor: 'gray', padding: '1rem' }}>
-          <h2>Choose a plan</h2>
-          <div className="products">
-            {products.map((product) => (
-              <Product
-                key={product.key}
-                product={product}
-                currentProductSelected={productSelected}
-                handleClick={handleClick}
-              />
-            ))}
+        <section className="plan">
+          <div className="container">
+            <h2 className="plan__title">Choose a plan</h2>
+            <div className="products">
+              {products.map((product) => (
+                <Product
+                  key={product.key}
+                  product={product}
+                  currentProductSelected={productSelected}
+                  handleClick={handleClick}
+                />
+              ))}
+            </div>
+            <p className="plan__text">
+              All our subscriptions include a 30-day free trial, we will not
+              charge anything until 30 days after the subscription date you can
+              cancel your subscription at any time.
+            </p>
+            <Subscribe />
           </div>
-          <Subscribe />
         </section>
 
         <section className="faq">
