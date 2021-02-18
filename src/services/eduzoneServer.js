@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { URL } from '@constants'
-import { setAccount, setToken, setUserSession } from '@utils/common'
+import { setAccount, setToken, setUserLicense, setUserSession } from '@utils/common'
 
 export const checkUserExists = async (email) => {
   if (typeof email !== 'string') throw new Error('Incorrect email provided')
@@ -59,9 +59,10 @@ export const createUser = async ({
     setToken(data.token)
 
     const { data: me } = await axios.get(`${URL}/auth/me`)
-    const { priceId, paymentMethodId, subscription, user } = me
+    const { priceId, paymentMethodId, subscription, user, license } = me
 
     setUserSession(user)
+    setUserLicense(license)
     setAccount({
       priceId,
       paymentMethodId,

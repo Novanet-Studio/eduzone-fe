@@ -32,7 +32,7 @@ export const products = [
     key: 2,
     price: '$12.95',
     name: 'Combo package',
-    type: 'ela',
+    type: 'combo',
     image: ComboProduct,
     interval: 'month',
     billed: 'monthly',

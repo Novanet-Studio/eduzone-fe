@@ -9,17 +9,18 @@ import { useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
 import {
   getUser,
   getUserAccount,
+  getUserLicense,
   removeUserSession,
-  setUserSession
+  setUserSession,
 } from '@utils/common'
 import { AccountDetails, AccountEditing, PriceChangeForm } from './components'
 import './Account.scss'
-
 
 function Account() {
   const history = useHistory()
   const account = getUserAccount()
   const user = getUser()
+  const userLicense = getUserLicense()
   const customerPaymentMethod = useRetrieveCustomerPaymentMethod(
     account.paymentMethodId,
   )
@@ -32,7 +33,7 @@ function Account() {
   const [isOpen, closeModal] = useModal(false)
 
   const productName = (name) => {
-    const product = products.filter(product => product.type === name)
+    const product = products.filter((product) => product.type === name)
     return product[0].name
   }
 
@@ -113,6 +114,7 @@ function Account() {
         <div className="container">
           <div className="account__info">
             <h2 className="account__title">Account Settings</h2>
+
             {/* User account */}
             <div className="account__card">
               <div className="account__card-header">
@@ -129,14 +131,38 @@ function Account() {
               )}
             </div>
 
-            {/* Stripe account */}
+            {/* User account */}
 
+            {userLicense?.type && (
+              <div className="account__card">
+                <div className="account__card-header">
+                  <h3 className="account__card-title">User License</h3>
+                </div>
+                <hr className="account__line" />
+                <div>
+                  <p style={{fontWeight: 'bold'}}>License Name</p>
+                  <span className="account__card-data">
+                    <p>{userLicense.type}</p>
+                  </span>
+                </div>
+                <div>
+                  <p style={{fontWeight: 'bold'}}>Access code</p>
+                  <span className="account__card-data">
+                    <p>{userLicense.accesscode}</p>
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Stripe account */}
             {account.subscription.id ? (
               <div className="account__card">
                 <div className="account__card-header">
                   <h3 className="account__card-title">Billing account</h3>
                   <p>Current Price</p>
-                  <span className="account__card-data">{productName(selectedProduct)}</span>
+                  <span className="account__card-data">
+                    {productName(selectedProduct)}
+                  </span>
                 </div>
                 <hr className="account__line" />
                 <div className="account__card-info">

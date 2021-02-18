@@ -36,6 +36,20 @@ export const getUserAccount = () => {
   return JSON.parse(account)
 }
 
+export const getUserLicense = () => {
+  const license = sessionStorage.getItem('eduzone::license')
+  if (!license) return null
+  if (!Object.keys(JSON.parse(license)).length) {
+    return {
+      type: null,
+      accesscode: null,
+    }
+  }
+
+  return JSON.parse(license)
+};
+
+
 export const setToken = (token) => {
   localStorage.setItem('eduzone::token', token)
 }
@@ -45,10 +59,17 @@ export const removeUserSession = () => {
   sessionStorage.removeItem('eduzone::user')
   sessionStorage.removeItem('eduzone::account')
   sessionStorage.removeItem('paymentMethodId')
+  sessionStorage.removeItem('eduzone::license')
+  sessionStorage.removeItem('eduzone::product')
+  sessionStorage.removeItem('email')
 }
 
 export const setUserSession = (user) => {
   sessionStorage.setItem('eduzone::user', JSON.stringify(user))
+}
+
+export const setUserLicense = (license) => {
+  sessionStorage.setItem('eduzone::license', JSON.stringify(license));
 }
 
 export const setAccount = (account) => {

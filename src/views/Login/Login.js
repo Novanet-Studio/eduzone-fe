@@ -6,7 +6,7 @@ import { Footer } from '@layout'
 
 import ErrorMessage from '@components/ErrorMessage'
 import { useError, useFormInput } from '@hooks'
-import { setAccount, setToken, setUserSession } from '@utils/common'
+import { setAccount, setToken, setUserLicense, setUserSession } from '@utils/common'
 import { URL } from '@constants'
 import './Login.scss'
 
@@ -36,8 +36,9 @@ function Login() {
       setToken(data.token)
 
       const { data: me } = await axios.get(`${URL}/auth/me`)
-      const { priceId, paymentMethodId, subscription, user } = me
+      const { priceId, paymentMethodId, subscription, user, license } = me
 
+      setUserLicense(license)
       setUserSession(user)
       setAccount({
         priceId,
