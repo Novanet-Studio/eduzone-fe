@@ -1,3 +1,7 @@
+import MathProduct from './assets/images/math-books-eduzone.png';
+import LanguageProduct from './assets/images/language-books-edu-zone.png';
+import ComboProduct from './assets/images/combo-books-eduzone.png';
+
 export const URL =
   process.env.NODE_ENV === 'production'
     ? 'https://eduzone-server.herokuapp.com'
@@ -9,6 +13,7 @@ export const products = [
     price: '$8.95',
     name: 'Math',
     type: 'math',
+    image: MathProduct,
     interval: 'month',
     billed: 'monthly',
     content: ['Math', 'Grades 1 to 6'],
@@ -18,6 +23,7 @@ export const products = [
     price: '$8.95',
     name: 'Language Arts',
     type: 'arts',
+    image: LanguageProduct,
     interval: 'month',
     billed: 'monthly',
     content: ['English Language', 'Grades 1 to 5'],
@@ -27,6 +33,7 @@ export const products = [
     price: '$12.95',
     name: 'Combo package',
     type: 'ela',
+    image: ComboProduct,
     interval: 'month',
     billed: 'monthly',
     content: [

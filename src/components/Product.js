@@ -1,5 +1,4 @@
 import './Product.scss'
-import ProductImg from '../assets/images/math-books-eduzone.png'
 
 const Product = ({ product, currentProductSelected, handleClick }) => (
   <div className="products__card">
@@ -10,7 +9,7 @@ const Product = ({ product, currentProductSelected, handleClick }) => (
       <p className="products__data-name">{product.name}</p>
       <p className="products__data-description">Grades 1 to 5</p>
       <p className="products__data-description">Access up to 5 users</p>
-      <img className="products__data-img" src={ProductImg} alt="ProductImg" />
+      <img className="products__data-img" src={product.image} alt="ProductImg" />
       <p className="products__data-price">
         {product.price} / {product.billed}
       </p>
