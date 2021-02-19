@@ -17,7 +17,9 @@ const ManageLicense = ({ showError, loading }) => {
         email: user.username,
         accesscode: accesscode.value,
       })
-      const {data:{ license }} = await axios.get(`${URL}/auth/me`)
+      const {
+        data: { license },
+      } = await axios.get(`${URL}/auth/me`)
       loading(true)
       setUserLicense(license)
       setIsAdding(false)
@@ -25,7 +27,9 @@ const ManageLicense = ({ showError, loading }) => {
     } catch (error) {
       console.log({ error })
       loading(true)
-      const {data:{ license }} = await axios.get(`${URL}/auth/me`)
+      const {
+        data: { license },
+      } = await axios.get(`${URL}/auth/me`)
       setUserLicense(license)
       accesscode.reset()
       showError(error.message)
@@ -43,28 +47,31 @@ const ManageLicense = ({ showError, loading }) => {
       {userLicense?.type && (
         <>
           <div>
-            <p style={{ fontWeight: 'bold' }}>License Name</p>
+            <p className="account__text">License Name</p>
             <span className="account__card-data">
               <p>{userLicense.type}</p>
             </span>
           </div>
           <div>
-            <p style={{ fontWeight: 'bold' }}>Access code</p>
+            <p className="account__text">Access code</p>
             <span className="account__card-data">
               <p>{userLicense.accesscode}</p>
             </span>
           </div>
         </>
       )}
-      <input
-        type="text"
-        placeholder="Access Code"
-        value={accesscode.value}
-        onChange={accesscode.onChange}
-      />
-      <button onClick={handleAccessCode}>
-        {isAdding ? 'Adding...' : 'Add'}
-      </button>
+      <form className="account-manage">
+        <input
+          type="text"
+          className="account-manage__input"
+          placeholder="Access Code"
+          value={accesscode.value}
+          onChange={accesscode.onChange}
+        />
+        <button className="account-manage__button" onClick={handleAccessCode}>
+          {isAdding ? 'Adding...' : 'Add'}
+        </button>
+      </form>
     </div>
   )
 }
