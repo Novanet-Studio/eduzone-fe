@@ -5,16 +5,16 @@ import Modal from '@components/Modal'
 import Product from '@components/Product'
 import { products, URL } from '@constants'
 import { Footer, Header } from '@layout'
-import { useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
+import { useError, useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
 import {
   getUser,
   getUserAccount,
   removeUserSession,
   setUserSession,
 } from '@utils/common'
-import { AccountDetails, AccountEditing, PriceChangeForm } from './components'
+import { AccountDetails, AccountEditing, PriceChangeForm, ManageLicense } from './components'
 import './Account.scss'
-import ManageLicense from './components/ManageLicense'
+import ErrorMessage from '@/components/ErrorMessage'
 
 function Account() {
   const history = useHistory()
@@ -23,6 +23,7 @@ function Account() {
   const customerPaymentMethod = useRetrieveCustomerPaymentMethod(
     account.paymentMethodId,
   )
+  const [error, showError] = useError(null)
   const [isEditing, setIsEditing] = useState(false)
   const [showChangePriceForm, setShowChangePriceForm] = useState(false)
   const [subscriptionCancelled, setSubscriptionCancelled] = useState(false)
@@ -94,7 +95,7 @@ function Account() {
               <h2>Account Settings</h2>
               <div className="account__card">
                 <div className="account__card-header">
-                  <p>Loading ...</p>
+                  <p>Updating content ...</p>
                 </div>
               </div>
             </div>
@@ -109,6 +110,7 @@ function Account() {
     <>
       <Header loggedIn={true} onClick={handleLogout} />
       <Modal isOpen={isOpen} closeModal={closeModal} />
+      {error && <ErrorMessage error={error} />}
       <section className="account">
         <div className="container">
           <div className="account__info">
@@ -132,7 +134,7 @@ function Account() {
 
             {/* User account */}
 
-            <ManageLicense />
+            <ManageLicense showError={showError} loading={setLoadingContent} />
 
             {/* Stripe account */}
             {account.subscription.id ? (

@@ -15,6 +15,7 @@ import {
   initAxiosInterceptors,
   removeUserSession,
   setAccount,
+  setUserLicense,
   setUserSession,
 } from './utils/common'
 
@@ -33,10 +34,11 @@ function App() {
 
       try {
         const {
-          data: { priceId, paymentMethodId, subscription, user },
+          data: { priceId, paymentMethodId, subscription, user, license },
         } = await axios.get(`${URL}/auth/me`)
         setAccount({ priceId, paymentMethodId, subscription })
         setUserSession(user)
+        setUserLicense(license)
         setTimeout(() => history.push('/account'), 200)
         setAuthLoading(false)
       } catch (error) {

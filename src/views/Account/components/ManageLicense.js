@@ -1,20 +1,37 @@
-import { useState } from 'react'
-import { getUserLicense } from '@/utils/common'
+import { getUser, getUserLicense, setUserLicense } from '@/utils/common'
 import { useFormInput } from '@/hooks'
+import { useState } from 'react'
+import axios from 'axios'
+import { URL } from '@/constants'
 
-const ManageLicense = () => {
+const ManageLicense = ({ showError, loading }) => {
+  const user = getUser()
   const userLicense = getUserLicense()
   const accesscode = useFormInput('')
-  const licenseType = useFormInput('math')
-  const [isAddingCode, setIsAddingCode] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
 
-  const handleAddingCode = () => {
-    setIsAddingCode(!isAddingCode)
-  }
-
-  const handleAccessCode = () => {
-    console.log(accesscode.value)
-    console.log(licenseType.value)
+  const handleAccessCode = async () => {
+    setIsAdding(true)
+    try {
+      await axios.post(`${URL}/user/assigncode`, {
+        email: user.username,
+        accesscode: accesscode.value,
+      })
+      const {data:{ license }} = await axios.get(`${URL}/auth/me`)
+      loading(true)
+      setUserLicense(license)
+      setIsAdding(false)
+      accesscode.reset()
+    } catch (error) {
+      console.log({ error })
+      loading(true)
+      const {data:{ license }} = await axios.get(`${URL}/auth/me`)
+      setUserLicense(license)
+      accesscode.reset()
+      showError(error.message)
+      setIsAdding(false)
+      loading(false)
+    }
   }
 
   return (
@@ -22,9 +39,9 @@ const ManageLicense = () => {
       <div className="account__card-header">
         <h3 className="account__card-title">Manage License</h3>
       </div>
-      {userLicense?.type ? (
+      <hr className="account__line" />
+      {userLicense?.type && (
         <>
-          <hr className="account__line" />
           <div>
             <p style={{ fontWeight: 'bold' }}>License Name</p>
             <span className="account__card-data">
@@ -38,40 +55,16 @@ const ManageLicense = () => {
             </span>
           </div>
         </>
-      ) : (
-        <>
-          <div
-            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-          >
-            <button
-              className="edit__button"
-              style={{ marginBottom: '.4rem' }}
-              onClick={handleAddingCode}
-            >
-              Add access code
-            </button>
-          </div>
-          <hr className="account__line" />
-          {isAddingCode && (
-            <>
-              <div>
-                <select onChange={licenseType.onChange} value={licenseType.value}>
-                  <option value="math">Math package</option>
-                  <option value="arts">Language Arts package</option>
-                  <option value="combo">Combo package</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="Access Code"
-                  value={accesscode.value}
-                  onChange={accesscode.onChange}
-                />
-              </div>
-              <button onClick={handleAccessCode}>Add</button>
-            </>
-          )}
-        </>
       )}
+      <input
+        type="text"
+        placeholder="Access Code"
+        value={accesscode.value}
+        onChange={accesscode.onChange}
+      />
+      <button onClick={handleAccessCode}>
+        {isAdding ? 'Adding...' : 'Add'}
+      </button>
     </div>
   )
 }
