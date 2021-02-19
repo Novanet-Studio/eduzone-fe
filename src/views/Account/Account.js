@@ -9,18 +9,17 @@ import { useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
 import {
   getUser,
   getUserAccount,
-  getUserLicense,
   removeUserSession,
   setUserSession,
 } from '@utils/common'
 import { AccountDetails, AccountEditing, PriceChangeForm } from './components'
 import './Account.scss'
+import ManageLicense from './components/ManageLicense'
 
 function Account() {
   const history = useHistory()
   const account = getUserAccount()
   const user = getUser()
-  const userLicense = getUserLicense()
   const customerPaymentMethod = useRetrieveCustomerPaymentMethod(
     account.paymentMethodId,
   )
@@ -133,26 +132,7 @@ function Account() {
 
             {/* User account */}
 
-            {userLicense?.type && (
-              <div className="account__card">
-                <div className="account__card-header">
-                  <h3 className="account__card-title">User License</h3>
-                </div>
-                <hr className="account__line" />
-                <div>
-                  <p style={{fontWeight: 'bold'}}>License Name</p>
-                  <span className="account__card-data">
-                    <p>{userLicense.type}</p>
-                  </span>
-                </div>
-                <div>
-                  <p style={{fontWeight: 'bold'}}>Access code</p>
-                  <span className="account__card-data">
-                    <p>{userLicense.accesscode}</p>
-                  </span>
-                </div>
-              </div>
-            )}
+            <ManageLicense />
 
             {/* Stripe account */}
             {account.subscription.id ? (
