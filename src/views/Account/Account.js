@@ -153,15 +153,19 @@ function Account() {
                   <h3 className="account__card-title">
                     Billing account information
                   </h3>
-                  <p>Current plan</p>
-                  <span className="account__card-data">
+                  <div className="account__card-info">
+                    <span className="account__card-data">
+                      <p>Current plan</p>
+                    </span>
+                  </div>
+                  <div className="account__card-data">
                     {productName(selectedProduct)}
                     <img
-                      className="account__img"
+                      className="account__card-img"
                       src={productImage(selectedProduct)}
                       alt={`Product ${productName(selectedProduct)}`}
                     />
-                  </span>
+                  </div>
                 </div>
                 <hr className="account__line" />
                 <div className="account__card-info">
