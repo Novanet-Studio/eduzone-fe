@@ -19,7 +19,7 @@ function Prices() {
         <div className="container">
           <div className="prices__info">
             <h2 className="prices__title">Subscribe to plan</h2>
-            <div className="prices__products">
+            <div className="products">
               {products.map((product, index) => (
                 <Product
                   key={index}

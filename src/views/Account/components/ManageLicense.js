@@ -46,13 +46,13 @@ const ManageLicense = ({ showError, loading }) => {
       <hr className="account__line" />
       {userLicense?.type && (
         <>
-          <div>
+          <div className="account__card-column">
             <p className="account__text">License Name</p>
             <span className="account__card-data">
               <p>{userLicense.type}</p>
             </span>
           </div>
-          <div>
+          <div className="account__card-column">
             <p className="account__text">Access code</p>
             <span className="account__card-data">
               <p>{userLicense.accesscode}</p>
@@ -69,7 +69,7 @@ const ManageLicense = ({ showError, loading }) => {
           onChange={accesscode.onChange}
         />
         <button className="account-manage__button" onClick={handleAccessCode}>
-          {isAdding ? 'Adding...' : 'Add'}
+          {isAdding ? 'Adding...' : 'Redeem'}
         </button>
       </form>
     </div>

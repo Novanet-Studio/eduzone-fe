@@ -178,7 +178,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
         <p className="payment__name">
           {'»'} Subscribing to <span>{productSelected.name}</span>
         </p>
-        <img src={sessionProduct.image} alt={`Package ${sessionProduct.name}`}/>
+        <img className="payment__pro-img" src={sessionProduct.image} alt={`Package ${sessionProduct.name}`}/>
       </div>
       <div className="payment__form">
         <input

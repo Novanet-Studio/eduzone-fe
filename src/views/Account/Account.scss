@@ -36,9 +36,16 @@
     @include flex;
     justify-content: space-between;
     background: rgb(238, 238, 238);
+    /*&-title {margin-bottom:2vh;}*/
     &-data {
       display: inline-flex;
+      p {
+        font-weight: 600;
+      }
     }
+  }
+  &__img {
+    margin: 2vh 0 3vh;
   }
   &__line {
     flex: 100%;
@@ -100,6 +107,9 @@
     &__title {
       padding-bottom: 2vh;
     }
+    &__img {
+      width: 50%;
+    }
     &__card {
       width: 90%;
       margin-top: 3vh;
@@ -117,6 +127,10 @@
       &-data {
         font-size: 1.2rem;
         padding: 0.5vh 1vh;
+      }
+      &-column {
+        width: 100%;
+        padding: 1vh;
       }
     }
     &__button {
@@ -152,6 +166,9 @@
       padding: 2vh 0 4vh 0;
       margin: 4vh;
     }
+    &__img {
+      width: 35%;
+    }
     &__card {
       width: 90%;
       margin-top: 3vh;
@@ -170,6 +187,9 @@
         font-size: 1.1rem;
         padding: 0.5vh 1vh;
       }
+      &-column {
+        padding: 3vh 0 0;
+      }
     }
     &__button {
       flex: 0 0 47%;
@@ -180,8 +200,8 @@
     &-manage {
       margin-top: 4vh;
       &__input {
-      font-size: 1rem;
-      padding: 2vh;
+        font-size: 1rem;
+        padding: 2vh;
         flex: 0 0 80%;
       }
       &__button {
@@ -244,12 +264,12 @@
     }
 
     &-manage {
-      margin-top:3vh;
+      margin-top: 3vh;
       &__input {
-        padding:1vh;
+        padding: 1vh;
       }
       &__button {
-        font-size:1.2rem;
+        font-size: 1.2rem;
       }
     }
   }

@@ -12,7 +12,12 @@ import {
   removeUserSession,
   setUserSession,
 } from '@utils/common'
-import { AccountDetails, AccountEditing, PriceChangeForm, ManageLicense } from './components'
+import {
+  AccountDetails,
+  AccountEditing,
+  PriceChangeForm,
+  ManageLicense,
+} from './components'
 import './Account.scss'
 import ErrorMessage from '@/components/ErrorMessage'
 
@@ -145,11 +150,17 @@ function Account() {
             {account.subscription.id ? (
               <div className="account__card">
                 <div className="account__card-header">
-                  <h3 className="account__card-title">Billing account information</h3>
+                  <h3 className="account__card-title">
+                    Billing account information
+                  </h3>
                   <p>Current plan</p>
                   <span className="account__card-data">
                     {productName(selectedProduct)}
-                    <img src={productImage(selectedProduct)} alt={`Product ${productName(selectedProduct)}`} />
+                    <img
+                      className="account__img"
+                      src={productImage(selectedProduct)}
+                      alt={`Product ${productName(selectedProduct)}`}
+                    />
                   </span>
                 </div>
                 <hr className="account__line" />

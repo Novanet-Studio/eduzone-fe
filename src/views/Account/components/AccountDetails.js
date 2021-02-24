@@ -7,20 +7,15 @@ const AccountDetails = () => {
   return (
     <div className="details">
       <p className="details__text">
-        First Name:{' '}
-        <span className="details__data">
-          {user.firstname}
-        </span>
+        First Name: <span className="details__data">{user.firstname}</span>
       </p>
       <p className="details__text">
         Last Name:{' '}
-        <span className="details__data">
-          {user.lastname || 'None'}
-        </span>
+        <span className="details__data">{user.lastname || 'None'}</span>
       </p>
       <p className="details__text">
         Email:{' '}
-        <span className="details__data">
+        <span className="details__data  details__data--email">
           {user.username}
         </span>
       </p>

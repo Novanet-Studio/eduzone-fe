@@ -48,14 +48,14 @@
   /* Prices */
   .prices {
     min-height: 93vh;
-    padding: 4vh 0;
+    padding: 5vh 0;
     &__info {
       border-radius: 3em;
-      width: 90vw;
-      padding: 2vh 4vh 4vh 4vh;
+      padding: 2vh 0 4vh;
     }
     &__title {
-      padding-bottom: 2vh;
+      padding-top: 1vh;
+      padding-bottom: 4vh;
     }
     &__form {
       width: 90%;
@@ -80,9 +80,12 @@
   .prices {
     min-height: 90vh;
     padding: 4vh 0;
+    &__title {
+      padding-top: 1vh;
+      padding-bottom: 4vh;
+    }
     &__info {
       border-radius: 3em;
-      width: 90vw;
       padding: 2vh 4vh 4vh 4vh;
       margin: 4vh;
     }
@@ -107,7 +110,7 @@
 @include min-media(768px, portrait) {
   /* Prices */
   .prices {
-    min-height: 62vh;
+    padding: 5vh 3vh;
     &__info {
       border-radius: 4em;
     }

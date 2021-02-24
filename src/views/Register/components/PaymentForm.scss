@@ -65,6 +65,12 @@
   &__name {
     background-color: $verde;
   }
+  &__text {text-align: justify;}
+  &__pro {
+    &-img {
+      margin: 2vh 0 3vh;
+    }
+  }
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
@@ -102,6 +108,11 @@
     &__text-down {
       font-size: 1.1rem;
       line-height: 1.3rem;
+    }
+    &__pro {
+      &-img {
+        width: 50%;
+      }
     }
   }
 }
@@ -145,6 +156,11 @@
     &__text-down {
       font-size: 1.1rem;
       line-height: 1.3rem;
+    }
+    &__pro {
+      &-img {
+        width: 35%;
+      }
     }
   }
 }
