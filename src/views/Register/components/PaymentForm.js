@@ -34,12 +34,13 @@ if (!REACT_APP_STRIPE_PK) {
 }
 
 const CheckoutForm = ({ productSelected, input, showError }) => {
-  const [userCreated, setUserCreated] = useState(false)
   const stripe = useStripe()
   const history = useHistory()
   const elements = useElements()
+  const sessionProduct = JSON.parse(sessionStorage.getItem('eduzone::product'))
   const firstname = useFormInput('')
   const lastname = useFormInput('')
+  const [userCreated, setUserCreated] = useState(false)
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(false)
 
@@ -177,6 +178,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
         <p className="payment__name">
           {'»'} Subscribing to <span>{productSelected.name}</span>
         </p>
+        <img src={sessionProduct.image} alt={`Package ${sessionProduct.name}`}/>
       </div>
       <div className="payment__form">
         <input

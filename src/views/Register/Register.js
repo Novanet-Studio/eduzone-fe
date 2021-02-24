@@ -27,6 +27,8 @@ function Register() {
     setProductSelected(products[key])
   }
 
+  window.scrollTo({ top: 0 })
+
   return (
     <>
       <Prompt
@@ -54,6 +56,7 @@ function Register() {
                 placeholder="Email address"
                 value={email.value}
                 onChange={email.onChange}
+                autoFocus
                 required
               />
               {/* <p className="register__password">

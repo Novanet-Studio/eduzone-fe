@@ -37,6 +37,11 @@ function Account() {
     return product[0].name
   }
 
+  const productImage = (name) => {
+    const product = products.filter((product) => product.type === name)
+    return product[0].image
+  }
+
   useEffect(() => {
     if (!subscriptionCancelled) return
     const fetchUser = async () => {
@@ -140,10 +145,11 @@ function Account() {
             {account.subscription.id ? (
               <div className="account__card">
                 <div className="account__card-header">
-                  <h3 className="account__card-title">Billing account</h3>
-                  <p>Current Price</p>
+                  <h3 className="account__card-title">Billing account information</h3>
+                  <p>Current plan</p>
                   <span className="account__card-data">
                     {productName(selectedProduct)}
+                    <img src={productImage(selectedProduct)} alt={`Product ${productName(selectedProduct)}`} />
                   </span>
                 </div>
                 <hr className="account__line" />
