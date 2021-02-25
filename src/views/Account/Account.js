@@ -159,7 +159,9 @@ function Account() {
                     </span>
                   </div>
                   <div className="account__card-data">
-                    {productName(selectedProduct)}
+                    <div className="account__card-info">
+                      <p>{productName(selectedProduct)}</p>
+                    </div>
                     <img
                       className="account__card-img"
                       src={productImage(selectedProduct)}
