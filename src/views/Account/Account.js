@@ -155,13 +155,13 @@ function Account() {
                   </h3>
                   <div className="account__card-info">
                     <span className="account__card-data">
-                      <p>Current plan</p>
+                      <h4>Current plan</h4>
                     </span>
                   </div>
-                  <div className="account__card-data">
-                    <div className="account__card-info">
-                      <p>{productName(selectedProduct)}</p>
-                    </div>
+                  <div className="account__card-info">
+                    <p className="account__card-data">
+                      {productName(selectedProduct)}
+                    </p>
                     <img
                       className="account__card-img"
                       src={productImage(selectedProduct)}
