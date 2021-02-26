@@ -7,8 +7,11 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+import { useForm } from 'react-hook-form'
+import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 
-import { useFormInput } from '@hooks'
+import { ErrorMessageContainer } from '@components/ErrorMessage'
+// import { useFormInput } from '@hooks'
 import {
   checkUserExists,
   createCustomer,
@@ -19,8 +22,6 @@ import {
   retryInvoiceWithNewPaymentMethod,
 } from '@services/stripe'
 import './PaymentForm.scss'
-
-// TODO: clean sessionStorage after to go to account
 
 const { REACT_APP_STRIPE_PK } = process.env
 
@@ -38,29 +39,26 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
   const history = useHistory()
   const elements = useElements()
   const sessionProduct = JSON.parse(sessionStorage.getItem('eduzone::product'))
-  const firstname = useFormInput('')
-  const lastname = useFormInput('')
+  const { register, handleSubmit, errors } = useForm()
   const [userCreated, setUserCreated] = useState(false)
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(false)
 
-  const comparePassword = () =>
-    input.password.value === input.confirmPassword.value
+  const comparePassword = () => input.password === input.confirmPassword
 
-  const resetPasswords = () => {
-    input.password.reset()
-    input.confirmPassword.reset()
-  }
+  // const resetPasswords = () => {
+  //   input.password.reset()
+  //   input.confirmPassword.reset()
+  // }
 
-  const resetInput = () => {
-    resetPasswords()
-    input.email.reset()
-    firstname.reset()
-    lastname.reset()
-  }
+  // const resetInput = () => {
+  //   resetPasswords()
+  //   input.email.reset()
+  //   firstname.reset()
+  //   lastname.reset()
+  // }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmitForm = async ({ firstname, lastname }) => {
     setSubscribing(true)
 
     if (!stripe || !elements) {
@@ -70,7 +68,8 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
     }
 
     if (!comparePassword()) {
-      resetPasswords()
+      // resetPasswords()
+      // Must reset the input password
       showError('Passwords not match')
       console.log('Passwords not match')
       setSubscribing(false)
@@ -89,14 +88,14 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
 
     // Use your card Element with other Stripe.js APIs
     try {
-      const exists = await checkUserExists(input.email.value)
+      const exists = await checkUserExists(input.email)
       if (exists) {
         setSubscribing(false)
         showError('User already exists')
         return
       }
 
-      const customer = await createCustomer(input.email.value)
+      const customer = await createCustomer(input.email)
 
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
@@ -138,10 +137,10 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
         console.log('Creating user in magic box')
 
         const { accountInformation: info } = await createUser({
-          firstname: firstname.value,
-          lastname: lastname.value,
-          userName: input.email.value,
-          password: input.password.value,
+          firstname,
+          lastname,
+          userName: input.email,
+          password: input.password,
           type: productSelected.type,
         })
 
@@ -149,7 +148,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
 
         sessionStorage.setItem('paymentMethodId', paymentMethodId)
         sessionStorage.setItem('new::user', true)
-        resetInput()
+        // resetInput()
         setUserCreated(true)
         setAccountInformation(info)
       }
@@ -157,7 +156,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
     } catch (error) {
       console.log({ error })
       setSubscribing(false)
-      resetInput()
+    //   resetInput()
       showError(error.message)
     }
   }
@@ -184,31 +183,40 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
           alt={`Package ${sessionProduct.name}`}
         />
       </div>
-      <div className="payment__form">
-        <input
-          className="payment__input"
-          type="text"
-          id="name"
-          name="firstname"
-          placeholder="First name"
-          value={firstname.value}
-          onChange={firstname.onChange}
-          required
-        />
-        <input
-          className="payment__input"
-          type="text"
-          id="lastname"
-          name="lastname"
-          placeholder="Last name"
-          value={lastname.value}
-          onChange={lastname.onChange}
-          required
-        />
-      </div>
-      <form id="payment-form" className="payment__form" onSubmit={handleSubmit}>
+      <form id="payment-form" className="payment__form" onSubmit={handleSubmit(handleSubmitForm)}>
+        <div className="payment__form-control">
+          <input
+            className="payment__input"
+            type="text"
+            name="firstname"
+            placeholder="First name"
+            ref={register({
+              required: { value: true, message: 'You must enter your first name name' },
+            })}
+          />
+          <ErrorFormMessage
+            errors={errors}
+            name="firstname"
+            as={<ErrorMessageContainer />}
+          />
+        </div>
+        <div className="payment__form-control">
+          <input
+            className="payment__input"
+            type="text"
+            name="lastname"
+            placeholder="Last name"
+            ref={register({
+              required: { value: true, message: 'You must enter your last name' },
+            })}
+          />
+          <ErrorFormMessage
+            errors={errors}
+            name="lastname"
+            as={<ErrorMessageContainer />}
+          />
+        </div>
         <div className="payment__form-group">
-          {/* <label>Card number</label> */}
           <div className="payment__form-element">
             <CardElement options={{}} />
           </div>
