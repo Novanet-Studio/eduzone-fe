@@ -63,6 +63,15 @@ function Register() {
                 The password must be at least 6 characters. The password must be
                 between 6 and 20 characters.
               </p> */}
+                            <input
+                className="register__input"
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Confirm your email address"
+                autoFocus
+                required
+              />
               <input
                 className="register__input"
                 type="password"

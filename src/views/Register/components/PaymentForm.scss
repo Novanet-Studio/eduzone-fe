@@ -4,7 +4,7 @@
 
 /*Payment*/
 .payment {
-  padding: 3vh 4vh 0;
+  padding: 3vh 4vh;
   &__form {
     &-group {
       margin: 2vh;
@@ -65,7 +65,9 @@
   &__name {
     background-color: $verde;
   }
-  &__text {text-align: justify;}
+  &__text {
+    text-align: justify;
+  }
   &__pro {
     &-img {
       margin: 2vh 0 3vh;
@@ -75,14 +77,14 @@
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
 @include min-media(320px, portrait) {
-    /*Payment*/
+  /*Payment*/
   .payment {
     &__text {
       margin: 1vh 0;
     }
     &__price,
     &__name {
-      padding:1vh 2vh;
+      padding: 1vh 2vh;
       margin: 2vh 0;
       font-size: 1rem;
     }
@@ -117,7 +119,6 @@
   }
 }
 
-
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
 @include min-media(568px, landscape) {
   /*Payment*/
@@ -130,7 +131,7 @@
     &__price,
     &__name {
       margin: 2vh !important;
-      padding:1vh 2vh;
+      padding: 1vh 2vh;
       font-size: 1rem;
     }
     &__input {
@@ -140,10 +141,10 @@
       margin: 2vh 0;
     }
     &__button {
-      margin-top: 3vh;
+      margin-top: 4vh;
       font-size: 1.1rem;
       padding: 2vh 3vh;
-      margin-bottom: 2vh;
+      margin-bottom: 4vh;
     }
     &__secure {
       margin-top: 4vh;
@@ -172,7 +173,7 @@
     flex: 0 0 80%;
     &__price,
     &__name {
-      margin:2vh 1vh !important;
+      margin: 2vh 1vh !important;
       padding: 0.5vh 1vh;
     }
     &__form {
@@ -217,11 +218,13 @@
     }
     &__input {
       padding: 1vh 2vh;
-    }
-    &__input {
       font-size: 1.2rem;
       width: 47.5%;
       margin: 0 1.5vh;
+    }
+    &__button {
+      margin-top: 2vh;
+      margin-bottom: 2vh;
     }
     &__button {
       font-size: 1.2rem;

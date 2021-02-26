@@ -27,7 +27,8 @@
     flex: 100%;
   }
   &__down {
-  flex: 0 0 100%;}
+    flex: 0 0 100%;
+  }
   &__input {
     border: none;
     font-weight: 400;
@@ -60,7 +61,7 @@
       padding-bottom: 2vh;
     }
     &__text {
-      padding-bottom:3vh;
+      padding-bottom: 3vh;
     }
     &__form {
       width: 100%;
@@ -97,13 +98,13 @@
       margin: 5vh;
     }
     &__title {
-      padding-bottom:3vh
+      padding-bottom: 3vh;
     }
     &__text {
-      padding-bottom: 4vh;
+      padding: 0 4vh 4vh;
     }
     &__down {
-      padding-top:4vh;
+      padding-top: 4vh;
     }
     &__input {
       width: 95%;
@@ -146,12 +147,19 @@
     &__info {
       border-radius: 4em;
     }
+    &__form {
+      flex: 0 0 65%;
+    }
+    &__text {
+      padding-left: 0;
+      padding-right: 0;
+    }
     &__input,
     &__button {
       margin: 0 0 4vh;
       font-size: 1.4rem;
       padding: 1vh 2vh;
-      width:100%;
+      width: 100%;
     }
     &__button {
       padding: 1vh 4vh;
@@ -164,6 +172,7 @@
   /* Register */
   .register {
     &__form {
-    flex: 0 0 60%;}
+      flex: 0 0 60%;
+    }
   }
 }

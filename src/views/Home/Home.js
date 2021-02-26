@@ -40,14 +40,15 @@ function Home() {
             <div className="enjoy__col-left">
               <h2 className="enjoy__title">Enjoy on your device</h2>
               <p className="enjoy__text">
-                Edu-zone’s digital subscripton provides access to more than
+                Edu-zone’s digital subscription provides access to more than
                 3,000 pages of digital content, English Language & Arts and Math
-                for K1-6: enriched with illustrations, photos, videos, games and
-                practice questions, ideal for students, parents, teachers and
+                for K1-6: this content is organized by grades, in the form of
+                ebooks enriched with illustrations, photos, videos, games, and
+                practice questions, ideal for students, parents, teachers, and
                 educational institutions. All our contents are aligned with the
-                common core standards. Our plataform is an essential tool for
-                the development of literacy and numeracy skills and abilities in
-                ELA and MATH at levels 1 to 6.
+                common core standards. Our platform is an essential tool for the
+                development of literacy and numeracy skills and abilities in ELA
+                and MATH at levels 1 to 6.
               </p>
             </div>
             <div className="enjoy__col-right">
