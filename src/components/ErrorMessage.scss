@@ -1,6 +1,42 @@
+// Archivos importados
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+
 .error {
-  padding: 1rem;
-  text-align: center;
+  display: flex;
   flex: 0 0 100%;
-  order: 4;
+  text-align: left;
+  font-weight: 600;
+  color: $rojo;
+}
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  .error {
+    padding: 0 3.5vh;
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  .error {
+    padding: 0 3.5vh;
+    margin: -4vh 0 4vh;
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  .error {
+    padding: 0;
+    margin: -2vh 0 3vh;
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
 }

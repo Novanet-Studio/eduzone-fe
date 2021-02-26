@@ -65,6 +65,7 @@
     }
     &__form {
       width: 100%;
+      padding-bottom: 3vh;
     }
     &__down {
       padding-top: 3vh;
@@ -102,6 +103,9 @@
     }
     &__text {
       padding: 0 4vh 4vh;
+    }
+    &__form {
+      padding-bottom: 3vh;
     }
     &__down {
       padding-top: 4vh;
@@ -149,6 +153,7 @@
     }
     &__form {
       flex: 0 0 65%;
+      padding-bottom: 0vh;
     }
     &__text {
       padding-left: 0;
