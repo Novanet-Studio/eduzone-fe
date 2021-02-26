@@ -1,35 +1,29 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { useHistory, Link, Prompt } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 import { Footer } from '@layout'
 
-import ErrorMessage from '@components/ErrorMessage'
-import { useError, useFormInput } from '@hooks'
+import { useError } from '@hooks'
+import ErrorMessage, { ErrorMessageContainer } from '@components/ErrorMessage'
 import { setAccount, setToken, setUserLicense, setUserSession } from '@utils/common'
 import { URL } from '@constants'
+import { useForm } from 'react-hook-form'
+import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 import './Login.scss'
 
 function Login() {
+  const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
-  const email = useFormInput('')
-  const password = useFormInput('')
-  const [error, showError] = useError()
+  const [error, showError] = useError(null)
   const [loading, setLoading] = useState(false)
 
-  const isTyping = () => email.isTyping || password.isTyping
-
-  const resetInput = () => {
-    email.reset()
-    password.reset()
-  }
-
   const handleLogin = async (e) => {
-    e.preventDefault()
+    const { email, password } = e
     setLoading(true)
     const signinParams = {
-      userName: email.value,
-      password: password.value,
+      userName: email,
+      password: password,
     }
     try {
       const { data } = await axios.post(`${URL}/auth/signin`, signinParams)
@@ -46,7 +40,6 @@ function Login() {
         subscription,
       })
       setLoading(false)
-      resetInput()
       history.push('/account')
     } catch (error) {
       setLoading(false)
@@ -57,41 +50,51 @@ function Login() {
       }
 
       showError('Somenthing went wrong. Please try again later.')
-      resetInput()
     }
   }
 
   return (
     <>
-      <Prompt
-        when={isTyping()}
-        message="Are you secure do you want to leave?"
-      />
+      {error && <ErrorMessage error={error} />}
       <section className="login">
         <div className="container">
           <div className="login__info">
             <h2 className="login__title">Login</h2>
-            {error && <ErrorMessage error={error} />}
-            <form className="login__form" onSubmit={handleLogin}>
-              <input
-                className="login__input"
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email address"
-                autoComplete="new-email"
-                value={email.value}
-                onChange={email.onChange}
-              />
+            <form className="login__form" onSubmit={handleSubmit(handleLogin)}>
+              <div className="login__form-control">
+                <input
+                  className="login__input"
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  ref={register({
+                    required: { value: true, message: 'You must enter your email' },
+                    pattern: { value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g, message: 'Email not valid' }
+                  })}
+                />
+                <ErrorFormMessage
+                  errors={errors}
+                  name="email"
+                  as={<ErrorMessageContainer />}
+                />
+              </div>
               <input
                 className="login__input"
                 type="password"
                 name="password"
-                id="password"
-                placeholder="Password"
-                autoComplete="new-password"
-                value={password.value}
-                onChange={password.onChange}
+                placeholder="Enter password"
+                ref={register({
+                  required: { value: true, message: 'You must enter a password'},
+                  minLength: {
+                    value: 6,
+                    message: 'Your password must be at least 6 characters',
+                  },
+                })}
+              />
+              <ErrorFormMessage
+                errors={errors}
+                name="password"
+                as={<ErrorMessageContainer />}
               />
               <button className="login__button" disabled={loading}>
                 {loading ? 'Loading...' : 'Login'}
