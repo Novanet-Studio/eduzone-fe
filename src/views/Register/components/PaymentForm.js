@@ -35,7 +35,7 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, input, showError }) => {
+const CheckoutForm = ({ productSelected, input, showError, reset }) => {
   const stripe = useStripe()
   const history = useHistory()
   const elements = useElements()
@@ -46,33 +46,27 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
   const [accountInformation, setAccountInformation] = useState(false)
 
   const comparePassword = () => input.password === input.confirmPassword
-
-  // const resetPasswords = () => {
-  //   input.password.reset()
-  //   input.confirmPassword.reset()
-  // }
-
-  // const resetInput = () => {
-  //   resetPasswords()
-  //   input.email.reset()
-  //   firstname.reset()
-  //   lastname.reset()
-  // }
+  const compareEmail = () => input.email === input.confirmEmail
 
   const handleSubmitForm = async ({ firstname, lastname }) => {
     setSubscribing(true)
 
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
+      return
+    }
+
+    console.log(input)
+
+    if (!compareEmail()) {
+      reset()
+      showError('Emails not match')
+      setSubscribing(false)
       return
     }
 
     if (!comparePassword()) {
-      // resetPasswords()
-      // Must reset the input password
+      reset()
       showError('Passwords not match')
-      console.log('Passwords not match')
       setSubscribing(false)
       return
     }
@@ -91,6 +85,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
     try {
       const exists = await checkUserExists(input.email)
       if (exists) {
+        reset()
         setSubscribing(false)
         showError('User already exists')
         return
@@ -105,6 +100,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
 
       if (error) {
         console.log('[createPaymentMethod error]', error)
+        reset()
         setSubscribing(false)
         showError(error && error.message)
         return
@@ -149,7 +145,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
 
         sessionStorage.setItem('paymentMethodId', paymentMethodId)
         sessionStorage.setItem('new::user', true)
-        // resetInput()
+        reset()
         setUserCreated(true)
         setAccountInformation(info)
       }
@@ -157,7 +153,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
     } catch (error) {
       console.log({ error })
       setSubscribing(false)
-      //   resetInput()
+      reset()
       showError(error.message)
     }
   }
