@@ -250,7 +250,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
             src={IconSegurity}
             alt="icon segurity server"
           />{' '}
-          Segurity server
+          Secure server
         </button>
         <p className="payment__text">
           You can un-subscribe at anytime, remember your first payment will be
