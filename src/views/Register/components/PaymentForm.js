@@ -22,6 +22,7 @@ import {
   retryInvoiceWithNewPaymentMethod,
 } from '@services/stripe'
 import './PaymentForm.scss'
+import IconSegurity from '@images/icon_segurity.svg'
 
 const { REACT_APP_STRIPE_PK } = process.env
 
@@ -156,7 +157,7 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
     } catch (error) {
       console.log({ error })
       setSubscribing(false)
-    //   resetInput()
+      //   resetInput()
       showError(error.message)
     }
   }
@@ -183,7 +184,11 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
           alt={`Package ${sessionProduct.name}`}
         />
       </div>
-      <form id="payment-form" className="payment__form" onSubmit={handleSubmit(handleSubmitForm)}>
+      <form
+        id="payment-form"
+        className="payment__form"
+        onSubmit={handleSubmit(handleSubmitForm)}
+      >
         <div className="payment__form-control">
           <input
             className="payment__input"
@@ -191,7 +196,10 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
             name="firstname"
             placeholder="First name"
             ref={register({
-              required: { value: true, message: 'You must enter your first name name' },
+              required: {
+                value: true,
+                message: 'You must enter your first name name',
+              },
             })}
           />
           <ErrorFormMessage
@@ -207,7 +215,10 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
             name="lastname"
             placeholder="Last name"
             ref={register({
-              required: { value: true, message: 'You must enter your last name' },
+              required: {
+                value: true,
+                message: 'You must enter your last name',
+              },
             })}
           />
           <ErrorFormMessage
@@ -236,6 +247,14 @@ const CheckoutForm = ({ productSelected, input, showError }) => {
           disabled={subscribing}
         >
           {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
+        </button>
+        <button className="payment__segurity">
+          <img
+            className="payment__segurity-img"
+            src={IconSegurity}
+            alt="icon segurity server"
+          />{' '}
+          Segurity server
         </button>
         <p className="payment__text">
           You can un-subscribe at anytime, remember your first payment will be
