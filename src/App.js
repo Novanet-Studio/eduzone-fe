@@ -2,11 +2,15 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 
+/* Pages */
 import Home from './views/Home'
 import Account from './views/Account'
 import Login from './views/Login'
 import Register from './views/Register'
 import Prices from './views/Prices'
+import Policy from './views/Policy'
+import Terms from './views/Terms'
+
 import PublicRoute from './routes/PublicRoute'
 import PrivateRoute from './routes/PrivateRoute'
 import { URL } from './constants'
@@ -57,6 +61,8 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route path="/policy" component={Policy} />
+      <Route path="/terms" component={Terms} />
       <PublicRoute path="/login" component={Login} />
       <PublicRoute path="/register" component={Register} />
       <PublicRoute path="/prices" component={Prices} />
