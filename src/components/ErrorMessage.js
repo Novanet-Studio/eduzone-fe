@@ -29,4 +29,22 @@ export const ErrorSummary = ({ errors }) => {
   )
 }
 
+export const SuccessMessage = ({ errors = [], name = "", values = {} }) => {
+  if (!values[name]) {
+    return null
+  }
+
+  if (!errors[name]) {
+    return (
+      <div>
+        Success!
+      </div>
+    )
+  }
+
+  return (
+    <div>Error!</div>
+  )
+}
+
 export default ErrorMessage

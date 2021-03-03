@@ -5,7 +5,7 @@ import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 
 import { Header, Footer } from '@layout'
 
-import ErrorMessage, { ErrorMessageContainer } from '@components/ErrorMessage'
+import ErrorMessage, { ErrorMessageContainer, SuccessMessage } from '@components/ErrorMessage'
 import ScrollToTop from '@/components/ScrollToTop'
 import { useError } from '@hooks'
 import { products } from '@constants'
@@ -16,7 +16,7 @@ import './Register.scss'
 function Register() {
   const sessionEmail = sessionStorage.getItem('email') || null
   const sessionProduct = JSON.parse(sessionStorage.getItem('eduzone::product'))
-  const { register, errors, handleSubmit, reset: resetForm } = useForm()
+  const { register, errors, handleSubmit, getValues, reset: resetForm } = useForm({ mode: 'onChange' })
   const [productSelected, setProductSelected] = useState(sessionProduct || null)
   const [input, setInput] = useState(null)
   const [error, showError] = useError()
@@ -32,6 +32,24 @@ function Register() {
   const reset = () => {
     resetForm()
     sessionStorage.removeItem('email')
+  }
+
+  const handleChange = () => {
+    const values = getValues()
+
+    if (values.confirmEmail) {
+      if (values.email !== values.confirmEmail) {
+        console.log('The email inputs not match')
+        showError('The email inputs not match')
+      }
+    }
+
+    if (values.confirmPassword) {
+      if (values.password !== values.confirmPassword) {
+        console.log('The passwords not match')
+        showError('The passwords not match')
+      }
+    }
   }
   
   return (
@@ -49,7 +67,7 @@ function Register() {
                 </Link>
               </p>
             {error && <ErrorMessage error={error} />}
-            <form className="register__form" onSubmit={handleSubmit(handleFormSubmit)}>
+            <form className="register__form" onSubmit={handleSubmit(handleFormSubmit)} onChange={handleChange}>
               <div className="register__form-control">
                 <input
                   className="register__input"
@@ -68,6 +86,7 @@ function Register() {
                   name="email"
                   as={<ErrorMessageContainer />}
                 />
+                <SuccessMessage errors={errors} name="email" values={getValues()} />
               </div>
               <div className="register__form-control">
                 <input
@@ -85,6 +104,7 @@ function Register() {
                   name="confirmEmail"
                   as={<ErrorMessageContainer />}
                 />
+                <SuccessMessage errors={errors} name="confirmEmail" values={getValues()} />
               </div>
               <div className="register__form-control">
                 <input
@@ -109,6 +129,7 @@ function Register() {
                   name="password"
                   as={<ErrorMessageContainer />}
                 />
+                <SuccessMessage errors={errors} name="password" values={getValues()} />
               </div>
               <div className="register__form-control">
                 <input
@@ -136,6 +157,7 @@ function Register() {
                   name="confirmPassword"
                   as={<ErrorMessageContainer />}
                 />
+                <SuccessMessage errors={errors} name="confirmPassword" values={getValues()} />
               </div>
               <input type="submit" ref={btnSubmit} hidden />
             </form>

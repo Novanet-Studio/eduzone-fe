@@ -10,7 +10,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 
-import { ErrorMessageContainer } from '@components/ErrorMessage'
+import { ErrorMessageContainer, SuccessMessage } from '@components/ErrorMessage'
 // import { useFormInput } from '@hooks'
 import {
   checkUserExists,
@@ -40,7 +40,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
   const history = useHistory()
   const elements = useElements()
   const sessionProduct = JSON.parse(sessionStorage.getItem('eduzone::product'))
-  const { register, handleSubmit, errors } = useForm()
+  const { register, handleSubmit, errors, getValues } = useForm({ mode: 'onChange' })
   const [userCreated, setUserCreated] = useState(false)
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(false)
@@ -203,6 +203,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
             name="firstname"
             as={<ErrorMessageContainer />}
           />
+          <SuccessMessage errors={errors} name="firstname" values={getValues()} />
         </div>
         <div className="payment__form-control">
           <input
@@ -214,7 +215,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
               required: {
                 value: true,
                 message: 'You must enter your last name',
-              },
+              }
             })}
           />
           <ErrorFormMessage
@@ -222,10 +223,12 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
             name="lastname"
             as={<ErrorMessageContainer />}
           />
+          <SuccessMessage errors={errors} name="lastname" values={getValues()} />
         </div>
         <div className="payment__form-group">
           <div className="payment__form-element">
-            <CardElement options={{}} />
+            {/* TODO: Show Error onChange input */}
+            <CardElement options={{}} onChange={e => console.log(e)} />
           </div>
         </div>
         <p className="payment__text">
