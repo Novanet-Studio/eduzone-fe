@@ -80,6 +80,10 @@ button {
   }
 }
 
+.none {
+  display: none;
+}
+
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
 @include min-media(320px, portrait) {
   .container {

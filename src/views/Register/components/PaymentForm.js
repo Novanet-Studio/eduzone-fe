@@ -40,7 +40,9 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
   const history = useHistory()
   const elements = useElements()
   const sessionProduct = JSON.parse(sessionStorage.getItem('eduzone::product'))
-  const { register, handleSubmit, errors, getValues } = useForm({ mode: 'onChange' })
+  const { register, handleSubmit, errors, getValues } = useForm({
+    mode: 'onChange',
+  })
   const [userCreated, setUserCreated] = useState(false)
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(false)
@@ -203,7 +205,11 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
             name="firstname"
             as={<ErrorMessageContainer />}
           />
-          <SuccessMessage errors={errors} name="firstname" values={getValues()} />
+          <SuccessMessage
+            errors={errors}
+            name="firstname"
+            values={getValues()}
+          />
         </div>
         <div className="payment__form-control">
           <input
@@ -215,7 +221,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
               required: {
                 value: true,
                 message: 'You must enter your last name',
-              }
+              },
             })}
           />
           <ErrorFormMessage
@@ -223,12 +229,16 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
             name="lastname"
             as={<ErrorMessageContainer />}
           />
-          <SuccessMessage errors={errors} name="lastname" values={getValues()} />
+          <SuccessMessage
+            errors={errors}
+            name="lastname"
+            values={getValues()}
+          />
         </div>
         <div className="payment__form-group">
           <div className="payment__form-element">
             {/* TODO: Show Error onChange input */}
-            <CardElement options={{}} onChange={e => console.log(e)} />
+            <CardElement options={{}} onChange={(e) => console.log(e)} />
           </div>
         </div>
         <p className="payment__text">
@@ -256,8 +266,9 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
           Secure server
         </button>
         <p className="payment__text">
-          You can un-subscribe at anytime, remember your first payment will be
-          30 days after your registration.
+          <b>Remember:</b> All our subscriptions include a 30-day free trial, we
+          will not charge anything until 30 days after the subscription date you
+          can cancel your subscription at any time.
         </p>
       </form>
     </div>

@@ -8,8 +8,8 @@
   @include center;
   border-bottom: $rojo 10px solid;
   background-image: $mozaicoPortadaIngles;
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: top center;
   .container {
     justify-content: center;
   }

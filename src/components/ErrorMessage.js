@@ -1,14 +1,18 @@
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 import './ErrorMessage.scss'
+import SuccessIcon from '@images/SuccessIcon.svg'
+import ErrorIcon from '@images/ErrorIcon.svg'
 
 const ErrorMessage = ({ error }) => (
-  <div className="error">
+  <div className="error__head">
     <p className="error__text">{error}</p>
   </div>
 )
 
 export const ErrorMessageContainer = ({ children }) => (
-  <span className="error">{children}</span>
+  <div className="error__down">
+    <p className="error__text">{children}</p>
+  </div>
 )
 
 export const ErrorSummary = ({ errors }) => {
@@ -29,21 +33,27 @@ export const ErrorSummary = ({ errors }) => {
   )
 }
 
-export const SuccessMessage = ({ errors = [], name = "", values = {} }) => {
+export const SuccessMessage = ({ errors = [], name = '', values = {} }) => {
   if (!values[name]) {
     return null
   }
 
   if (!errors[name]) {
     return (
-      <div>
-        Success!
+      <div className="success">
+        <img
+          className="success__img"
+          src={SuccessIcon}
+          alt="Success Icon Eduzone"
+        />{' '}
       </div>
     )
   }
 
   return (
-    <div>Error!</div>
+    <div className="error">
+      <img className="error__img" src={ErrorIcon} alt="Error Icon Eduzone" />{' '}
+    </div>
   )
 }
 

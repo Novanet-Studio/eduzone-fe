@@ -2,38 +2,99 @@
 @import '../assets/scss/variables';
 @import '../assets/scss/mixins';
 
-.error {
+.error,
+.success {
   display: flex;
   flex: 0 0 100%;
   text-align: left;
   font-weight: 600;
+}
+
+.error {
   color: $rojo;
+  &__head,
+  &__down {
+    flex: 0 0 100%;
+    font-weight: 600;
+  }
+  &__head {
+    text-align: center;
+  }
+  &__down {
+    text-align: left;
+  }
+  &__text {
+    color: $rojo;
+    font-weight: 600;
+  }
+}
+
+.success {
+  color: $verde;
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
 @include min-media(320px, portrait) {
+  .error,
+  .success {
+    flex: 0 0 6%;
+    &__img {
+      width: 100%;
+    }
+  }
+
   .error {
-    padding: 0 3.5vh;
+    &__head {
+      padding-bottom: 2vh;
+    }
+    &__text {
+      font-size: 1rem;
+    }
   }
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
 @include min-media(568px, landscape) {
+  .error,
+  .success {
+    flex: 0 0 5%;
+    margin: -2vh 0 2vh;
+    &__img {
+      width: 100%;
+    }
+  }
+
   .error {
-    padding: 0 3.5vh;
-    margin: -4vh 0 4vh;
+    &__head {
+      padding-bottom: 2vh;
+    }
+    &__down {
+      margin-top: -3vh;
+    }
+    &__text {
+      font-size: 1rem;
+    }
   }
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
 @include min-media(768px, portrait) {
+  .error {
+    &__text {
+      font-size: 1.2rem;
+    }
+  }
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
 @include min-media(1024px, landscape) {
   .error {
-    padding: 0;
-    margin: -2vh 0 3vh;
+    &__text {
+      font-size: 1.2rem;
+    }
+    &__down {
+      margin-bottom: 2vh;
+    }
   }
 }
 

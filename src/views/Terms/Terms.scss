@@ -1,0 +1,137 @@
+// Archivos importados
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+/* Terms */
+.terms {
+  @include flex;
+  @include center;
+  border-bottom: $amarillo 10px solid;
+  background-image: $mozaicoPortadaIngles;
+  background-size: contain;
+  background-position: top center;
+  .container {
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__info {
+    background-color: #fff;
+    box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+  }
+  &__title,
+  &__subtitle {
+    flex: 0 0 100%;
+  }
+  &__line {
+    flex: 100%;
+    border-top: 2px solid $gris1;
+  }
+  &__link {
+    color: $azul;
+    font-weight: 600;
+  }
+}
+
+/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
+@include min-media(320px, portrait) {
+  /* Terms */
+  .terms {
+    &__info {
+      padding: 4vh;
+    }
+    &__subtitle {
+      padding-bottom: 2vh;
+    }
+    &__text {
+      margin: 1vh 0;
+    }
+    &__item {
+      margin: 1.5vh 0 1.5vh 3vh;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+    &__line {
+      margin: 3vh 0;
+    }
+  }
+}
+
+/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
+@include min-media(568px, landscape) {
+  /* Terms */
+  .terms {
+    &__info {
+      padding: 7vh;
+    }
+    &__subtitle {
+      padding-bottom: 2vh;
+    }
+    &__text {
+      margin: 3vh 0;
+    }
+    &__item {
+      margin: 4vh 0 4vh 5vh;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+    &__line {
+      margin: 5vh 0;
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
+@include min-media(768px, portrait) {
+  /* Terms */
+  .terms {
+    .container {
+      padding: 4vh;
+    }
+    &__info {
+      border-radius: 4em;
+    }
+    &__title {
+      padding-bottom: 0;
+    }
+    &__subtitle {
+      padding-bottom: 1vh;
+    }
+    &__item {
+      margin: 1.5vh 0 1.5vh 2vh;
+    }
+    &__line {
+      margin: 2vh 0 1vh 0;
+    }
+  }
+}
+
+/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
+@include min-media(1024px, landscape) {
+  /* Terms */
+  .terms {
+    padding: 7vh 5vh;
+    &__info {
+      border-radius: 4em;
+    }
+    &__text,
+    &__item {
+      font-size: 1.4rem;
+      line-height: 1.9rem;
+    }
+    &__text {
+      margin: 1vh 0;
+    }
+    &__item {
+      margin: 1vh 0 1vh 2.5vh;
+    }
+    &__line {
+      margin: 4vh 0 3vh 0;
+    }
+  }
+}
+
+/*-------------------------------------------- Desktop responsive --------------------------------------------*/
+@include min-media(1280px) {
+}

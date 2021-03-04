@@ -8,8 +8,8 @@
   @include center;
   border-bottom: $rojo 10px solid;
   background-image: $mozaicoPortadaIngles;
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: top center;
   .container {
     justify-content: center;
   }
@@ -28,6 +28,12 @@
   }
   &__down {
     flex: 0 0 100%;
+  }
+  &__form {
+    &-control {
+      @include flex;
+      justify-content: space-between;
+    }
   }
   &__input {
     border: none;
@@ -66,12 +72,15 @@
     &__form {
       width: 100%;
       padding-bottom: 3vh;
+      &-control {
+        padding: 0 2vh;
+      }
     }
     &__down {
       padding-top: 3vh;
     }
     &__input {
-      width: 90%;
+      flex: 0 0 92%;
       font-size: 1rem;
       padding: 1vh 1.5vh;
       margin: 2vh 0;
@@ -105,13 +114,14 @@
       padding: 0 4vh 4vh;
     }
     &__form {
+      width: 80%;
       padding-bottom: 3vh;
     }
     &__down {
       padding-top: 4vh;
     }
     &__input {
-      width: 95%;
+      flex: 0 0 92%;
       font-size: 1rem;
       padding: 3vh 2vh;
       margin: 2vh 0 6vh 0;
@@ -136,6 +146,9 @@
     padding: 5vh 3vh;
     &__info {
       border-radius: 4em;
+    }
+    &__form {
+      width: 75%;
     }
     &__input,
     &__button {
@@ -164,9 +177,12 @@
       margin: 0 0 4vh;
       font-size: 1.4rem;
       padding: 1vh 2vh;
-      width: 100%;
+    }
+    &__input {
+      flex: 0 0 93%;
     }
     &__button {
+      width: 100%;
       padding: 1vh 4vh;
     }
   }
