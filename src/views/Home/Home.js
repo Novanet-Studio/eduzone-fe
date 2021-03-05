@@ -25,13 +25,25 @@ function Home() {
     setProductSelected(products[key])
   }
 
+  // react-slick props
+  const settings = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    autoplay: true,
+    speed: 1000,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  }
+
   return (
     <>
       <Header loggedIn={false} onClick={changeLocation} />
       <div>
         <section className="hero">
           <div className="container">
-            <Carousel items={CarouselItems} />
+            <Carousel items={CarouselItems} settings={settings} />
           </div>
         </section>
 

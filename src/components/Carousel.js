@@ -2,17 +2,8 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-export default function Carousel({ items }) {
-  const settings = {
-    dots: true,
-    arrows: true,
-    infinite: true,
-    autoplay: true,
-    speed: 4000,
-    autoplaySpeed: 4000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  }
+export default function Carousel({ items, settings  }) {
+  
   return (
     <Slider className="slider" {...settings}>
       {items.map((imagen, i) => (
