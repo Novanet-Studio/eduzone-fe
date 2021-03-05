@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
@@ -32,6 +32,13 @@ function Register() {
   const [input, setInput] = useState(null)
   const [error, showError] = useError()
   const btnSubmit = useRef()
+
+  useEffect(() => {
+    
+    const emailInput = document.getElementById('emailInput');
+    emailInput.onpaste = e => e.preventDefault();  
+
+  }, [])
 
   const handleClick = (key) => {
     sessionStorage.setItem('eduzone::product', JSON.stringify(products[key]))
@@ -138,13 +145,14 @@ function Register() {
                   values={getValues()}
                 />
                 <ErrorFormMessage
-                  errors={errors}
+                  errors={errors}register__input
                   name="email"
                   as={<ErrorMessageContainer />}
                 />
               </div>
               <div className="register__form-control">
                 <input
+                  id="emailInput"
                   className="register__input"
                   type="email"
                   name="confirmEmail"
