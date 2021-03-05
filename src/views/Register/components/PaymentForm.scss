@@ -6,8 +6,14 @@
 .payment {
   padding: 3vh 4vh;
   &__form {
+    &-control {
+      @include flex;
+      justify-content: space-between;
+    }
     &-group {
-      margin: 2vh;
+      @include flex;
+      justify-content: space-between;
+      margin: 2vh 0 6vh;
       text-align: left;
     }
     &-element {
@@ -79,7 +85,7 @@
   }
   &__pro {
     &-img {
-      margin: 2vh 0 3vh;
+      margin: 3vh 0 4vh;
     }
   }
 }
@@ -97,8 +103,13 @@
       margin: 2vh 0;
       font-size: 1rem;
     }
+    &__form {
+      &-element {
+        flex: 0 0 92%;
+      }
+    }
     &__input {
-      width: 100%;
+      flex: 0 0 92%;
       font-size: 1rem;
       padding: 1.4vh 1.2vh;
       margin: 2vh 0;
@@ -153,11 +164,16 @@
       padding: 1vh 2vh;
       font-size: 1rem;
     }
+    &__form {
+      &-element {
+        flex: 0 0 92%;
+      }
+    }
     &__input {
-      width: 100%;
+      flex: 0 0 92%;
       font-size: 1rem;
       padding: 3vh 2vh;
-      margin: 2vh 0;
+      margin: 2vh 0 6vh 0;
     }
     &__button {
       margin-top: 4vh;
@@ -251,16 +267,12 @@
       }
     }
     &__input {
-      padding: 1vh 2vh;
       font-size: 1.2rem;
-      width: 47.5%;
-      margin: 0 1.5vh;
+      margin:2vh 0;
     }
     &__button {
-      margin-top: 2vh;
-      margin-bottom: 2vh;
-    }
-    &__button {
+      margin-top: 3vh;
+      margin-bottom: 3vh;
       font-size: 1.2rem;
     }
     &__price,

@@ -6,7 +6,7 @@
 .payment {
   &__form {
     &-group {
-      margin: 2vh 0;
+      margin: 2vh 0 6vh 0;
       text-align: left;
     }
     &-element {
@@ -92,9 +92,8 @@
       margin: 2vh 0;
     }
     &__input {
-      width: 100%;
       font-size: 1rem;
-      padding: 2vh;
+      padding: 3vh 2vh;
       margin: 2vh 0;
     }
     &__button {
@@ -164,6 +163,16 @@
       &-group {
         label {
           font-size: 1.2rem;
+        }
+      }
+      &-control {
+        .success,
+        .error {
+          margin: 2vh 0 2vh;
+        }
+        .error__down {
+          margin-top: 0;
+          margin-bottom: 0;
         }
       }
     }

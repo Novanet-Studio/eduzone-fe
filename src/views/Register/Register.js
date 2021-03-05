@@ -71,12 +71,12 @@ function Register() {
           {
             type: 'manual',
             name: 'email',
-            message: 'Emails not match',
+            message: 'Emails do not match',
           },
           {
             type: 'manual',
             name: 'confirmEmail',
-            message: 'Emails not match',
+            message: 'Emails do not match',
           }
         ].forEach(({ name, ...config}) => setError(name, config))
       }
@@ -88,12 +88,12 @@ function Register() {
           {
             type: 'manual',
             name: 'password',
-            message: 'Passwords no match',
+            message: 'Passwords do not match',
           },
           {
             type: 'manual',
             name: 'confirmPassword',
-            message: 'Passwords no match',
+            message: 'Passwords do not match',
           }
         ].forEach(({ name, ...config }) => setError(name, config))
       }
