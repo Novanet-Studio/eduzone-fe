@@ -52,6 +52,19 @@ function App() {
     }
 
     loadUser()
+
+    setTimeout(function() {
+      /* let viewheight = window.visualViewport.height // webkit browsers
+      let viewwidth = window.visualViewport.width // webkit browsers */
+      let viewheight = window.innerHeight
+      let viewwidth = window.innerWidth
+      let viewport = document.querySelector("meta[name=viewport]")
+      viewport.setAttribute(
+        "content",
+        "height=" + viewheight + ", width=" + viewwidth + ", initial-scale=1.0"
+      )
+    }, 300)
+    
   }, [history])
 
   if (authLoading && getToken()) {
