@@ -4,14 +4,14 @@
 
 .error,
 .success {
-  display: flex;
-  flex: 0 0 100%;
+  flex: 0 0 5%;
   text-align: left;
   font-weight: 600;
 }
 
 .error {
   color: $rojo;
+  margin-top: 3vh;
   &__head,
   &__down {
     flex: 0 0 100%;
@@ -37,7 +37,6 @@
 @include min-media(320px, portrait) {
   .error,
   .success {
-    flex: 0 0 6%;
     &__img {
       display: grid;
       width: 18px;
@@ -59,21 +58,16 @@
 @include min-media(568px, landscape) {
   .error,
   .success {
-    flex: 0 0 5%;
-    margin: -2vh 0 2vh;
+    width: 24px;
+    height: 24px;
     &__img {
-      display: grid;
-      width: 25px;
-      align-self: center;
+      width: 24px;
     }
   }
 
-  .error {
+  .error {    
     &__head {
       padding-bottom: 2vh;
-    }
-    &__down {
-      margin-top: -3vh;
     }
     &__text {
       font-size: 1rem;
@@ -83,25 +77,49 @@
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
 @include min-media(768px, portrait) {
+  .error,
+  .success {
+    width: 26px;
+    height: 26px;
+    &__img {
+      width: 26px;
+    }
+  }
   .error {
     &__text {
       font-size: 1.2rem;
+      margin-top: -1vh;
     }
   }
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
 @include min-media(1024px, landscape) {
-  .error {
-    &__text {
-      font-size: 1.2rem;
+  .error,
+  .success {
+    margin-top: 3.5vh;
+    width: 24px;
+    height: 24px;
+    &__img {
+      width: 24px;
     }
-    &__down {
-      margin-bottom: 2vh;
+  }
+  .error {    
+    &__text {
+      font-size: 1.2rem; 
     }
   }
 }
 
+@include min-media(1366px, landscape) {
+
+}
+
+
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
 @include min-media(1280px) {
+  .error,
+  .success {
+    margin-top: 3vh;
+  }
 }

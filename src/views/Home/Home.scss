@@ -26,12 +26,26 @@
   }
   .slick {
     &-list {
-      width: 100%;
+      width: 80%;
     }
     &-slide {
       img {
         margin: 0 auto;
       }
+    }
+    &-arrow  {
+      width: 10vw;
+      height: 10vw;
+      z-index: 10;
+      &::before {
+        font-size: 2.5rem;
+      }
+    }
+    &-prev {
+      left: 2%;
+    }
+    &-next {
+      right: 2%;
     }
     &-dots {
       bottom: 25px;
@@ -41,7 +55,7 @@
             color: White;
             opacity: 1;
             font-size: 1.1rem;
-            line-height: 1.5rem;
+            line-height: 1.38rem;
           }
         }
       }
@@ -165,18 +179,6 @@
       padding: 10vh 0;
     }
     .slick {
-      &-prev {
-        left: 3vw;
-        &:before {
-          font-size: 2rem;
-        }
-      }
-      &-next {
-        right: 7vw;
-        &:before {
-          font-size: 2rem;
-        }
-      }
       &-slide {
         img {
           width: 70%;
@@ -272,7 +274,8 @@
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
 @include min-media(568px, landscape) {
   /* Hero */
-  .hero {
+  .hero {  font-size: 1.1rem;
+    line-height: 1.5rem;
     height: 105vh;
     .slider {
       width: 90%;
@@ -280,28 +283,11 @@
       padding: 16vh 0;
     }
     .slick {
-      &-prev {
-        left: 7vw;
-        &:before {
-          font-size: 3rem;
-        }
-      }
-      &-next {
-        right: 12vw;
-        &:before {
-          font-size: 3rem;
-        }
-      }
       &-slide {
         img {
-          width: 50%;
+          width: 65%;
         }
-      }
-      &-dots {
-        li {
-          margin: 0 1vh;
-        }
-      }
+      }      
     }
   }
 
@@ -359,8 +345,8 @@
     &__input {
       width: 65%;
       font-size: 1rem;
-      padding: 1.5vh 2vh 1.8vh;
-      line-height: 0;
+      padding: 1.5vh;
+
     }
     &__button {
       font-size: 1rem;
@@ -391,17 +377,12 @@
     .slider {
       width: 90%;
     }
-    .slick {
-      &-prev {
-        &:before {
-          font-size: 3rem;
+    .slick { 
+      &-arrow  {
+        &::before {
+          font-size: 3.5rem;
         }
-      }
-      &-next {
-        &:before {
-          font-size: 3rem;
-        }
-      }
+      }    
       &-dots {
         li {
           margin: 0 0.5vh;
@@ -462,13 +443,13 @@
       padding: 8vh 0;
     }
     .slick {
-      &-prev {
-        &:before {
-          font-size: 4rem;
-        }
+      &-slide {
+        img {
+          width: 85%;
+        }        
       }
-      &-next {
-        &:before {
+      &-arrow  {
+        &::before {
           font-size: 4rem;
         }
       }
@@ -515,8 +496,7 @@
       width: 73%;
     }
     &__input {
-      font-size: 1.4rem;
-      padding: 1vh 2vh;
+
     }
     &__button {
       font-size: 1.4rem;
