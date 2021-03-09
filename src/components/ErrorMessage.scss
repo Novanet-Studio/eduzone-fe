@@ -4,9 +4,16 @@
 
 .error,
 .success {
-  flex: 0 0 5%;
+  @include flex;
+  flex: 0 0 9%;
   text-align: left;
   font-weight: 600;
+  width: 40px;
+  height: 40px;
+  margin-top: 3.5vh;
+  &__img {
+    width: 40px;
+  }
 }
 
 .error {
@@ -34,11 +41,12 @@
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   .error,
   .success {
+    width: 18px;
+    height: 18px;
     &__img {
-      display: grid;
       width: 18px;
       align-self: center;
     }
@@ -55,13 +63,14 @@
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em)  {
   .error,
   .success {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
+    margin-top: 6.5vh;
     &__img {
-      width: 24px;
+      width: 20px;
     }
   }
 
@@ -76,11 +85,12 @@
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   .error,
   .success {
     width: 26px;
     height: 26px;
+    margin-top: 4vh;
     &__img {
       width: 26px;
     }
@@ -94,10 +104,10 @@
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   .error,
   .success {
-    margin-top: 3.5vh;
+    margin-top: 4vh;
     width: 24px;
     height: 24px;
     &__img {
@@ -111,15 +121,25 @@
   }
 }
 
-@include min-media(1366px, landscape) {
+@include min-media(1366px) {
 
 }
 
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
+@include min-media(80em) {
+  .error {
+    &__head {
+      padding-top: 4vh;
+    }
+  }
   .error,
   .success {
-    margin-top: 3vh;
+    width: 28px;
+    height: 28px;
+    margin-top: 4vh;
+    &__img {
+      width: 28px;
+    }
   }
 }

@@ -9,7 +9,7 @@ const Modal = ({ isOpen, closeModal }) => {
         <div className="modal__head">
           <button
             onClick={closeModal}
-            className="modal__button modal__button-red"
+            className="button modal__button modal__button-red"
           >
             <span>&#10006;</span>
           </button>
@@ -19,7 +19,7 @@ const Modal = ({ isOpen, closeModal }) => {
           We have sent you an email with your access credentials for future
           reference.
         </p>
-        <button className="modal__button modal__button-blue">
+        <button className="button modal__button modal__button-blue">
           <a href="https://www.eduzoneserver.com/" target="_blank" rel="noreferrer">
             Access now
           </a>

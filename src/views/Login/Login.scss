@@ -10,35 +10,39 @@
   background-image: $mozaicoPortadaIngles;
   background-size: cover;
   background-position: center;
+
   .container {
-    justify-content: center;
+    justify-content: center
   }
+
   &__info {
     @include flex;
     @include center;
     text-align: center;
+    width: 50vw;
+    margin: 4vh 0 4vh 0;
+    padding: 4vh 0;
+    border-radius: 3em;
     background-color: $amarillo;
     box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
     -webkit-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);    
+  }
+  &__form {
+    width: 70%;
   }
   &__title,
   &__text {
     flex: 100%;
   }
   &__input {
-    border: none;
-    font-weight: 400;
-    color: $negro;
-    border-radius: 0.4rem;
+    width: 100%;
+    margin: 2vh 0;
   }
   &__button {
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    cursor: pointer;
     background-color: $rojo;
-    border-radius: 0.4rem;
+    align-self: center;
+    margin: 0 auto;
   }
   &__register {
     font-weight: 600;
@@ -47,12 +51,12 @@
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   /* Login */
   .login {
     height: 93vh;
     &__info {
-      border-radius: 3em;
+      border-radius: 1.5em;
       width: 90vw;
       padding: 2vh 2vh 4vh 2vh;
     }
@@ -67,25 +71,23 @@
     }
     &__input {
       width: 100%;
-      font-size: 1rem;
-      padding: 1vh 1.5vh;
-      margin: 2vh 0;
+      margin-bottom: 0;
+
     }
     &__button {
-      margin-top: 1vh;
-      font-size: 1rem;
-      padding: 1vh 2vh;
+      margin-top: 2.5vh;
+
     }
   }
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em)  {
   /* Login */
   .login {
     height: 90vh;
     &__info {
-      border-radius: 3em;
+      border-radius: 1.5em;
       width: 90vw;
       padding: 4vh 0;
     }
@@ -97,32 +99,24 @@
     }
     &__input {
       width: 100%;
-      font-size: 1rem;
-      padding: 3vh 2vh;
       margin: 2vh 0;
     }
     &__button {
       margin-top: 1vh;
-      font-size: 1.2rem;
-      padding: 1.5vh 5vh;
     }
   }
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   /* Login */
   .login {
     height: 62vh;
     &__info {
-      border-radius: 4em;
+      border-radius: 3em;
     }
     &__form {
       width: 70%;
-    }
-    &__input,
-    &__button {
-      font-size: 1.3rem;
     }
     &__input {
       margin: 1.5vh 0;
@@ -131,29 +125,21 @@
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   /* Login */
   .login {
     height: 72vh;
     &__info {
-      border-radius: 4em;
+      border-radius: 3em;
     }
     &__form {
       width: 70%;
-    }
-    &__input,
-    &__button {
-      font-size: 1.4rem;
-      padding: 1vh 2vh;
-    }
-    &__button {
-      padding: 1vh 4vh;
-    }
+    }  
   }
 }
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
+@include min-media(80em) {
   /* Login */
   .login {
     &__info {

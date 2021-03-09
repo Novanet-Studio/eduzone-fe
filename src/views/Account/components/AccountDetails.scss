@@ -8,9 +8,11 @@
   flex: 0 0 100%;
   text-align: left;
   &__text {
+    flex: 0 0 50%;
     font-weight: 400;
     color: $gris2;
     text-transform: capitalize;
+    margin: 1vh 0;
   }
   &__data {
     font-weight: 600;
@@ -22,7 +24,7 @@
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   .details {
     margin-top: 1vh;
     &__text {
@@ -32,7 +34,7 @@
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em)  {
   /*detalles*/
   .details {
     padding-top: 1vh;
@@ -47,7 +49,7 @@
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   .details {
     &__text {
       flex: 0 0 50%;
@@ -56,7 +58,7 @@
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   /*detalles*/
   .details {
     padding-top: 1vh;
@@ -67,5 +69,5 @@
 }
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
+@include min-media(80em) {
 }

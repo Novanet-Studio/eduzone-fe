@@ -7,7 +7,6 @@ import Home from './views/Home'
 import Account from './views/Account'
 import Login from './views/Login'
 import Register from './views/Register'
-import Prices from './views/Prices'
 import Policy from './views/Policy'
 import Terms from './views/Terms'
 
@@ -78,7 +77,6 @@ function App() {
       <Route path="/terms" component={Terms} />
       <PublicRoute path="/login" component={Login} />
       <PublicRoute path="/register" component={Register} />
-      <PublicRoute path="/prices" component={Prices} />
       <PrivateRoute path="/account" component={Account} />
     </Switch>
   )

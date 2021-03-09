@@ -1,27 +1,21 @@
 @mixin flex {
-   display: flex;
-   flex-wrap: wrap;
- }
- 
- @mixin column-justify {
-   flex-direction: column;
-   justify-content: center;
- }
+  display: flex;
+  flex-wrap: wrap;
+}
 
- @mixin center {
+@mixin column-justify {
+  flex-direction: column;
+  justify-content: center;
+}
+
+@mixin center {
   align-items: center;
   justify-content: center;
 }
 
-@mixin min-media($size, $orientation: "") {
-  @if $orientation == "" {
-    @media only screen and (min-device-width: #{$size}) and (-webkit-min-device-pixel-ratio: 1) {
-      @content;  
-    }
-  } @else {
-    @media only screen and (min-device-width: #{$size}) and (-webkit-min-device-pixel-ratio: 1) and (orientation: #{$orientation}) {
-      @content;
-    }
+@mixin min-media($size) {
+  @media all and  (min-width: #{$size}) and (-webkit-min-device-pixel-ratio: 1) {
+    @content;
   }
 }
 

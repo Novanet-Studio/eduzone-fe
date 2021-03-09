@@ -31,16 +31,15 @@
     flex: 0 0 100%;
   }
   &__form {
+    flex: 0 0 60%;
+    padding-bottom: 3vh;
     &-control {
       @include flex;
       justify-content: space-between;
     }
   }
   &__input {
-    border: none;
-    font-weight: 400;
-    color: $negro;
-    border-radius: 0.4rem;
+    flex: 0 0 90%;
   }
   &__button {
     border: none;
@@ -56,37 +55,25 @@
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   /* Register */
   .register {
     padding: 5vh 0;
     &__info {
-      border-radius: 3em;
+      border-radius: 1.5em;
       padding: 2vh 0 0;
     }
     &__title {
       padding-bottom: 2vh;
     }
-    &__text {
-      padding-bottom: 3vh;
-    }
     &__form {
-      width: 100%;
-      padding-bottom: 3vh;
-      &-control {
-        padding: 0 2vh;
-      }
+      flex: 0 0 90%;
     }
     &__down {
       padding-top: 3vh;
     }
     &__input {
-      flex: 0 0 92%;
-      font-size: 1rem;
-      padding: 1vh 1.5vh;
-      margin: 2vh 0;
-      font-size: 16px;
-
+      flex: 0 0 90%;
     }
     &__button {
       margin-top: 1vh;
@@ -102,11 +89,11 @@
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em)  {
   /* Register */
   .register {
     &__info {
-      border-radius: 3em;
+      border-radius: 1.5em;
       padding: 4vh 0 0;
       margin: 5vh;
     }
@@ -114,20 +101,17 @@
       padding-bottom: 3vh;
     }
     &__text {
-      padding: 0 4vh 4vh;
     }
     &__form {
       width: 80%;
-      padding-bottom: 3vh;
+      padding-bottom: 6vh;
     }
     &__down {
       padding-top: 4vh;
     }
     &__input {
-      flex: 0 0 92%;
-      font-size: 1rem;
-      padding: 3vh 2vh;
-      margin: 2vh 0 1.5vh 0;
+      flex: 0 0 90%;
+      
     }
     &__button {
       margin-top: 1vh;
@@ -143,45 +127,40 @@
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   /* Register */
   .register {
     padding: 5vh 3vh;
     &__info {
-      border-radius: 4em;
+      border-radius: 3em;
     }
     &__form {
       width: 75%;
     }
-    &__input,
-    &__button {
-      font-size: 1.3rem;
+    &__input {
+      margin: 3vh 0 1vh 0;
     }
   }
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   /* Register */
   .register {
     &__info {
-      border-radius: 4em;
+      border-radius: 3em;
     }
     &__form {
       flex: 0 0 65%;
-      padding-bottom: 0vh;
     }
     &__text {
-      padding-left: 0;
-      padding-right: 0;
-    }
-    &__input,
-    &__button {
-      font-size: 1.4rem;
-      padding: 1vh 2vh;
+
     }
     &__input {
-      flex: 0 0 93%;
+      margin: 3vh 0 1vh 0;
+    }
+    &__input {
+      flex: 0 0 90%;
     }
     &__button {
       width: 100%;
@@ -196,6 +175,7 @@
   .register {
     &__form {
       flex: 0 0 60%;
+      padding-bottom: 3vh;
     }
   }
 }

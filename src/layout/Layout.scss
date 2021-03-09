@@ -1,50 +1,95 @@
 // Archivos importados
-@import './normalize';
-@import './variables';
-@import './mixins';
-@import './fonts';
-@import './appleZoomInput';
+@import '../assets/scss/normalize';
+@import '../assets/scss/variables';
+@import '../assets/scss/mixins';
+@import '../assets/scss/fonts';
+@import '../assets/scss/appleZoomInput';
 
 /* Contenedores principales */
 body {
   background-color: #fff;
 }
 
+.content {
+  @include flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .container {
   @include flex;
-  max-width: inherit;
-  margin-top: 0;
+  width: 74vw;
 }
 
 /*Text*/
 h2 {
+  font-size: 2.2rem;
+  line-height: 2.4rem;
   padding-bottom: 2vh;
 }
 
-p,
-button {
+h3 {
+  font-size: 1.9rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+p {
+  font-size: 1.35rem;
+  line-height: 1.65rem;
   font-weight: 400;
+}
+
+.button {
+  @include flex;
+  @include column-justify;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 1.5vh 3vh 1.5vh;
+  border-radius: 0.5em;
+  border: 0;
+  cursor: pointer;
+}
+
+.input {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: $negro;
+  border-radius: 0.5em;
+  padding: 1.5vh;
+  margin: 3vh 0 1vh 0;
+  border: 0;
 }
 
 /* Header */
 .header {
+  padding: 2vh 0;
   @include flex;
-  @include center;
+  justify-content: center;
   background-color: $negro;
   .container {
     justify-content: space-between;
-    align-items: center;
   }
   &__logo {
     cursor: pointer;
+    max-width: 60%;
   }
-  &__button {
-    font-weight: 600;
-    border: none;
-    color: #fff;
+  &__logo-container {
+    width: 25vw;
+  }
+  &__button-group {
+    @include flex;
+    width: 12.5vw;
+    justify-content: space-between;
+  }
+  &__button-signin {
     background-color: $azul;
-    cursor: pointer;
-    border-radius: 0.4em;
+  }
+  &__button-signup {
+    background-color: $rojo;
   }
 }
 
@@ -52,11 +97,12 @@ button {
 .footer {
   @include flex;
   @include center;
-  text-align: center;
   color: #fff;
   background-color: $negro;
+  padding: 4vh 0;
   .container {
     justify-content: center;
+    text-align: center;
   }
   &__title {
     flex: 100%;
@@ -67,75 +113,63 @@ button {
     flex: 100%;
     cursor: pointer;
     color: #fff;
+    font-size: 1.7rem;
+    padding-bottom: 3vh;
   }
   &__line {
     flex: 100%;
     border-top: 2px solid #fff;
+    margin-bottom: 2vh;
   }
   &__logo {
     cursor: pointer;
+    width: 50%;
   }
   &__copy {
     flex: 100%;
     color: #fff;
+    font-size: 1.3rem; 
+     
   }
+  &__terms {
+    padding-top: 0.5vh;
+    color: white;
+  }
+  &__span {
+    color:white;
+  } 
 }
 
-.none {
-  display: none;
-}
-
-/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+/*----------------------------------------- Mobile Portrait (320px) --------------------------------------------*/
+@include min-media(20em) {
   .container {
-    width: 100vw;
-  }
-
-  /*Text*/
-  h2 {
-    font-size: 2.2rem;
-    line-height: 2.4rem;
-  }
-
-  h3 {
-    font-size: 1.9rem;
-  }
-
-  h4 {
-    font-size: 1.4rem;
-  }
-
-  p {
-    font-size: 1.2rem;
-    line-height: 1.5rem;
+    width: 90vw;
+    margin: 3vh 0 3vh;
   }
 
   /* Header */
   .header {
     padding: 2vh 0;
-    .container {
-      padding: 0 2vh;
+    &__logo-container {
+      width: 45vw;
     }
     &__logo {
-      width: 33vw;
+      max-width: 100%;
     }
-    &__button {
-      padding: 0.5vh 3vh;
-      font-size: 0.8rem;
+    &__button-group {
+      width: 35vw;
+    }
+    .button {
+      padding: 1.54vh;
+      font-size: 0.85rem;
     }
   }
 
   /* Footer */
   .footer {
     padding: 3vh 0;
-    .container {
-      padding: 0 6vh;
-    }
     &__email {
       font-size: 1rem;
-    }
-    &__line {
-      margin: 2vh 0;
     }
     &__logo {
       width: 45vw;
@@ -148,57 +182,28 @@ button {
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
-  .container {
-    width: 100vw;
+@include min-media(35.5em) {
+  .input {
+    margin: 6vh 0 1vh 0;
   }
-
-  /*Text*/
-  h2 {
-    font-size: 2.2rem;
-    line-height: 2.4rem;
-  }
-
-  h3 {
-    font-size: 1.9rem;
-  }
-
-  h4 {
-    font-size: 1.4rem;
-  }
-
-  p {
-    font-size: 1.2rem;
-    line-height: 1.4rem;
-  }
-
   /* Header */
   .header {
     padding: 4vh 0;
-    .container {
-      padding: 0 4vh;
-    }
     &__logo {
       width: 23vw;
     }
-    &__button {
-      padding: 0.8vh 5vh;
-      font-size: 1rem;
+    &__button-group {
+      width: 19.5vw;
+    }
+    .button {
+      padding: 2.5vh;
     }
   }
 
   /* Footer */
   .footer {
-    padding: 4vh 0;
-    .container {
-      padding: 0 14vh;
-    }
     &__email {
       font-size: 1.3rem;
-      padding-bottom: 3vh;
-    }
-    &__line {
-      margin: 2vh 0;
     }
     &__logo {
       width: 32vw;
@@ -211,33 +216,23 @@ button {
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
-  /*Text*/
-  h2 {
-    font-size: 2.7rem;
-    line-height: 2.9rem;
-  }
-
-  h3 {
-    font-size: 2.3rem;
-  }
-
-  h4 {
-    font-size: 1.7rem;
-  }
-
+@include min-media(48em) {
   /* Header */
   .header {
+    padding: 2vh 0;
     &__logo {
       width: 23vw;
+    }
+    &__button-group {
+      width: 30vw;
+    }
+    .button {
+      font-size: 1.1rem;
     }
   }
 
   /* Footer */
   .footer {
-    &__email {
-      font-size: 1.7rem;
-    }
     &__copy {
       font-size: 1.3rem;
     }
@@ -245,34 +240,24 @@ button {
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
-  /*Text*/
-  h2 {
-    font-size: 2.7rem;
-    line-height: 2.9rem;
-  }
-
-  h3 {
-    font-size: 2.3rem;
-  }
-
-  h4 {
-    font-size: 1.7rem;
-  }
-
+@include min-media(64em) {
   /* Header */
   .header {
     padding: 2vh 0;
     &__logo {
       width: 20vw;
     }
+    &__button-group {
+      width: 16vw;
+    }
+    .button {
+      font-size: 1.1rem;
+      padding: 1.5vh;
+    }
   }
 
   /* Footer */
   .footer {
-    &__email {
-      font-size: 1.7rem;
-    }
     &__copy {
       font-size: 1.3rem;
     }
@@ -280,25 +265,28 @@ button {
 }
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
+@include min-media(80em) {
   .container {
     width: 74vw;
+    margin: 1.5vh 0 1.5vh;
   }
-
   /* Header */
   .header {
     &__logo {
-      width: 15vw;
+      width: 12.5vw;
+    }
+    &__button-group {
+      width: 10.5vw;     
+    }
+    .button {
+      font-size: 1.1rem;
+      padding: 1.75vh;
     }
   }
-
   /* Footer */
   .footer {
-    .container {
-      padding: 0 18vh;
-    }
     &__logo {
-      width: 24vw;
+      width: 18vw;
     }
   }
 }

@@ -21,16 +21,10 @@
       border-radius: 0.4em;
     }
   }
-  &__button {
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    cursor: pointer;
-    background-color: $azul;
-    border-radius: 0.4em;
-    margin-top: 1vh;
-    font-size: 1rem;
-    padding: 1vh 1vh;
+  &__button {   
+    background-color: $azul;  
+    margin: 3vh auto 0; 
+   
     &-update {
       cursor: pointer;
       border-radius: 0.4em;
@@ -45,7 +39,7 @@
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   .edit {
     &__form {
       &-group {
@@ -72,7 +66,7 @@
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em)  {
   .edit {
     &__form {
       padding-top: 1vh;
@@ -99,7 +93,7 @@
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   .edit {
     &__form {
       &-group {
@@ -118,7 +112,7 @@
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   .edit {
     &__form {
       &-group {

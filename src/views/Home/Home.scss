@@ -10,14 +10,18 @@
   background-image: $mozaicoPortadaIngles;
   background-size: cover;
   background-position: center;
+
   .container {
     justify-content: center;
   }
+
   .slider {
-    width: 100%;
     @include flex;
     @include center;
+    width: 50vw;
+    margin: 5vh 0 5vh 0;
     text-align: center;
+    border-radius: 1.5em;
     background-color: $azul;
     box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
     -webkit-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
@@ -26,19 +30,21 @@
   }
   .slick {
     &-list {
-      width: 80%;
+      width: 80vw;
     }
-    &-slide {
-      img {
-        margin: 0 auto;
-      }
-    }
-    &-arrow  {
+    &-arrow {
       width: 10vw;
       height: 10vw;
       z-index: 10;
       &::before {
         font-size: 2.5rem;
+      }
+    }
+    &-slide {
+      img {
+        margin: 5vh auto 5vh;
+        padding: 0;
+        width: 50%;
       }
     }
     &-prev {
@@ -48,13 +54,13 @@
       right: 2%;
     }
     &-dots {
-      bottom: 25px;
+      bottom: 1.25vh;
       li {
         button {
           &:before {
             color: White;
             opacity: 1;
-            font-size: 1.1rem;
+            font-size: 0.85rem;
             line-height: 1.38rem;
           }
         }
@@ -71,15 +77,26 @@
 
 /* Enjoy */
 .enjoy {
+  padding: 8vh 0;
   @include flex;
   @include center;
   border-bottom: $azul 10px solid;
-  .container {
-    justify-content: space-between;
-    align-items: center;
+  &__col-right,
+  &__col-left {
+    width: 50%;
+    padding: 4vh 1vh 4vh;
   }
-  &__title {
-    display: none;
+  &__col-left {
+    font-size: 1.4rem;
+  }
+  &__col-right {
+    @include flex;
+    @include column-justify;
+    align-content: center;
+    margin-top: 0 ;
+  }
+  &__img {
+    width: 50%;
   }
 }
 
@@ -88,34 +105,40 @@
   @include flex;
   @include center;
   background: $gris2;
-  .container {
-    justify-content: center;
-  }
+  padding: 4vh;
   &__title,
   &__text {
     flex: 0 0 100%;
     color: #fff;
+    text-align: center;    
   }
-  &__title {
-    text-align: center;
+  &__text {
+    padding: 8vh 0 6vh 0;
   }
 }
 
 /*Subscriptions*/
+
 .square-subs {
   &__info {
+    width: 45vw;
+    margin: 0 auto 4vh;
+    padding: 4vh 0 4vh 0;
     @include flex;
-    @include center;
+    @include center;  
     text-align: center;
     background-color: $amarillo;
+    border-radius: 3em;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
     -webkit-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
     -moz-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.7);
   }
+  &__subs {
+    width: 80%;
+  }
   &__input {
-    border: none;
-    color: $negro;
-    border-radius: 0.4em 0 0 0.4em;
+    width: 18vw;
+    border-radius: 0.5em 0 0 0.5em;
   }
   &__title {
     flex: 100%;
@@ -124,12 +147,9 @@
     flex: 100%;
   }
   &__button {
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    cursor: pointer;
+    display: unset;
     background-color: $rojo;
-    border-radius: 0 0.4em 0.4em 0;
+    border-radius: 0 0.5em 0.5em 0;
   }
 }
 
@@ -139,20 +159,24 @@
   @include center;
   border-top: $azul 10px solid;
   border-bottom: $amarillo 10px solid;
-  .container {
-    justify-content: center;
-  }
+
   &__title {
     flex: 0 0 100%;
     text-align: center;
   }
   .accordion {
+    width: 45vw;
+    margin: 0 auto;
+    &::before {
+      font-size: 2.5rem;
+    }
     text-align: center;
     background: $gris1;
     margin-bottom: 1vh;
     border: 0;
     &__button {
       background: $gris1;
+      font-size: 1.5rem;
       font-weight: 400;
       color: #fff;
       text-align: center;
@@ -169,21 +193,29 @@
   }
 }
 
-/*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+/*-------------------------------------------- Mobile Portrait(20em) --------------------------------------------*/
+@include min-media(20em) {
   /* Hero */
   .hero {
-    height: 90vh;
     .slider {
-      border-radius: 5em;
-      padding: 10vh 0;
+      width: 100vw;
+      border-radius: 1.5em;
+      padding: 6vh 0 6vh;
+      margin: 0;
     }
     .slick {
-      &-slide {
-        img {
-          width: 70%;
+      &-arrow {
+        &::before {
+          font-size: 2rem;
         }
       }
+      &-slide {
+        img {
+         width: 70%;
+          margin: 0 auto;
+        }
+      }
+      text-align: center;
       &-dots {
         li {
           margin: 0 0.2vh;
@@ -195,17 +227,15 @@
   /* Enjoy */
   .enjoy {
     padding: 4vh 0;
-    .container {
-      padding: 0 4vh;
-    }
+
     &__col-left {
       flex: 0 0 100%;
     }
     &__col-right {
-      margin-top: 4vh;
       flex: 0 0 100%;
     }
     &__text {
+      font-size: 1.2rem;
       text-align: center;
     }
     &__img {
@@ -214,17 +244,6 @@
   }
 
   /* Plan */
-  .plan {
-    padding-top: 5vh;
-    padding-bottom: 7vh;
-    &__title {
-      padding-bottom: 5vh;
-    }
-    &__text {
-      padding-left: 5vh;
-      padding-right: 5vh;
-    }
-  }
 
   /*Subscriptions*/
   .square-subs {
@@ -232,26 +251,13 @@
       width: 95vw;
       margin-top: 4vh;
       padding: 2vh 3vh 4vh;
-      border-radius: 4em;
-    }
-    &__title {
-      padding-bottom: 1vh;
-    }
-    &__text {
-      font-size: 1.2rem;
-      padding-bottom: 2vh;
+      border-radius: 1.5em;
     }
     &__subs {
       width: 95%;
     }
     &__input {
-      width: 60%;
-      font-size: 1rem;
-      padding: 1vh 1.5vh;
-    }
-    &__button {
-      font-size: 1rem;
-      padding: 1vh 2vh;
+      width: 50%;
     }
   }
 
@@ -262,7 +268,7 @@
       padding-bottom: 5vh;
     }
     .accordion {
-      width: 80%;
+      width: 100%;
       margin-bottom: 1.5vh;
       &__button {
         font-size: 1.4rem;
@@ -271,86 +277,61 @@
   }
 }
 
-/*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+/*-------------------------------------------- Mobile Landscape(35.5em) --------------------------------------------*/
+@include min-media(35.5em) {
   /* Hero */
-  .hero {  font-size: 1.1rem;
+  .hero {
+    font-size: 1.1rem;
     line-height: 1.5rem;
     height: 105vh;
     .slider {
-      width: 90%;
-      border-radius: 5em;
-      padding: 16vh 0;
+      padding: 8vh 0 8vh;
     }
     .slick {
       &-slide {
         img {
-          width: 65%;
+          width: 55%;
         }
-      }      
+      }
     }
   }
-
   /* Enjoy */
   .enjoy {
-    padding: 7vh 0;
-    .container {
-      padding: 0 7vh;
-    }
+    padding: 1vh 0;
     &__col-left {
       flex: 0 0 100%;
     }
-    &__col-right {
-      margin-top: 7vh;
-      flex: 0 0 60%;
+    &__col-right {      
+      flex: 0 0 100%;
+      text-align: center;
     }
     &__img {
-      width: 100%;
+      width: 70%;
     }
   }
 
   /* Plan */
   .plan {
-    padding-top: 8vh;
-    padding-bottom: 12vh;
-    padding-left: 5vh;
-    padding-right: 5vh;
     &__title {
-      padding-bottom: 8vh;
-    }
-    &__text {
-      padding-left: 14vh;
-      padding-right: 14vh;
+      padding-bottom: 4vh;
     }
   }
 
   /*Subscriptions*/
   .square-subs {
     &__info {
-      width: 80vw;
-      margin-top: 5vh;
-      padding: 3vh 0 6vh 0;
-      border-radius: 7em;
-    }
-    &__title {
-      padding-bottom: 1.5vh;
-    }
-    &__text {
-      font-size: 1.2rem;
-      padding-bottom: 2vh;
+      margin: 0 7vh;
+      padding: 3vh;
+      border-radius: 1.5em;
     }
     &__subs {
-      width: 90%;
+      width: 80%;
     }
     &__input {
-      width: 65%;
-      font-size: 1rem;
-      padding: 1.5vh;
-
+      width: 50%;
     }
     &__button {
-      font-size: 1rem;
-      padding: 1.5vh 3vh;
+      width: 45%;  
     }
   }
 
@@ -361,7 +342,7 @@
       padding-bottom: 5vh;
     }
     .accordion {
-      width: 70%;
+      width: 80vw;
       &__button {
         font-size: 1.4rem;
       }
@@ -369,21 +350,19 @@
   }
 }
 
-/*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+/*-------------------------------------------- Tablet Portrait(48em) --------------------------------------------*/
+@include min-media(48em) {
   /* Hero */
   .hero {
-    height: 75vh;
-    .slider {
-      width: 90%;
-    }
-    .slick { 
-      &-arrow  {
+    height: 55vh;
+    .slick {
+      &-arrow {
         &::before {
           font-size: 3.5rem;
         }
-      }    
+      }
       &-dots {
+        bottom: 3vh;
         li {
           margin: 0 0.5vh;
           button {
@@ -402,30 +381,25 @@
       flex: 0 0 50%;
     }
     &__col-right {
-      margin-top: 0;
-      flex: 0 0 45%;
+      flex: 0 0 50%;
     }
     &__text {
       text-align: left;
+      font-size: 0.9rem;
+      line-height: 1.1rem;
     }
   }
-
   /*Subscriptions*/
   .square-subs {
     &__info {
       width: 70vw;
-    }
-    &__input {
-      font-size: 1.3rem;
-    }
-    &__button {
-      font-size: 1.3rem;
     }
   }
 
   /* FAQ */
   .faq {
     .accordion {
+      width: 70vw;
       &__button {
         font-size: 1.6rem;
       }
@@ -433,22 +407,18 @@
   }
 }
 
-/*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+/*-------------------------------------------- Tablet Landscape(64em) --------------------------------------------*/
+@include min-media(64em) {
   /* Hero */
   .hero {
-    height: 85vh;
+    height: 75vh;
     .slider {
-      border-radius: 8em;
-      padding: 8vh 0;
+      border-radius: 3em;
     }
     .slick {
       &-slide {
-        img {
-          width: 85%;
-        }        
       }
-      &-arrow  {
+      &-arrow {
         &::before {
           font-size: 4rem;
         }
@@ -462,52 +432,29 @@
       flex: 0 0 50%;
     }
     &__col-right {
-      margin-top: 0;
-      flex: 0 0 45%;
-    }
-
-    &__text {
-      font-size: 1.4rem;
-      line-height: 1.9rem;
+      flex: 0 0 50%;
     }
   }
 
   /* Plan */
   .plan {
-    padding: 5vh 5vh 7vh;
-    &__title {
-      padding-bottom: 5vh;
-    }
 
-    &__text {
-      padding-left: 8vh;
-      padding-right: 8vh;
-      font-size: 1.5rem;
-      line-height: 1.8rem;
-    }
   }
 
   /*Subscriptions*/
   .square-subs {
     &__info {
-      width: 65vw;
+      width: 100vw;
     }
     &__subs {
       width: 73%;
-    }
-    &__input {
-
-    }
-    &__button {
-      font-size: 1.4rem;
-      padding: 1vh 2vh;
-    }
+    } 
   }
 
   /* FAQ */
   .faq {
     .accordion {
-      width: 55%;
+      width: 100%;
       &__button {
         font-size: 1.6rem;
       }
@@ -516,11 +463,52 @@
 }
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
+@include min-media(80em) {
+  .hero {
+    height: 65vh;
+    .container {
+      justify-content: center;
+    }
+    .slider {
+      width: 70%;
+    }
+    .slick {
+      &-list {
+      }
+      &-slide {
+        img {
+          padding: 0;
+        }
+      }
+    }
+  }
+
   /*Subscriptions*/
   .square-subs {
     &__info {
-      width: 54vw;
+      margin: 0 auto;
+      width: 45vw;
+    }
+  }
+
+  .enjoy {
+    &__text {
+      font-size: 1.4rem;
+      line-height: 1.7rem;
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    .container {
+      justify-content: center;
+    }
+    .accordion {
+      width:45vw;
+      margin-top: 0 auto;
+      &__button {
+        font-size: 1.6rem;
+      }
     }
   }
 }

@@ -63,12 +63,12 @@ const ManageLicense = ({ showError, loading }) => {
       <form className="account-manage">
         <input
           type="text"
-          className="account-manage__input"
+          className="input account-manage__input"
           placeholder="Access Code"
           value={accesscode.value}
           onChange={accesscode.onChange}
         />
-        <button className="account-manage__button" onClick={handleAccessCode}>
+        <button className="button account-manage__button" onClick={handleAccessCode}>
           {isAdding ? 'Adding...' : 'Redeem'}
         </button>
       </form>

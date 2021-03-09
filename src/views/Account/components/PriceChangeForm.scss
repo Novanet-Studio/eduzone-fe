@@ -15,7 +15,7 @@
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   /*Change Price*/
   .price {
     margin-top: 2vh;
@@ -37,7 +37,7 @@
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em) {
   /*Change Price*/
   .price {
     &-current,
@@ -59,7 +59,7 @@
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   /*Change Price*/
   .price {
     &-current,
@@ -77,7 +77,7 @@
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   /*Change Price*/
   .price {
     &-current {
@@ -96,7 +96,7 @@
 }
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
+@include min-media(80em) {
   /*Change Price*/
   .price {
     &-current {

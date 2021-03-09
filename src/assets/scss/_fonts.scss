@@ -1,32 +1,29 @@
 /* Bariol 300 - Light */
 @font-face {
-  font-family: "Bariol";
+  font-family: 'Bariol';
   font-style: normal;
   font-weight: 300;
-  // src: url("../font/Bariol/Bariol-Light.ttf");
   src: $bariolLight;
 }
 
 /* Bariol 400 - Regular */
 @font-face {
-  font-family: "Bariol";
+  font-family: 'Bariol';
   font-style: normal;
   font-weight: 400;
-  // src: url("../font/Bariol/Bariol-Regular.ttf");
+
   src: $bariolRegular;
 }
 
-
 /* Bariol 600 - Bold */
 @font-face {
-  font-family: "Bariol";
+  font-family: 'Bariol';
   font-style: normal;
   font-weight: 600;
-  // src: url("../font/Bariol/Bariol-Bold.ttf");
   src: $bariolBold;
 }
 
 * {
-  font-family: "Bariol";
-  color:$negro;
+  font-family: 'Bariol';
+  color: $negro;
 }

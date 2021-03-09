@@ -54,16 +54,6 @@ export const setToken = (token) => {
   localStorage.setItem('eduzone::token', token)
 }
 
-export const removeUserSession = () => {
-  localStorage.removeItem('eduzone::token')
-  sessionStorage.removeItem('eduzone::user')
-  sessionStorage.removeItem('eduzone::account')
-  sessionStorage.removeItem('paymentMethodId')
-  sessionStorage.removeItem('eduzone::license')
-  sessionStorage.removeItem('eduzone::product')
-  sessionStorage.removeItem('email')
-}
-
 export const setUserSession = (user) => {
   sessionStorage.setItem('eduzone::user', JSON.stringify(user))
 }
@@ -84,6 +74,16 @@ export const setUserCredentials = (email, password) => {
 export const removeUserCredentials = () => {
   sessionStorage.removeItem('eduzone::email')
   sessionStorage.removeItem('eduzone::password')
+}
+
+export const removeUserSession = () => {
+  localStorage.removeItem('eduzone::token')
+  sessionStorage.removeItem('eduzone::user')
+  sessionStorage.removeItem('eduzone::account')
+  sessionStorage.removeItem('paymentMethodId')
+  sessionStorage.removeItem('eduzone::license')
+  sessionStorage.removeItem('eduzone::product')
+  sessionStorage.removeItem('email')
 }
 
 export const initAxiosInterceptors = () => {

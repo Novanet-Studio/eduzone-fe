@@ -22,7 +22,8 @@ import {
   retryInvoiceWithNewPaymentMethod,
 } from '@services/stripe'
 import './PaymentForm.scss'
-import IconSegurity from '@images/icon_segurity.svg'
+import IconSecure from '@images/icon_secure.svg'
+import stripeLogo from '@images/stripe_logo.svg'
 
 const { REACT_APP_STRIPE_PK } = process.env
 
@@ -188,8 +189,13 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
         onSubmit={handleSubmit(handleSubmitForm)}
       >
         <div className="payment__form-control">
+          <p className="payment__text">
+            <b>Remember:</b> All our subscriptions include a 30-day free trial,
+            we will not charge anything until 30 days after the subscription
+            date you can cancel your subscription at any time.
+          </p>
           <input
-            className="payment__input"
+            className="input payment__input"
             type="text"
             name="firstname"
             placeholder="First name"
@@ -213,7 +219,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
         </div>
         <div className="payment__form-control">
           <input
-            className="payment__input"
+            className="input payment__input"
             type="text"
             name="lastname"
             placeholder="Last name"
@@ -240,36 +246,40 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
             {/* TODO: Show Error onChange input */}
             <CardElement options={{}} onChange={(e) => console.log(e)} />
           </div>
+          <img
+            className="payment__form-stripe"
+            src={stripeLogo}
+            alt="secure server icon"
+          />
         </div>
         <p className="payment__text">
           By clicking <b>Subscribe to Edu-zone</b>, you are confirming that you
-          have read and accept our Terms of Service. You also agree that Eduzone
-          will save your card details in order to automatically renew your
-          subscription and process future account updates. If we change in any
-          way the way we use the data we store from your card, we will notify
-          you using the email address you provided. This site is protected by
-          reCAPTCHA and subject to Google's Privacy Policy and Terms of Service.
+          have read and accept our{' '}
+          <a href="/" target="_blank">
+            Terms of Service.
+          </a>{' '}
+          You also agree that Eduzone will save your card details in order to
+          automatically renew your subscription and process future account
+          updates. If we change in any way the way we use the data we store from
+          your card, we will notify you using the email address you provided.
+          This site is protected by reCAPTCHA and subject to Google's Privacy
+          Policy and Terms of Service.
         </p>
         <button
-          className="payment__button"
+          className="button payment__button"
           type="submit"
           disabled={subscribing}
         >
           {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
         </button>
-        <button className="payment__segurity">
+        <div className="payment__security">
           <img
-            className="payment__segurity-img"
-            src={IconSegurity}
-            alt="icon segurity server"
+            className="payment__security-img"
+            src={IconSecure}
+            alt="secure server icon"
           />{' '}
           Secure server
-        </button>
-        <p className="payment__text">
-          <b>Remember:</b> All our subscriptions include a 30-day free trial, we
-          will not charge anything until 30 days after the subscription date you
-          can cancel your subscription at any time.
-        </p>
+        </div>
       </form>
     </div>
   )

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import Modal from '@components/Modal'
 import Product from '@components/Product'
 import { products, URL } from '@constants'
@@ -9,7 +8,6 @@ import { useError, useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
 import {
   getUser,
   getUserAccount,
-  removeUserSession,
   setUserSession,
 } from '@utils/common'
 import {
@@ -22,7 +20,6 @@ import './Account.scss'
 import ErrorMessage from '@/components/ErrorMessage'
 
 function Account() {
-  const history = useHistory()
   const account = getUserAccount()
   const user = getUser()
   const customerPaymentMethod = useRetrieveCustomerPaymentMethod(
@@ -67,11 +64,6 @@ function Account() {
     fetchUser()
   }, [subscriptionCancelled])
 
-  const handleLogout = () => {
-    removeUserSession()
-    history.push('/login')
-  }
-
   const handleCancelSubscription = async () => {
     setLoadingContent(true)
     const bodyParams = {
@@ -98,7 +90,7 @@ function Account() {
   if (loadingContent) {
     return (
       <>
-        <Header loggedIn={true} handleClick={handleLogout} />
+        <Header />
         <section className="account">
           <div className="container">
             <div className="account__info">
@@ -118,7 +110,7 @@ function Account() {
 
   return (
     <>
-      <Header loggedIn={true} onClick={handleLogout} />
+      <Header />
       <Modal isOpen={isOpen} closeModal={closeModal} />
       {error && <ErrorMessage error={error} />}
       <section className="account">
@@ -129,10 +121,7 @@ function Account() {
             {/* User account */}
             <div className="account__card">
               <div className="account__card-header">
-                <h3 className="account__card-title">User account</h3>
-                <button className="edit__button" onClick={handleEdit}>
-                  Edit info
-                </button>
+                <h3 className="account__card-title">User account</h3>                
               </div>
               <hr className="account__line" />
               {isEditing ? (
@@ -140,6 +129,10 @@ function Account() {
               ) : (
                 <AccountDetails />
               )}
+              
+              <button className="button edit__button" onClick={handleEdit}>
+                  Edit info
+                </button>
             </div>
 
             {/* User account */}
@@ -155,13 +148,13 @@ function Account() {
                   </h3>
                   <div className="account__card-info">
                     <span className="account__card-data">
-                      <h4>Current plan</h4>
+                      <h4>Current plan:</h4>
+                      <p className="account__card-data">
+                      {`\u00A0${productName(selectedProduct)}`}
+                    </p>
                     </span>
                   </div>
-                  <div className="account__card-info">
-                    <p className="account__card-data">
-                      {productName(selectedProduct)}
-                    </p>
+                  <div className="account__card-info">                    
                     <img
                       className="account__card-img"
                       src={productImage(selectedProduct)}
@@ -178,14 +171,14 @@ function Account() {
                 </div>
 
                 <div
-                  className="account__button"
+                  className="button account__button"
                   onClick={() => handleChangePriceForm()}
                 >
                   Change pricing plan {'>'}
                 </div>
 
                 <div
-                  className="account__button"
+                  className="button account__button"
                   onClick={() => handleCancelSubscription()}
                 >
                   Cancel subscription {'>'}
@@ -243,7 +236,7 @@ function Account() {
               amount.
             </p>
             <a
-              className="account__button"
+              className="button account__button"
               href="https://www.eduzoneserver.com/studentportal/"
               target="_blank"
               rel="noreferrer"

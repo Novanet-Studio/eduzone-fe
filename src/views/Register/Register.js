@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 
-import { Header, Footer } from '@layout'
+import Layout from '../../layout/Layout'
 
 import ErrorMessage, {
   ErrorMessageContainer,
@@ -101,9 +101,9 @@ function Register() {
   }
 
   return (
-    <>
+    <Layout>
       <ScrollToTop />
-      <Header loggedIn={false} />
+
       <section className="register">
         <div className="container">
           <div className="register__info">
@@ -122,7 +122,7 @@ function Register() {
             >
               <div className="register__form-control">
                 <input
-                  className="register__input"
+                  className="input register__input"
                   type="email"
                   name="email"
                   placeholder="Email address"
@@ -153,7 +153,7 @@ function Register() {
               <div className="register__form-control">
                 <input
                   id="emailInput"
-                  className="register__input"
+                  className="input register__input"
                   type="email"
                   name="confirmEmail"
                   placeholder="Confirm email address"
@@ -181,7 +181,7 @@ function Register() {
               </div>
               <div className="register__form-control">
                 <input
-                  className="register__input"
+                  className="input register__input"
                   type="password"
                   name="password"
                   placeholder="Enter password"
@@ -214,7 +214,7 @@ function Register() {
               </div>
               <div className="register__form-control">
                 <input
-                  className="register__input"
+                  className="input register__input"
                   type="password"
                   name="confirmPassword"
                   placeholder="Password confirmation"
@@ -275,8 +275,8 @@ function Register() {
           </div>
         </div>
       </section>
-      <Footer />
-    </>
+
+    </Layout>
   )
 }
 

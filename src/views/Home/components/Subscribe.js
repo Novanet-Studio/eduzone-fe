@@ -21,11 +21,11 @@ const Subscribe = ({ parentClass = 'square-subs' }) => {
 
   return (
     <div className={`${currentClass}info`}>
-      <h3 className={`${currentClass}title`}>Discover our interactive eBooks</h3>
+      <h3 className={`${currentClass}title`}>Sign up to discover our interactive eBooks</h3>
       <p className={`${currentClass}text`}>Ready to learn? Enter your email to create or restart your membership</p>
     <form className={`${currentClass}subs`} onSubmit={handleSubscribe}>
       <input
-        className={`${currentClass}input`}
+        className={`input ${currentClass}input`}
         type="email"
         name="email"
         id="email"
@@ -34,7 +34,7 @@ const Subscribe = ({ parentClass = 'square-subs' }) => {
         onChange={email.onChange}
         required
       />
-      <button className={`${currentClass}button`} type="submit">
+      <button className={`button ${currentClass}button`} type="submit">
         {loading ? 'Loading...' : `Get started »`}
       </button>
     </form>

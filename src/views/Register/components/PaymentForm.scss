@@ -4,8 +4,12 @@
 
 /*Payment*/
 .payment {
-  padding: 3vh 4vh;
+  @include flex;
+  flex: 0 0 60%;
+  justify-content: center;
+  padding: 3vh 0;
   &__form {
+    flex: 0 0 100%;
     &-control {
       @include flex;
       justify-content: space-between;
@@ -13,33 +17,36 @@
     &-group {
       @include flex;
       justify-content: space-between;
-      margin: 2vh 0 6vh;
       text-align: left;
-    }
+      margin: 0;
+    }    
     &-element {
-      margin-top: 1vh;
+      flex: 0 0 90%;
       padding: 2vh;
       background: #fff;
       border-radius: 0.4em;
+      margin: 3vh 0 1vh 0;
     }
     &-error {
       margin-top: 2vh;
     }
+    &-stripe {
+      width: 15%;
+      padding-top: 1vh;
+    }
   }
   &__input {
-    border: none;
-    font-weight: 400;
-    color: $negro;
-    border-radius: 0.4em;
+    flex: 0 0 90%;
+  }
+  &__text {
+    margin: 3vh 0 3vh 0;
+    a {
+      text-decoration: underline;
+    }
   }
   &__button {
-    margin-top: 2vh;
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    cursor: pointer;
+    margin: 0 auto;
     background-color: $rojo;
-    border-radius: 0.4em;
   }
   &__data {
     margin-top: 1vh;
@@ -47,16 +54,18 @@
   &__secure {
     text-align: left;
     display: flex;
-    align-items: center;
+    align-items: center;    
   }
-  &__segurity {
-    display: flex;
-    align-items: center;
+  &__security {
+    @include flex;
+    justify-content: center;
     font-weight: 600;
-    border-radius: 0.4em;
     color: $azul;
-    background: none;
-    border: none;
+    margin-top: 2vh;
+    &-img {
+      width: 15px;
+      margin-right: 1vh;
+    }
   }
   &__data {
     @include flex;
@@ -69,12 +78,15 @@
     font-weight: 300;
     border-radius: 0.4em;
     font-weight: 400;
+    margin: 2vh 1vh;
+    padding: 0.5vh 1vh;
     span {
       color: #fff;
       font-weight: 600;
     }
   }
   &__price {
+    padding: 0.5vh 1vh;
     background-color: $azul;
   }
   &__name {
@@ -86,15 +98,19 @@
   &__pro {
     &-img {
       margin: 3vh 0 4vh;
+      width: 45%;
     }
   }
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   /*Payment*/
   .payment {
+    flex: 0 0 90%;
     &__text {
+      font-size: 1.1rem;
+      line-height: 1.45rem;
       margin: 1vh 0;
     }
     &__price,
@@ -103,20 +119,20 @@
       margin: 2vh 0;
       font-size: 1rem;
     }
-    &__form {
+    &__form {      
       &-element {
-        flex: 0 0 92%;
+        flex: 0 0 90%;
+      }
+      &-stripe {
+        width: 36%;
+        padding: 0.5vh 0 0.5vh;
       }
     }
     &__input {
-      flex: 0 0 92%;
-      font-size: 1rem;
-      padding: 1.4vh 1.2vh;
-      margin: 2vh 0;
+      flex: 0 0 90%;
     }
     &__button {
-      margin-bottom: 3vh;
-      font-size: 1rem;
+      margin: 3vh auto 1vh;
       padding: 1vh 2vh;
     }
     &__secure {
@@ -127,13 +143,12 @@
         margin-right: 1vh;
       }
     }
-    &__segurity {
+    &__security {
       width: 46%;
       margin: 0 auto 3vh;
-      font-size: 1rem;
       padding: 1vh 2vh;
       &-img {
-        width: 12%;
+        width: 12px;
         margin-right: 1vh;
       }
     }
@@ -143,43 +158,43 @@
     }
     &__pro {
       &-img {
-        width: 50%;
+        width: 60%;
       }
     }
   }
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em) {
   /*Payment*/
   .payment {
     margin: 2vh 0;
-    flex: 0 0 83%;
+    flex: 0 0 90%;
     &__text {
       margin: 1vh 0;
     }
     &__price,
     &__name {
-      margin: 2vh !important;
+      margin: 2vh;
       padding: 1vh 2vh;
       font-size: 1rem;
     }
     &__form {
       &-element {
-        flex: 0 0 92%;
+        flex: 0 0 90%;
+        margin: 6vh 0 3vh 0;
+      }
+      &-stripe {
+        width: 24%;
+        padding: 0 0 2.5vh;
       }
     }
     &__input {
-      flex: 0 0 92%;
-      font-size: 1rem;
-      padding: 3vh 2vh;
-      margin: 2vh 0 6vh 0;
+      flex: 0 0 90%;    
     }
     &__button {
-      margin-top: 4vh;
-      font-size: 1.1rem;
       padding: 2vh 3vh;
-      margin-bottom: 4vh;
+      
     }
     &__secure {
       margin-top: 4vh;
@@ -189,15 +204,12 @@
         margin-right: 2vh;
       }
     }
-    &__segurity {
+    &__security {
       width: 29%;
-      margin: 0 auto 3vh;
-      font-size: 1rem;
-      padding: 2vh;
-      &-img {
-        width: 12%;
-        margin-right: 2vh;
+      &-img {         
+        margin-right: 1vh;
       }
+
     }
     &__text-down {
       font-size: 1.1rem;
@@ -212,32 +224,34 @@
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   /*Payment*/
   .payment {
-    flex: 0 0 80%;
-    &__price,
-    &__name {
-      margin: 2vh 1vh !important;
-      padding: 0.5vh 1vh;
+    flex: 0 0 90%;
+    &__title {
+      width: 100%;
     }
-    &__form {
-      &-group {
-        label {
-          font-size: 1.2rem;
-        }
-      }
+    &__subtitle {
+      width: 100%;
     }
     &__input {
-      margin: 1.5vh 0;
-      padding: 1vh 1.5vh;
+      margin: 3vh 0 1vh 0;
     }
-    &__input,
-    &__button {
-      font-size: 1.2rem;
-      line-height: 1.5rem;
+    &__price,
+    &__name {
+      margin: 2vh 1vh;
+      padding: 0.5vh 1vh;
     }
-
+    
+    &__form {
+      &-element {
+        flex: 0 0 90%;
+        margin: 3vh 0 0 0;
+      }
+      &-stripe {
+        padding: 1vh 0 0.5vh;
+      }
+    }
     &__secure {
       font-size: 1.2rem;
       margin-top: 2vh;
@@ -246,35 +260,26 @@
         width: 2vh;
       }
     }
-    &__segurity {
+    &__security {
       width: 38%;
-      font-size: 1.2rem;
-      line-height: 1.5rem;
+      &-img {
+        width: 15px;
+        margin-right: 1vh;
+      }
+    }
+    &__pro {
+      &-img {
+        width: 50%;
+      }
     }
   }
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   /*Payment*/
   .payment {
-    flex: 0 0 65% !important;
-    &__form {
-      &-group {
-        label {
-          font-size: 1.2rem;
-        }
-      }
-    }
-    &__input {
-      font-size: 1.2rem;
-      margin:2vh 0;
-    }
-    &__button {
-      margin-top: 3vh;
-      margin-bottom: 3vh;
-      font-size: 1.2rem;
-    }
+    flex: 0 0 65%; 
     &__price,
     &__name {
       font-size: 1.2rem;
@@ -292,17 +297,37 @@
       font-size: 1.2rem;
       line-height: 1.5rem;
     }
-
-    &__segurity {
-      font-size: 1.2rem;
-      padding: 1.4vh;
-      &-img {
-        margin-right: 1vh;
-      }
-    }
   }
 }
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
 @include min-media(1280px) {
+  .payment {
+    &__input {
+      margin: 3vh 0 1vh 0;
+    }
+    &__form {
+      &-group {
+        margin: 3vh 0 3vh 0;
+      }
+      &-element {
+        margin: 0;
+      }
+      &-stripe {
+        width: 15%;
+        padding-top: 1vh;
+      }
+    }
+    &__security {
+      &-img {
+        width: 15px;
+        margin-right: 1vh;
+      }
+    }
+    &__pro {
+      &-img {
+        width: 52%;
+      }
+    }
+  }
 }

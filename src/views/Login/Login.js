@@ -2,11 +2,16 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
-import { Footer } from '@layout'
+import Layout from '../../layout/Layout'
 
 import { useError } from '@hooks'
 import ErrorMessage, { ErrorMessageContainer } from '@components/ErrorMessage'
-import { setAccount, setToken, setUserLicense, setUserSession } from '@utils/common'
+import {
+  setAccount,
+  setToken,
+  setUserLicense,
+  setUserSession,
+} from '@utils/common'
 import { URL } from '@constants'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
@@ -54,8 +59,8 @@ function Login() {
   }
 
   return (
-    <>
-      {error && <ErrorMessage error={error} />}
+    <Layout>
+      
       <section className="login">
         <div className="container">
           <div className="login__info">
@@ -63,13 +68,19 @@ function Login() {
             <form className="login__form" onSubmit={handleSubmit(handleLogin)}>
               <div className="login__form-control">
                 <input
-                  className="login__input"
+                  className="input login__input"
                   type="email"
                   name="email"
                   placeholder="Enter email"
                   ref={register({
-                    required: { value: true, message: 'You must enter your email' },
-                    pattern: { value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g, message: 'Email not valid' }
+                    required: {
+                      value: true,
+                      message: 'You must enter your email',
+                    },
+                    pattern: {
+                      value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
+                      message: 'Email not valid',
+                    },
                   })}
                 />
                 <ErrorFormMessage
@@ -77,28 +88,32 @@ function Login() {
                   name="email"
                   as={<ErrorMessageContainer />}
                 />
+                <input
+                  className="input login__input"
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  ref={register({
+                    required: {
+                      value: true,
+                      message: 'You must enter a password',
+                    },
+                    minLength: {
+                      value: 6,
+                      message: 'Your password must be at least 6 characters',
+                    },
+                  })}
+                />
+                <ErrorFormMessage
+                  errors={errors}
+                  name="password"
+                  as={<ErrorMessageContainer />}
+                />
+                <button className="button login__button" disabled={loading}>
+                  {loading ? 'Loading...' : 'Login'}
+                </button>
+                {error && <ErrorMessage error={error} />}
               </div>
-              <input
-                className="login__input"
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                ref={register({
-                  required: { value: true, message: 'You must enter a password'},
-                  minLength: {
-                    value: 6,
-                    message: 'Your password must be at least 6 characters',
-                  },
-                })}
-              />
-              <ErrorFormMessage
-                errors={errors}
-                name="password"
-                as={<ErrorMessageContainer />}
-              />
-              <button className="login__button" disabled={loading}>
-                {loading ? 'Loading...' : 'Login'}
-              </button>
             </form>
             <p className="login__text">
               You don't have an account yet?{' '}
@@ -109,8 +124,7 @@ function Login() {
           </div>
         </div>
       </section>
-      <Footer />
-    </>
+    </Layout>
   )
 }
 

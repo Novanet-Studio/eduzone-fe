@@ -14,6 +14,7 @@
     justify-content: center;
   }
   &__title {
+    width: 100%;
     padding-bottom: 0;
   }
   &__info {
@@ -21,12 +22,13 @@
     @include center;
     text-align: center;
     background-color: $amarillo;
+    width: 53vw;
+    border-radius: 1.5em;
+    margin: 4vh;
+    padding: 0 0 4vh 0;
     box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
     -webkit-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
     -moz-box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.7);
-  }
-  &__title {
-    flex: 100%;
   }
   &__text {
     font-weight: 400;
@@ -35,9 +37,14 @@
   &__card {
     @include flex;
     justify-content: space-between;
-    background: rgb(238, 238, 238);
-    /*&-title {margin-bottom:2vh;}*/
+    width: 90%;
+    margin-top: 3vh;
+    border-radius: 1.5em;
+    padding: 4vh;
+    background: rgb(238, 238, 238);  
     &-header {
+      flex: 0 0 100%;
+      padding-bottom: 2vh;
       justify-content: center;
       align-items: center;
     }
@@ -45,34 +52,29 @@
       justify-content: center;
       align-items: center;
       display: flex;
-      p {
-        font-weight: 600;
-      }
+    }
+    &-column {
+      width: 100%;
+      padding: 1vh;
+    }
+    &-info {
+      flex: 0 0 100%;
     }
     &-img {
-      margin: 3vh 0;
+      width: 35%;
     }
   }
   &__line {
     flex: 100%;
     border-top: 1px solid $gris1;
   }
-  &__button {
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    cursor: pointer;
+  &__button {    
+    flex: 0 0 48%;
     background-color: $rojo;
-    border-radius: 0.4em;
   }
   .cancel {
     &__button {
-      border: none;
-      border-radius: 0;
-      color: #fff;
-      cursor: pointer;
       background-color: $rojo;
-      border-radius: 0.4em;
     }
   }
   &__text-down {
@@ -83,31 +85,34 @@
     width: 100%;
     display: flex;
     &__input {
+      flex: 0 0 80%;
       border: 1px #808080 solid;
       border-right: none;
       font-weight: 400;
       color: #131313;
       border-radius: 0.4em 0 0 0.4em;
+      margin: 0;
     }
     &__button {
-      border: none;
-      border-radius: 0;
-      color: #fff;
-      cursor: pointer;
+      flex: 0 0 20%;
       background-color: $verde;
       border-radius: 0 0.4em 0.4em 0;
+      margin: 0;
     }
   }
 }
 
 /*-------------------------------------------- Mobile Portrait --------------------------------------------*/
-@include min-media(320px, portrait) {
+@include min-media(20em) {
   /* Account */
   .account {
+    p {
+      font-size: 1rem;
+      line-height: 1.2rem;
+    }
     min-height: 93vh;
     padding: 4vh 0;
     &__info {
-      border-radius: 3em;
       width: 95vw;
       padding: 2vh 2vh 4vh 2vh;
     }
@@ -116,9 +121,7 @@
     }
     &__card {
       width: 90%;
-      margin-top: 3vh;
-      padding: 1vh 4vh 3vh;
-      border-radius: 2em;
+      padding: 2vh;
       &-header {
         flex: 0 0 100%;
         padding-bottom: 2vh;
@@ -128,56 +131,50 @@
         padding-top: 1vh;
         padding-bottom: 2vh;
       }
-      &-data {
-        font-size: 1.2rem;
-        padding: 0.5vh 1vh;
-      }
       &-column {
         width: 100%;
-        padding: 1vh;
+        padding: 1vh;&-img {
+          width: 35%;
+        }
       }
       &-img {
         width: 50%;
       }
     }
     &__button {
-      margin-top: 2vh;
-      font-size: 1rem;
-      padding: 1vh 2vh;
       flex: 0 0 100%;
+      margin-top: 1.5vh;
     }
     &-manage {
       margin-top: 2vh;
       &__input {
         font-size: 1rem;
-        padding: 1vh;
-        flex: 0 0 75%;
+
+        flex: 0 0 50%;
       }
       &__button {
         flex: 0 0 25%;
-        font-size: 1rem;
-        padding: 1vh 0.9vh;
       }
     }
   }
 }
 
 /*-------------------------------------------- Mobile Landscape --------------------------------------------*/
-@include min-media(568px, landscape) {
+@include min-media(35.5em) {
   /* Account */
   .account {
+    p {
+      font-size: 1.35rem;
+      line-height: 1.65rem;
+    }
     min-height: 90vh;
     &__info {
-      border-radius: 3em;
       width: 90vw;
       padding: 2vh 0 4vh 0;
-      margin: 4vh;
     }
     &__card {
       width: 90%;
-      margin-top: 3vh;
-      padding: 1vh 6vh 5vh;
-      border-radius: 2em;
+      padding: 4vh;
       &-header {
         flex: 0 0 100%;
         padding-bottom: 2vh;
@@ -185,10 +182,6 @@
       &-info {
         flex: 0 0 100%;
         padding-bottom: 2vh;
-      }
-      &-data {
-        font-size: 1.1rem;
-        padding: 0.5vh 1vh;
       }
       &-column {
         padding: 3vh 0 0;
@@ -198,22 +191,19 @@
       }
     }
     &__button {
-      flex: 0 0 30%;
-      font-size: 1rem;
-      padding: 2vh 3vh;
+      flex: 0 0 45%;
     }
 
     &-manage {
       margin-top: 4vh;
+      justify-content: center;
       &__input {
         font-size: 1rem;
         padding: 2vh;
-        flex: 0 0 80%;
+        flex: 0 0 50%;
       }
       &__button {
-        flex: 0 0 20%;
-        font-size: 1rem;
-        padding: 1vh 3vh;
+        flex: 0 0 30%;
       }
     }
   }
@@ -225,19 +215,17 @@
     }
     &__button {
       flex: 0 0 25%;
-      font-size: 1rem;
-      padding: 1vh 3vh;
     }
   }
 }
 
 /*-------------------------------------------- Tablet Portrait --------------------------------------------*/
-@include min-media(768px, portrait) {
+@include min-media(48em) {
   /* Account */
   .account {
     min-height: 62vh;
     &__info {
-      border-radius: 4em;
+      border-radius: 3em;
     }
     &__button {
       margin-top: 0;
@@ -250,38 +238,30 @@
       }
       &__button {
         flex: 0 0 20%;
-        font-size: 1.2rem;
       }
     }
   }
 }
 
 /*-------------------------------------------- Tablet Landscape --------------------------------------------*/
-@include min-media(1024px, landscape) {
+@include min-media(64em) {
   /* Account */
   .account {
     min-height: 72vh;
     &__info {
-      border-radius: 4em;
-    }
-    &__button {
-      font-size: 1.2rem;
-      padding: 1vh 2vh;
+      border-radius: 3em;
     }
 
     &-manage {
       &__input {
         padding: 1vh;
       }
-      &__button {
-        font-size: 1.2rem;
-      }
     }
   }
 }
 
 /*-------------------------------------------- Desktop responsive --------------------------------------------*/
-@include min-media(1280px) {
+@include min-media(80em) {
   /* Account */
   .account {
     &__info {
