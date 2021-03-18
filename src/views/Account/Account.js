@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import Modal from '@components/Modal'
 import Product from '@components/Product'
 import { products, URL } from '@constants'
@@ -20,6 +21,7 @@ import './Account.scss'
 import ErrorMessage from '@/components/ErrorMessage'
 
 function Account() {
+  const history = useHistory()
   const account = getUserAccount()
   const user = getUser()
   const customerPaymentMethod = useRetrieveCustomerPaymentMethod(
@@ -32,7 +34,7 @@ function Account() {
   const [newProductSelected, setNewProductSelected] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(account.priceId)
   const [loadingContent, setLoadingContent] = useState(false)
-  const [isOpen, closeModal] = useModal(false)
+  const [isOpen, closeModal] = useModal(history.location?.state?.isNew ?? false)
 
   const productName = (name) => {
     const product = products.filter((product) => product.type === name)

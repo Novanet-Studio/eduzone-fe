@@ -147,7 +147,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
         console.log('subscription info: ', info)
 
         sessionStorage.setItem('paymentMethodId', paymentMethodId)
-        sessionStorage.setItem('new::user', true)
+        // sessionStorage.setItem('new::user', true)
         reset()
         setUserCreated(true)
         setAccountInformation(info)
@@ -163,7 +163,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
 
   if (accountInformation && userCreated) {
     console.log('[Account Information]', accountInformation)
-    history.push('/account')
+    history.push('/account', { isNew: true })
   }
 
   return (
