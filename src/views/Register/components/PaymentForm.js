@@ -258,12 +258,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
           <a href="/" target="_blank">
             Terms of Service.
           </a>{' '}
-          You also agree that Eduzone will save your card details in order to
-          automatically renew your subscription and process future account
-          updates. If we change in any way the way we use the data we store from
-          your card, we will notify you using the email address you provided.
-          This site is protected by reCAPTCHA and subject to Google's Privacy
-          Policy and Terms of Service.
+          You also agree that Eduzone will renew your subscription and process future account updates. If we change in any way the way we use the data we store from your account, we will notify you using the email address you provided.
         </p>
         <button
           className="button payment__button"
