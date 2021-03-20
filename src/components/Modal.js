@@ -1,6 +1,6 @@
 import './Modal.scss'
 
-const Modal = ({ isOpen, closeModal }) => {
+const Modal = ({ isOpen, closeModal, children }) => {
   const handleModalDialogClick = (e) => e.stopPropagation()
 
   return (
@@ -14,16 +14,7 @@ const Modal = ({ isOpen, closeModal }) => {
             <span>&#10006;</span>
           </button>
         </div>
-        <h2 className="modal__title">¡Thanks for you subscription!</h2>
-        <p className="modal__text">
-          We have sent you an email with your access credentials for future
-          reference.
-        </p>
-        <button className="button modal__button modal__button-blue">
-          <a href="https://www.eduzoneserver.com/" target="_blank" rel="noreferrer">
-            Access now
-          </a>
-        </button>
+        {children}
       </div>
     </section>
   )

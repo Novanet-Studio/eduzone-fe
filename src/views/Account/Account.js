@@ -34,7 +34,8 @@ function Account() {
   const [newProductSelected, setNewProductSelected] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(account.priceId)
   const [loadingContent, setLoadingContent] = useState(false)
-  const [isOpen, closeModal] = useModal(history.location?.state?.isNew ?? false)
+  // const [isOpen, closeModal] = useModal(history.location?.state?.isNew ?? false)
+  const [isOpenModal, , closeModal] = useModal(history.location?.state?.isNew ?? false)
 
   const productName = (name) => {
     const product = products.filter((product) => product.type === name)
@@ -113,7 +114,18 @@ function Account() {
   return (
     <>
       <Header />
-      <Modal isOpen={isOpen} closeModal={closeModal} />
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
+        <h2 className="modal__title">¡Thanks for you subscription!</h2>
+          <p className="modal__text">
+            We have sent you an email with your access credentials for future
+            reference.
+          </p>
+          <button className="button modal__button modal__button-blue">
+            <a href="https://www.eduzoneserver.com/" target="_blank" rel="noreferrer">
+              Access now
+            </a>
+          </button>
+      </Modal>
       {error && <ErrorMessage error={error} />}
       <section className="account">
         <div className="container">

@@ -34,10 +34,8 @@ function Register() {
   const btnSubmit = useRef()
 
   useEffect(() => {
-    
-    const emailInput = document.getElementById('emailInput');
-    emailInput.onpaste = e => e.preventDefault();  
-
+    const emailInput = document.getElementById('emailInput')
+    emailInput.onpaste = (e) => e.preventDefault()
   }, [])
 
   const handleClick = (key) => {
@@ -67,7 +65,7 @@ function Register() {
 
     if (values.confirmEmail) {
       if (values.email !== values.confirmEmail) {
-        [
+        ;[
           {
             type: 'manual',
             name: 'email',
@@ -77,14 +75,14 @@ function Register() {
             type: 'manual',
             name: 'confirmEmail',
             message: 'Emails do not match',
-          }
-        ].forEach(({ name, ...config}) => setError(name, config))
+          },
+        ].forEach(({ name, ...config }) => setError(name, config))
       }
     }
 
     if (values.confirmPassword) {
       if (values.password !== values.confirmPassword) {
-        [
+        ;[
           {
             type: 'manual',
             name: 'password',
@@ -94,7 +92,7 @@ function Register() {
             type: 'manual',
             name: 'confirmPassword',
             message: 'Passwords do not match',
-          }
+          },
         ].forEach(({ name, ...config }) => setError(name, config))
       }
     }
@@ -103,7 +101,6 @@ function Register() {
   return (
     <Layout>
       <ScrollToTop />
-
       <section className="register">
         <div className="container">
           <div className="register__info">
@@ -145,7 +142,8 @@ function Register() {
                   values={getValues()}
                 />
                 <ErrorFormMessage
-                  errors={errors}register__input
+                  errors={errors}
+                  register__input
                   name="email"
                   as={<ErrorMessageContainer />}
                 />
@@ -275,7 +273,6 @@ function Register() {
           </div>
         </div>
       </section>
-
     </Layout>
   )
 }

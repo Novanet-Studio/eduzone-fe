@@ -11,7 +11,8 @@ import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 
 import { ErrorMessageContainer, SuccessMessage } from '@components/ErrorMessage'
-// import { useFormInput } from '@hooks'
+import { useModal } from '@hooks'
+import Modal from '@/components/Modal'
 import {
   checkUserExists,
   createCustomer,
@@ -21,9 +22,9 @@ import {
   createSubscription,
   retryInvoiceWithNewPaymentMethod,
 } from '@services/stripe'
-import './PaymentForm.scss'
 import IconSecure from '@images/icon_secure.svg'
 import stripeLogo from '@images/stripe_logo.svg'
+import './PaymentForm.scss'
 
 const { REACT_APP_STRIPE_PK } = process.env
 
@@ -47,6 +48,8 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
   const [userCreated, setUserCreated] = useState(false)
   const [subscribing, setSubscribing] = useState(false)
   const [accountInformation, setAccountInformation] = useState(false)
+  const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [error, setError] = useState(null)
 
   const comparePassword = () => input.password === input.confirmPassword
   const compareEmail = () => input.email === input.confirmEmail
@@ -57,8 +60,6 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
     if (!stripe || !elements) {
       return
     }
-
-    console.log(input)
 
     if (!compareEmail()) {
       reset()
@@ -144,10 +145,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
           type: productSelected.type,
         })
 
-        console.log('subscription info: ', info)
-
         sessionStorage.setItem('paymentMethodId', paymentMethodId)
-        // sessionStorage.setItem('new::user', true)
         reset()
         setUserCreated(true)
         setAccountInformation(info)
@@ -157,7 +155,8 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
       console.log({ error })
       setSubscribing(false)
       reset()
-      showError(error.message)
+      setError(error?.response?.data?.message)
+      openModal()
     }
   }
 
@@ -168,6 +167,10 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
 
   return (
     <div className="payment">
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
+        <h2 className="modal__title">¡Was an error!</h2>
+        <p className="modal__text">{error}</p>
+      </Modal>
       <h2 className="payment__title">Enter your card details</h2>
       <h3 className="payment__subtitle">Your subscription will start now</h3>
       <div className="payment__data">
@@ -244,7 +247,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
         <div className="payment__form-group">
           <div className="payment__form-element">
             {/* TODO: Show Error onChange input */}
-            <CardElement options={{}} onChange={(e) => console.log(e)} />
+            <CardElement options={{}} />
           </div>
           <img
             className="payment__form-stripe"
@@ -258,7 +261,10 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
           <a href="/" target="_blank">
             Terms of Service.
           </a>{' '}
-          You also agree that Eduzone will renew your subscription and process future account updates. If we change in any way the way we use the data we store from your account, we will notify you using the email address you provided.
+          You also agree that Eduzone will renew your subscription and process
+          future account updates. If we change in any way the way we use the
+          data we store from your account, we will notify you using the email
+          address you provided.
         </p>
         <button
           className="button payment__button"
