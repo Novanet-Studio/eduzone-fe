@@ -29,7 +29,13 @@ function App() {
   const [authLoading, setAuthLoading] = useState(true)
 
   useEffect(() => {
+    const isPolicyPath = history.location.pathname === '/policy'
+        
     const loadUser = async () => {
+      if (isPolicyPath) {
+        setAuthLoading(false)
+        return
+      }
       const token = getToken()
       if (!token) {
         return
@@ -42,7 +48,7 @@ function App() {
         setAccount({ priceId, paymentMethodId, subscription })
         setUserSession(user)
         setUserLicense(license)
-        setTimeout(() => history.push('/account'), 200)
+        setTimeout(() => isPolicyPath ? history.push('/policy') : history.push('/account'), 200)
         setAuthLoading(false)
       } catch (error) {
         removeUserSession()
