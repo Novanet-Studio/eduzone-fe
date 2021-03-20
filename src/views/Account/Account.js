@@ -34,18 +34,13 @@ function Account() {
   const [newProductSelected, setNewProductSelected] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(account.priceId)
   const [loadingContent, setLoadingContent] = useState(false)
-  // const [isOpen, closeModal] = useModal(history.location?.state?.isNew ?? false)
   const [isOpenModal, , closeModal] = useModal(history.location?.state?.isNew ?? false)
 
-  const productName = (name) => {
-    const product = products.filter((product) => product.type === name)
-    return product[0].name
-  }
+  const productName = (name) =>
+    products.filter((product) => product.type === name)[0].name
 
-  const productImage = (name) => {
-    const product = products.filter((product) => product.type === name)
-    return product[0].image
-  }
+  const productImage = (name) => 
+    products.filter((product) => product.type === name)[0].image
 
   useEffect(() => {
     if (!subscriptionCancelled) return
