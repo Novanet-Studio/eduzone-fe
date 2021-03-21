@@ -168,8 +168,8 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
   return (
     <div className="payment">
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
-        <h2 className="modal__title">¡Was an error!</h2>
-        <p className="modal__text">{error}</p>
+        <h2 className="modal__title">There was an error. Your payment has been not processed</h2>
+        <p className="modal__text">Error message: {error}</p>
       </Modal>
       <h2 className="payment__title">Enter your card details</h2>
       <h3 className="payment__subtitle">Your subscription will start now</h3>
