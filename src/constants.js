@@ -1,6 +1,6 @@
-import MathProduct from './assets/images/math-books-eduzone.png';
-import LanguageProduct from './assets/images/language-books-edu-zone.png';
-import ComboProduct from './assets/images/combo-books-eduzone.png';
+import MathProduct from './assets/images/math-books-eduzone.png'
+import LanguageProduct from './assets/images/language-books-edu-zone.png'
+import ComboProduct from './assets/images/combo-books-eduzone.png'
 
 export const URL =
   process.env.NODE_ENV === 'production'
@@ -55,7 +55,7 @@ export const faq = [
   {
     title: 'What content will I find in the subscription?',
     body:
-      'You will find content for English Language & Arts  (Grades 1-5 ), and Mathematics (Grades 1-6).',
+      'You will find content for English Language Arts (Grades 1-5 ), and Mathematics (Grades 1-6).',
   },
   {
     title: 'How much does it cost?',
@@ -65,7 +65,7 @@ export const faq = [
   {
     title: 'Where can I access Edu-zone?',
     body:
-      'Edu-zone can be accessed through these web browsers: Chrome, Safari, Edge.',
+      'Edu-zone can be accessed through these web browsers: Chrome, Safari, Edge or download our iOS app.',
   },
   {
     title: 'How do I cancel?',
