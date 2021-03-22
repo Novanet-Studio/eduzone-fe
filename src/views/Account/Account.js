@@ -134,14 +134,14 @@ function Account() {
               </div>
               <hr className="account__line" />
               {isEditing ? (
-                <AccountEditing editing={setIsEditing} />
+                <AccountEditing setEditing={setIsEditing} />
               ) : (
                 <AccountDetails />
               )}
               
               <button className="button edit__button" onClick={handleEdit}>
-                  Edit info
-                </button>
+                {isEditing ? 'Cancel editing' : 'Edit info'}
+              </button>
             </div>
 
             {/* User account */}
