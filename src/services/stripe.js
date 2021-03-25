@@ -17,11 +17,12 @@ const handlePaymentCustomerAction = async ({
     isRetry,
   })
 
-  // if (!stripe) throw new Error('Stripe was not provided')
-
   if (subscription && subscription.status === 'active') {
     console.log('[Subscription == active]')
     // Subscription is active, no custumer actions required
+    return { subscription, priceId, paymentMethodId }
+    
+  } else if (subscription.latest_invoice.status === 'paid') {
     return { subscription, priceId, paymentMethodId }
   }
 
@@ -41,6 +42,7 @@ const handlePaymentCustomerAction = async ({
     )
 
     if (result.error) {
+      console.log('There was an error: ', result)
       // To Display error message in UI
       // The card was declined, insufficient founds, card has expired, etc
       throw result
@@ -74,7 +76,8 @@ const handleRequiresPaymentMethod = ({
     paymentMethodId,
     priceId,
   })
-  if (subscription.status === 'active') {
+
+  if (subscription.status === 'active' || subscription.status === 'trialing') {
     // Subscription is active, no customer actions required
     return { subscription, priceId, paymentMethodId }
   } else if (
@@ -86,7 +89,7 @@ const handleRequiresPaymentMethod = ({
     localStorage.setItem('latestInvoiceId', subscription.latest_invoice.id)
     localStorage.setItem(
       'latestInvoicePaymentIntentStatus',
-      subscription.latest_invoice.payment_intent.status,
+      subscription.latest_invoice?.payment_intent?.status,
     )
     // showError('Your card was declined.')
     // setSubscribing(false)

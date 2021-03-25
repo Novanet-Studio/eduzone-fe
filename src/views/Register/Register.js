@@ -54,12 +54,10 @@ function Register() {
     const values = getValues()
 
     if (values.email === values.confirmEmail) {
-      console.log('The email inputs not match')
       clearErrors(['email', 'confirmEmail'])
     }
 
     if (values.password === values.confirmPassword) {
-      console.log('The passwords match')
       clearErrors(['password', 'confirmPassword'])
     }
 
