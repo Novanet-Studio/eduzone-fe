@@ -104,7 +104,6 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
 
       if (error) {
         console.log('[createPaymentMethod error]', error)
-        reset()
         setSubscribing(false)
         showError(error && error.message)
         return
@@ -146,7 +145,6 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
         })
 
         sessionStorage.setItem('paymentMethodId', paymentMethodId)
-        reset()
         setUserCreated(true)
         setAccountInformation(info)
       }
@@ -154,7 +152,6 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
     } catch (error) {
       console.log({ error })
       setSubscribing(false)
-      reset()
       setError(error?.response?.data?.message)
       openModal()
     }
