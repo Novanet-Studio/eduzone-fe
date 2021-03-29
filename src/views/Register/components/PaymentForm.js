@@ -37,7 +37,7 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, input, showError, reset }) => {
+const CheckoutForm = ({ productSelected, input, showError, reset, disabled }) => {
   const stripe = useStripe()
   const history = useHistory()
   const elements = useElements()
@@ -47,12 +47,30 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
   })
   const [userCreated, setUserCreated] = useState(false)
   const [subscribing, setSubscribing] = useState(false)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [accountInformation, setAccountInformation] = useState(false)
   const [isOpenModal, openModal, closeModal] = useModal(false)
   const [error, setError] = useState(null)
 
   const comparePassword = () => input.password === input.confirmPassword
   const compareEmail = () => input.email === input.confirmEmail
+  const areFieldsFull = () => {
+    const { firstname, lastname } = getValues()
+    const { email, confirmEmail, password, confirmPassword } = input
+    return email && confirmEmail && password && confirmPassword && firstname && lastname
+  }
+
+  const onChangeStripeCard = ({ complete }) => {
+    if (!complete) return
+
+    if (!input) return
+
+    if (!areFieldsFull()) return
+
+    if (disabled) return
+
+    setIsButtonDisabled(false)
+  }
 
   const handleSubmitForm = async ({ firstname, lastname }) => {
     setSubscribing(true)
@@ -166,7 +184,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
     <div className="payment">
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <h2 className="modal__title">There was an error. Your payment has been not processed</h2>
-        <p className="modal__text">Error message: {error}</p>
+        <p className="modal__text">Please verify the credit card information</p>
       </Modal>
       <h2 className="payment__title">Enter your card details</h2>
       <h3 className="payment__subtitle">Your subscription will start now</h3>
@@ -244,7 +262,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
         <div className="payment__form-group">
           <div className="payment__form-element">
             {/* TODO: Show Error onChange input */}
-            <CardElement options={{}} />
+            <CardElement options={{}} onChange={onChangeStripeCard} />
           </div>
           <img
             className="payment__form-stripe"
@@ -266,7 +284,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset }) => {
         <button
           className="button payment__button"
           type="submit"
-          disabled={subscribing}
+          disabled={isButtonDisabled ?? subscribing}
         >
           {subscribing ? 'Subscribing...' : 'Subscribe to Edu-zone'}
         </button>

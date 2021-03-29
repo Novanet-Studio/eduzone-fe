@@ -48,6 +48,10 @@
     margin: 0 auto;
     background-color: $rojo;
   }
+  &__button:disabled {
+    background-color: lighten($color: $rojo, $amount: 10);
+    cursor: not-allowed;
+  }
   &__data {
     margin-top: 1vh;
   }

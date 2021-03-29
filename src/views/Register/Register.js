@@ -29,6 +29,7 @@ function Register() {
     reset: resetForm,
   } = useForm({ mode: 'onChange' })
   const [productSelected, setProductSelected] = useState(sessionProduct || null)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [input, setInput] = useState(null)
   const [error, showError] = useError()
   const btnSubmit = useRef()
@@ -53,6 +54,34 @@ function Register() {
   const handleChange = () => {
     const values = getValues()
 
+    const areFieldsFull = () => values.email && values.confirmEmail && values.password && values.confirmPassword
+
+    const emails = [
+      {
+        type: 'manual',
+        name: 'email',
+        message: 'Emails do not match',
+      },
+      {
+        type: 'manual',
+        name: 'confirmEmail',
+        message: 'Emails do not match',
+      },
+    ]
+
+    const passwords = [
+      {
+        type: 'manual',
+        name: 'password',
+        message: 'Passwords do not match',
+      },
+      {
+        type: 'manual',
+        name: 'confirmPassword',
+        message: 'Passwords do not match',
+      },
+    ]
+
     if (values.email === values.confirmEmail) {
       clearErrors(['email', 'confirmEmail'])
     }
@@ -63,36 +92,18 @@ function Register() {
 
     if (values.confirmEmail) {
       if (values.email !== values.confirmEmail) {
-        ;[
-          {
-            type: 'manual',
-            name: 'email',
-            message: 'Emails do not match',
-          },
-          {
-            type: 'manual',
-            name: 'confirmEmail',
-            message: 'Emails do not match',
-          },
-        ].forEach(({ name, ...config }) => setError(name, config))
+        emails.forEach(({ name, ...config }) => setError(name, config))
       }
     }
 
     if (values.confirmPassword) {
       if (values.password !== values.confirmPassword) {
-        ;[
-          {
-            type: 'manual',
-            name: 'password',
-            message: 'Passwords do not match',
-          },
-          {
-            type: 'manual',
-            name: 'confirmPassword',
-            message: 'Passwords do not match',
-          },
-        ].forEach(({ name, ...config }) => setError(name, config))
+        passwords.forEach(({ name, ...config }) => setError(name, config))
       }
+    }
+
+    if (areFieldsFull()) {
+      setIsButtonDisabled(false)
     }
   }
 
@@ -266,6 +277,7 @@ function Register() {
                 showError={showError}
                 input={input}
                 reset={reset}
+                disabled={isButtonDisabled}
               />
             )}
           </div>
