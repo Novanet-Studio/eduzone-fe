@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
@@ -32,7 +32,6 @@ function Register() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [input, setInput] = useState(null)
   const [error, showError] = useError()
-  const btnSubmit = useRef()
 
   useEffect(() => {
     const emailInput = document.getElementById('emailInput')
@@ -225,9 +224,6 @@ function Register() {
                   type="password"
                   name="confirmPassword"
                   placeholder="Password confirmation"
-                  onBlur={() => {
-                    btnSubmit.current.click()
-                  }}
                   ref={register({
                     required: {
                       value: true,
@@ -256,7 +252,6 @@ function Register() {
                   as={<ErrorMessageContainer />}
                 />
               </div>
-              <input type="submit" ref={btnSubmit} hidden />
             </form>
             <section className="plan">
               <h2 className="plan__title">Choose a plan</h2>
