@@ -22,7 +22,6 @@ function Register() {
   const {
     register,
     errors,
-    handleSubmit,
     getValues,
     setError,
     clearErrors,
@@ -43,8 +42,6 @@ function Register() {
     setProductSelected(products[key])
   }
 
-  const handleFormSubmit = (e) => setInput(e)
-
   const reset = () => {
     resetForm()
     sessionStorage.removeItem('email')
@@ -53,7 +50,7 @@ function Register() {
   const handleChange = () => {
     const values = getValues()
 
-    const areFieldsFull = () => values.email && values.confirmEmail && values.password && values.confirmPassword
+    const areFieldsFull = !!values.email && !!values.confirmEmail && !!values.password && !!values.confirmPassword
 
     const emails = [
       {
@@ -101,8 +98,9 @@ function Register() {
       }
     }
 
-    if (areFieldsFull()) {
+    if (areFieldsFull) {
       setIsButtonDisabled(false)
+      setInput(values)
     }
   }
 
@@ -122,7 +120,6 @@ function Register() {
             {error && <ErrorMessage error={error} />}
             <form
               className="register__form"
-              onSubmit={handleSubmit(handleFormSubmit)}
               onChange={handleChange}
             >
               <div className="register__form-control">
