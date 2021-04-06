@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 
 /* Pages */
@@ -12,53 +11,21 @@ import Terms from './views/Terms'
 
 import PublicRoute from './routes/PublicRoute'
 import PrivateRoute from './routes/PrivateRoute'
-import { URL } from './constants'
 import {
   getToken,
   initAxiosInterceptors,
-  removeUserSession,
-  setAccount,
-  setUserLicense,
-  setUserSession,
 } from './utils/common'
+import useLoadData from './hooks/useLoadData'
 
 initAxiosInterceptors()
 
 function App() {
   const history = useHistory()
-  const [authLoading, setAuthLoading] = useState(true)
+  const authLoading = useLoadData(history)
 
   useEffect(() => {
-    const isPolicyPath = history.location.pathname === '/policy'
-        
-    const loadUser = async () => {
-      if (isPolicyPath) {
-        setAuthLoading(false)
-        return
-      }
-      const token = getToken()
-      if (!token) {
-        return
-      }
 
-      try {
-        const {
-          data: { priceId, paymentMethodId, subscription, user, license },
-        } = await axios.get(`${URL}/auth/me`)
-        setAccount({ priceId, paymentMethodId, subscription })
-        setUserSession(user)
-        setUserLicense(license)
-        setTimeout(() => isPolicyPath ? history.push('/policy') : history.push('/account'), 200)
-        setAuthLoading(false)
-      } catch (error) {
-        removeUserSession()
-        setAuthLoading(false)
-      }
-    }
-
-    loadUser()
-
-    setTimeout(function() {
+    setTimeout(() => {
       /* let viewheight = window.visualViewport.height // webkit browsers
       let viewwidth = window.visualViewport.width // webkit browsers */
       let viewheight = window.innerHeight
@@ -70,7 +37,7 @@ function App() {
       )
     }, 300)
     
-  }, [history])
+  }, [])
 
   if (authLoading && getToken()) {
     return <div className="content">Checking Authentication...</div>

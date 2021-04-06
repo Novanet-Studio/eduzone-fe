@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 import Layout from '../../layout/Layout'
 
+import Modal from '@/components/Modal'
 import { useError, useModal } from '@hooks'
 import ErrorMessage, { ErrorMessageContainer } from '@components/ErrorMessage'
 import {
@@ -13,10 +15,8 @@ import {
   setUserSession,
 } from '@utils/common'
 import { URL } from '@constants'
-import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 import './Login.scss'
-import Modal from '@/components/Modal'
 
 function Login() {
   const { register, handleSubmit, errors } = useForm()
@@ -50,12 +50,11 @@ function Login() {
       history.push('/account')
     } catch (error) {
       setLoading(false)
-      console.log({ error })
 
       if (error.response.status === 401) {
         showError(error.response.data.message)
       }
-      showError('Somenthing went wrong. Please try again later.')
+      showError(error.response.data.message)
       openModal()
     }
   }
@@ -63,8 +62,8 @@ function Login() {
   return (
     <Layout>
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
-      <h2 className="modal__title">There was an error while login</h2>
-        <p className="modal__text">Please verify the login information</p>
+        <h2 className="modal__title">There was an error while login</h2>
+        <p className="modal__text">{error}</p>
       </Modal>
       <section className="login">
         <div className="container">

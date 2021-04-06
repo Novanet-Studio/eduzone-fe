@@ -50,7 +50,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset, disabled }) =>
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [accountInformation, setAccountInformation] = useState(false)
   const [isOpenModal, openModal, closeModal] = useModal(false)
-  const [error, setError] = useState(null)
+  const [_, setError] = useState(null)
 
   const comparePassword = () => input.password === input.confirmPassword
   const compareEmail = () => input.email === input.confirmEmail

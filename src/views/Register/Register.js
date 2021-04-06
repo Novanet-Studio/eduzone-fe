@@ -10,11 +10,12 @@ import ErrorMessage, {
   SuccessMessage,
 } from '@components/ErrorMessage'
 import ScrollToTop from '@/components/ScrollToTop'
-import { useError } from '@hooks'
+import { useError, useModal } from '@hooks'
 import { products } from '@constants'
 import Product from '@components/Product'
 import PaymentForm from './components/PaymentForm'
 import './Register.scss'
+import Modal from '@/components/Modal'
 
 function Register() {
   const sessionEmail = sessionStorage.getItem('email') || null
@@ -31,6 +32,8 @@ function Register() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [input, setInput] = useState(null)
   const [error, showError] = useError()
+  const [isOpenModal, openModal, closeModal] = useModal(false)
+
 
   useEffect(() => {
     const emailInput = document.getElementById('emailInput')
@@ -107,6 +110,10 @@ function Register() {
   return (
     <Layout>
       <ScrollToTop />
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
+        <h2 className="modal__title">There was an error while register</h2>
+        <p className="modal__text">{error}</p>
+      </Modal>
       <section className="register">
         <div className="container">
           <div className="register__info">
