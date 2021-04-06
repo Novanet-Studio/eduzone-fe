@@ -38,11 +38,18 @@ function Account() {
   )
   const [isOpenModalSubs, openModalSubs, closeModalSubs] = useModal(false)
 
-  const productName = (name) =>
-    products.filter((product) => product.type === name)[0].name
+  const extractProductProperty = (name, prop) => {
+    const isPropName = prop === 'name'
+    const isPropImage = prop === 'image'
 
-  const productImage = (name) =>
-    products.filter((product) => product.type === name)[0].image
+    console.log({ isPropName,isPropImage })
+
+    if (!isPropName && !isPropImage) {
+      return null
+    }
+    
+    return products.filter((product) => product.type === name)[0][prop]
+  }
 
   useEffect(() => {
     if (!subscriptionCancelled) return
@@ -231,15 +238,15 @@ function Account() {
                     <span className="account__card-data">
                       <h4>Current plan:</h4>
                       <p className="account__card-data">
-                        {`\u00A0${productName(selectedProduct)}`}
+                        {`\u00A0${extractProductProperty(selectedProduct, 'name')}`}
                       </p>
                     </span>
                   </div>
                   <div className="account__card-info">
                     <img
                       className="account__card-img"
-                      src={productImage(selectedProduct)}
-                      alt={`Product ${productName(selectedProduct)}`}
+                      src={extractProductProperty(selectedProduct, 'image')}
+                      alt={`Product ${extractProductProperty(selectedProduct, 'name')}`}
                     />
                   </div>
                 </div>
