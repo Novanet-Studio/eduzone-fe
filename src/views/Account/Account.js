@@ -1,16 +1,15 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import { useForm } from 'react-hook-form'
+import { ErrorMessage } from '@hookform/error-message'
 import Modal from '@components/Modal'
 import Product from '@components/Product'
 import { products, URL } from '@constants'
 import { Footer, Header } from '@layout'
 import { useError, useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
-import {
-  getUser,
-  getUserAccount,
-  setUserSession,
-} from '@utils/common'
+import { ErrorMessageContainer } from '@/components/ErrorMessage'
+import { getUser, getUserAccount, setUserSession } from '@utils/common'
 import {
   AccountDetails,
   AccountEditing,
@@ -18,7 +17,6 @@ import {
   ManageLicense,
 } from './components'
 import './Account.scss'
-import ErrorMessage from '@/components/ErrorMessage'
 
 function Account() {
   const history = useHistory()
@@ -34,16 +32,44 @@ function Account() {
   const [newProductSelected, setNewProductSelected] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(account.priceId)
   const [loadingContent, setLoadingContent] = useState(false)
-  const [isOpenModal, , closeModal] = useModal(history.location?.state?.isNew ?? false)
+  const { register, handleSubmit, errors } = useForm({ mode: 'onChange' })
+  const [isOpenModal, , closeModal] = useModal(
+    history.location?.state?.isNew ?? false,
+  )
+  const [isOpenModalSubs, openModalSubs, closeModalSubs] = useModal(false)
 
   const productName = (name) =>
     products.filter((product) => product.type === name)[0].name
 
-  const productImage = (name) => 
+  const productImage = (name) =>
     products.filter((product) => product.type === name)[0].image
 
   useEffect(() => {
     if (!subscriptionCancelled) return
+
+    setLoadingContent(true)
+
+    const cancelSubscription = async () => {
+      setLoadingContent(true)
+      const bodyParams = {
+        email: user.username,
+        subscriptionId: account.subscription.id,
+      }
+
+      try {
+        await axios.post(`${URL}/stripe/cancel-subscription`, bodyParams)
+        await axios.get(`${URL}/user/deactivate/${user.username}`)
+        alert('Subscription cancelled succesfully')
+        setSubscriptionCancelled(true)
+        setLoadingContent(false)
+        window.location.reload()
+      } catch (error) {
+        console.log({ error })
+        setLoadingContent(false)
+        throw new Error('Error while cancel subscription')
+      }
+    }
+
     const fetchUser = async () => {
       setLoadingContent(true)
       try {
@@ -59,26 +85,35 @@ function Account() {
       }
     }
 
+    cancelSubscription()
     fetchUser()
-  }, [subscriptionCancelled])
-
-  const handleCancelSubscription = async () => {
     setLoadingContent(true)
-    const bodyParams = {
-      email: user.username,
-      subscriptionId: account.subscription.id,
+  }, [subscriptionCancelled, account.subscription.id, user.username])
+  
+  const handleConfirmPasswordForm = async ({ confirmPassword }) => {
+    const signinParams = {
+      userName: user.username,
+      password: confirmPassword,
     }
 
     try {
-      await axios.post(`${URL}/stripe/cancel-subscription`, bodyParams)
-      await axios.get(`${URL}/user/deactivate/${user.username}`)
+      const { data } = await axios.post(`${URL}/auth/signin`, signinParams)
+
+      if (!data) {
+        throw new Error('Password not valid')
+      }
+
+      closeModalSubs()
       setSubscriptionCancelled(true)
-      alert('Subscription cancelled')
+
     } catch (error) {
-      setLoadingContent(true)
       console.log({ error })
-      throw new Error('Error while cancel subscription')
+      throw new Error('There was an error while confirm user password')
     }
+  }
+
+  const handleCancelSubscription = () => {
+    openModalSubs()
   }
 
   const handleChangePriceForm = () => setShowChangePriceForm(true)
@@ -111,15 +146,52 @@ function Account() {
       <Header />
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <h2 className="modal__title">¡Thanks for you subscription!</h2>
-          <p className="modal__text">
-            We have sent you an email with your access credentials for future
-            reference.
-          </p>
-          <button className="button modal__button modal__button-blue">
-            <a href="https://www.eduzoneserver.com/" target="_blank" rel="noreferrer">
-              Access now
-            </a>
+        <p className="modal__text">
+          We have sent you an email with your access credentials for future
+          reference.
+        </p>
+        <button className="button modal__button modal__button-blue">
+          <a
+            href="https://www.eduzoneserver.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Access now
+          </a>
+        </button>
+      </Modal>
+      <Modal isOpen={isOpenModalSubs} closeModal={closeModalSubs}>
+        <form onSubmit={handleSubmit(handleConfirmPasswordForm)}>
+          <div className="edit__form-group">
+            <label className="edit__form-label" htmlFor="firstname">
+              Confirm password
+            </label>
+            <input
+              className="edit__form-input"
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              ref={register({
+                minLength: {
+                  value: 6,
+                  message: 'Your password must be at least 6 characters',
+                },
+                maxLength: {
+                  value: 20,
+                  message: 'The password must be between 6 and 20 characters',
+                },
+              })}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="confirmPassword"
+              as={<ErrorMessageContainer />}
+            />
+          </div>
+          <button className="edit__button-update" type="submit">
+            confirm
           </button>
+        </form>
       </Modal>
       {error && <ErrorMessage error={error} />}
       <section className="account">
@@ -130,7 +202,7 @@ function Account() {
             {/* User account */}
             <div className="account__card">
               <div className="account__card-header">
-                <h3 className="account__card-title">User account</h3>                
+                <h3 className="account__card-title">User account</h3>
               </div>
               <hr className="account__line" />
               {isEditing ? (
@@ -138,7 +210,7 @@ function Account() {
               ) : (
                 <AccountDetails />
               )}
-              
+
               <button className="button edit__button" onClick={handleEdit}>
                 {isEditing ? 'Cancel editing' : 'Edit info'}
               </button>
@@ -159,11 +231,11 @@ function Account() {
                     <span className="account__card-data">
                       <h4>Current plan:</h4>
                       <p className="account__card-data">
-                      {`\u00A0${productName(selectedProduct)}`}
-                    </p>
+                        {`\u00A0${productName(selectedProduct)}`}
+                      </p>
                     </span>
                   </div>
-                  <div className="account__card-info">                    
+                  <div className="account__card-info">
                     <img
                       className="account__card-img"
                       src={productImage(selectedProduct)}
@@ -183,14 +255,14 @@ function Account() {
                   className="button account__button"
                   onClick={() => handleChangePriceForm()}
                 >
-                  Change pricing plan {'>'}
+                  Change pricing plan {'»'}
                 </div>
 
                 <div
                   className="button account__button"
-                  onClick={() => handleCancelSubscription()}
+                  onClick={handleCancelSubscription}
                 >
-                  Cancel subscription {'>'}
+                  Cancel subscription {'»'}
                 </div>
               </div>
             ) : (

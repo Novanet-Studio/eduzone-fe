@@ -4,7 +4,7 @@ import { useHistory, Link } from 'react-router-dom'
 
 import Layout from '../../layout/Layout'
 
-import { useError } from '@hooks'
+import { useError, useModal } from '@hooks'
 import ErrorMessage, { ErrorMessageContainer } from '@components/ErrorMessage'
 import {
   setAccount,
@@ -16,12 +16,14 @@ import { URL } from '@constants'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 import './Login.scss'
+import Modal from '@/components/Modal'
 
 function Login() {
   const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
   const [error, showError] = useError(null)
   const [loading, setLoading] = useState(false)
+  const [isOpenModal, openModal, closeModal] = useModal(false)
 
   const handleLogin = async (e) => {
     const { email, password } = e
@@ -53,14 +55,17 @@ function Login() {
       if (error.response.status === 401) {
         showError(error.response.data.message)
       }
-
       showError('Somenthing went wrong. Please try again later.')
+      openModal()
     }
   }
 
   return (
     <Layout>
-      
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
+      <h2 className="modal__title">There was an error while login</h2>
+        <p className="modal__text">Please verify the login information</p>
+      </Modal>
       <section className="login">
         <div className="container">
           <div className="login__info">
