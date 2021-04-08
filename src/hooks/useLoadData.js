@@ -13,14 +13,9 @@ const useLoadData = (history) => {
   const [authLoading, setAuthLoading] = useState(true)
 
   useEffect(() => {
-    const isPolicyPath = history.location.pathname
+    const isPolicyPath = history.location.pathname.includes('/policy')
 
     const loadUser = async () => {
-      if (isPolicyPath) {
-        setAuthLoading(false)
-        return
-      }
-
       const token = getToken()
 
       if (!token) {
