@@ -5,17 +5,17 @@ import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 
 import Layout from '../../layout/Layout'
 
-import ErrorMessage, {
+import {
   ErrorMessageContainer,
   SuccessMessage,
 } from '@components/ErrorMessage'
 import ScrollToTop from '@/components/ScrollToTop'
-import { useError, useModal } from '@hooks'
+import { useModal } from '@hooks'
 import { products } from '@constants'
 import Product from '@components/Product'
 import PaymentForm from './components/PaymentForm'
-import './Register.scss'
 import Modal from '@/components/Modal'
+import './Register.scss'
 
 function Register() {
   const sessionEmail = sessionStorage.getItem('email') || null
