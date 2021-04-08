@@ -31,14 +31,18 @@ function Register() {
   const [productSelected, setProductSelected] = useState(sessionProduct || null)
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [input, setInput] = useState(null)
-  const [error, showError] = useError()
+  const [error, showError] = useState(null)
   const [isOpenModal, openModal, closeModal] = useModal(false)
-
 
   useEffect(() => {
     const emailInput = document.getElementById('emailInput')
     emailInput.onpaste = (e) => e.preventDefault()
-  }, [])
+
+    if (error) {
+      openModal()
+    }
+
+  }, [error])
 
   const handleClick = (key) => {
     sessionStorage.setItem('eduzone::product', JSON.stringify(products[key]))
@@ -124,7 +128,6 @@ function Register() {
                 Login
               </Link>
             </p>
-            {error && <ErrorMessage error={error} />}
             <form
               className="register__form"
               onChange={handleChange}
