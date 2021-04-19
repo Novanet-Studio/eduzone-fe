@@ -4,9 +4,9 @@ import { useHistory } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import Modal from '@components/Modal'
+import Layout from '@/layout'
 import Product from '@components/Product'
 import { products, URL } from '@constants'
-import { Footer, Header } from '@layout'
 import { useError, useModal, useRetrieveCustomerPaymentMethod } from '@hooks'
 import { ErrorMessageContainer } from '@/components/ErrorMessage'
 import { getUser, getUserAccount, setUserSession } from '@utils/common'
@@ -42,13 +42,9 @@ function Account() {
     const isPropName = prop === 'name'
     const isPropImage = prop === 'image'
 
-    console.log({ isPropName,isPropImage })
-
-    if (!isPropName && !isPropImage) {
-      return null
-    }
+    if (!isPropName && !isPropImage) return null
     
-    return products.filter((product) => product.type === name)[0][prop]
+    return products.find((product) => product.type === name)[prop]
   }
 
   useEffect(() => {
@@ -129,28 +125,26 @@ function Account() {
 
   if (loadingContent) {
     return (
-      <>
-        <Header />
-        <section className="account">
-          <div className="container">
-            <div className="account__info">
-              <h2>Account Settings</h2>
-              <div className="account__card">
-                <div className="account__card-header">
-                  <p>Updating content ...</p>
-                </div>
+      <Layout>
+      <section className="account">
+        <div className="container">
+          <div className="account__info">
+            <h2>Account Settings</h2>
+            <div className="account__card">
+              <div className="account__card-header">
+                <p>Updating content ...</p>
               </div>
             </div>
           </div>
-        </section>
-        <Footer />
-      </>
+        </div>
+      </section>
+      </Layout>
     )
   }
 
   return (
     <>
-      <Header />
+      <Layout>
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <h2 className="modal__title">¡Thanks for you subscription!</h2>
         <p className="modal__text">
@@ -334,7 +328,7 @@ function Account() {
           </div>
         </div>
       </section>
-      <Footer />
+      </Layout>
     </>
   )
 }

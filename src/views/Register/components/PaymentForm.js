@@ -50,6 +50,7 @@ const CheckoutForm = ({ productSelected, input, showError, reset, disabled }) =>
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [accountInformation, setAccountInformation] = useState(false)
   const [isOpenModal, openModal, closeModal] = useModal(false)
+  // eslint-disable-next-line
   const [_, setError] = useState(null)
 
   const comparePassword = () => input.password === input.confirmPassword

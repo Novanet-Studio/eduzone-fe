@@ -55,9 +55,9 @@ const AccountEditing = ({ setEditing }) => {
       }
 
       try {
-        const { data } = await axios.post(`${URL}/user/update`, { ...formData, password })
+        const { data: userUpdated } = await axios.post(`${URL}/user/update`, { ...formData, password })
 
-        setUserSession(data.user)
+        setUserSession(userUpdated)
         setEditing(false)
         closeModal()
       } catch (error) {

@@ -3,23 +3,24 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 
-import Layout from '../../layout/Layout'
+import Modal from '@/components/Modal'
+import Layout from '@/layout'
+import Product from '@components/Product'
+import PaymentForm from './components/PaymentForm'
+import ScrollToTop from '@/components/ScrollToTop'
 
 import {
   ErrorMessageContainer,
   SuccessMessage,
 } from '@components/ErrorMessage'
-import ScrollToTop from '@/components/ScrollToTop'
 import { useModal } from '@hooks'
 import { products } from '@constants'
-import Product from '@components/Product'
-import PaymentForm from './components/PaymentForm'
-import Modal from '@/components/Modal'
+import { getProduct, setProduct } from '@/utils/common'
 import './Register.scss'
 
 function Register() {
   const sessionEmail = sessionStorage.getItem('email') || null
-  const sessionProduct = JSON.parse(sessionStorage.getItem('eduzone::product'))
+  const sessionProduct = getProduct()
   const {
     register,
     errors,
@@ -45,7 +46,7 @@ function Register() {
   }, [error])
 
   const handleClick = (key) => {
-    sessionStorage.setItem('eduzone::product', JSON.stringify(products[key]))
+    setProduct(products[key])
     setProductSelected(products[key])
   }
 

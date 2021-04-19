@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
-import Layout from '../../layout/Layout'
+import Layout from '@/layout'
 
 import Modal from '@/components/Modal'
 import { useError, useModal } from '@hooks'
@@ -19,8 +19,8 @@ import { ErrorMessage as ErrorFormMessage } from '@hookform/error-message'
 import './Login.scss'
 
 function Login() {
-  const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
+  const { register, handleSubmit, errors } = useForm()
   const [error, showError] = useError(null)
   const [loading, setLoading] = useState(false)
   const [isOpenModal, openModal, closeModal] = useModal(false)
@@ -33,19 +33,16 @@ function Login() {
       password: password,
     }
     try {
-      const { data } = await axios.post(`${URL}/auth/signin`, signinParams)
-      setToken(data.token)
+      const { data: token } = await axios.post(`${URL}/auth/signin`, signinParams)
+
+      setToken(token)
 
       const { data: me } = await axios.get(`${URL}/auth/me`)
-      const { priceId, paymentMethodId, subscription, user, license } = me
+      const { auth, user, license, ...account } = me
 
       setUserLicense(license)
       setUserSession(user)
-      setAccount({
-        priceId,
-        paymentMethodId,
-        subscription,
-      })
+      setAccount(account)
       setLoading(false)
       history.push('/account')
     } catch (error) {

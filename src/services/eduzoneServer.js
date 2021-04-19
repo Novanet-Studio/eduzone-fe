@@ -6,8 +6,8 @@ export const checkUserExists = async (email) => {
   if (typeof email !== 'string') throw new Error('Incorrect email provided')
 
   try {
-    const { data } = await axios.post(`${URL}/user/verify`, { email })
-    return data.exists
+    const { data: exists } = await axios.post(`${URL}/user/verify`, { email })
+    return exists
   } catch (error) {
     console.log('[CHECK_USER_EXISTS]')
     console.error({ error })
@@ -49,14 +49,14 @@ export const createUser = async ({
   console.log(bodyParams)
 
   try {
-    const { data } = await axios.post(`${URL}/auth/signup`, bodyParams)
+    const { data: token } = await axios.post(`${URL}/user/add`, bodyParams)
 
-    if (!data.auth) {
-      console.log('Cannot register user')
-      throw new Error('Cannot register user')
+    if (!token) {
+      console.log('Cannot access to dashboard! Please try login')
+      throw new Error('Cannot access to dashboard! Please try login')
     }
 
-    setToken(data.token)
+    setToken(token)
 
     const { data: me } = await axios.get(`${URL}/auth/me`)
     const { priceId, paymentMethodId, subscription, user, license } = me

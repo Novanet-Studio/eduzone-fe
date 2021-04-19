@@ -71,6 +71,14 @@ export const setUserCredentials = (email, password) => {
   sessionStorage.setItem('eduzone::password', password)
 }
 
+export const setProduct = (product) => {
+  sessionStorage.setItem('eduzone::product', JSON.stringify(product))
+}
+
+export const getProduct = () => {
+  return JSON.parse(sessionStorage.getItem('eduzone::product'))
+}
+
 export const removeUserCredentials = () => {
   sessionStorage.removeItem('eduzone::email')
   sessionStorage.removeItem('eduzone::password')
