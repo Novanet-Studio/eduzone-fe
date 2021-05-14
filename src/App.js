@@ -17,6 +17,19 @@ import {
 } from './utils/common'
 import useLoadData from './hooks/useLoadData'
 
+/* Facebook Pixel */
+import ReactPixel from 'react-facebook-pixel';
+const options = {
+  autoConfig: true, 
+  debug: false, 
+};
+
+ReactPixel.init('4151013851586187', advancedMatching, options);
+
+ReactPixel.pageView(); 
+ReactPixel.track(event, data); 
+ReactPixel.trackSingle('4151013851586187', event, data); 
+
 initAxiosInterceptors()
 
 function App() {
