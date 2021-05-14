@@ -19,6 +19,7 @@ import useLoadData from './hooks/useLoadData'
 
 /* Facebook Pixel */
 import ReactPixel from 'react-facebook-pixel';
+const advancedMatching = { em: 'demian.boura@edu-zone.org' };
 const options = {
   autoConfig: true, 
   debug: false, 
@@ -27,8 +28,6 @@ const options = {
 ReactPixel.init('4151013851586187', advancedMatching, options);
 
 ReactPixel.pageView(); 
-ReactPixel.track(event, data); 
-ReactPixel.trackSingle('4151013851586187', event, data); 
 
 initAxiosInterceptors()
 
