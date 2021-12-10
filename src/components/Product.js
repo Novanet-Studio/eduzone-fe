@@ -7,9 +7,17 @@ const Product = ({ product, currentProductSelected, handleClick }) => (
     </div>
     <div className="products__data">
       <p className="products__data-name">{product.name}</p>
-      <p className="products__data-description">Grades 1 to 5</p>
+      <p className="products__data-description">
+        {product.content.map((line) => (
+          <div>{line}</div>
+        ))}
+      </p>
       <p className="products__data-description">Access up to 5 users</p>
-      <img className="products__data-img" src={product.image} alt="ProductImg" />
+      <img
+        className="products__data-img"
+        src={product.image}
+        alt="ProductImg"
+      />
       <p className="products__data-price">
         {product.price} / {product.billed}
       </p>

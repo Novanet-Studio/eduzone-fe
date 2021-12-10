@@ -37,7 +37,13 @@ if (!REACT_APP_STRIPE_PK) {
   console.error('**Or replace .env.example with .env **')
 }
 
-const CheckoutForm = ({ productSelected, input, showError, reset, disabled }) => {
+const CheckoutForm = ({
+  productSelected,
+  input,
+  showError,
+  reset,
+  disabled,
+}) => {
   const stripe = useStripe()
   const history = useHistory()
   const elements = useElements()
@@ -58,7 +64,14 @@ const CheckoutForm = ({ productSelected, input, showError, reset, disabled }) =>
   const areFieldsFull = () => {
     const { firstname, lastname } = getValues()
     const { email, confirmEmail, password, confirmPassword } = input
-    return email && confirmEmail && password && confirmPassword && firstname && lastname
+    return (
+      email &&
+      confirmEmail &&
+      password &&
+      confirmPassword &&
+      firstname &&
+      lastname
+    )
   }
 
   const onChangeStripeCard = ({ complete }) => {
@@ -184,7 +197,9 @@ const CheckoutForm = ({ productSelected, input, showError, reset, disabled }) =>
   return (
     <div className="payment">
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
-        <h2 className="modal__title">There was an error. Your payment has been not processed</h2>
+        <h2 className="modal__title">
+          There was an error. Your payment has been not processed
+        </h2>
         <p className="modal__text">Please verify the credit card information</p>
       </Modal>
       <h2 className="payment__title">Enter your card details</h2>
@@ -210,8 +225,8 @@ const CheckoutForm = ({ productSelected, input, showError, reset, disabled }) =>
         <div className="payment__form-control">
           <p className="payment__text">
             <b>Remember:</b> All our subscriptions include a 30-day free trial,
-            we will not charge anything until 30 days after the subscription
-            date you can cancel your subscription at any time.
+            we will not charge anything until 7 days after the subscription date
+            you can cancel your subscription at any time.
           </p>
           <input
             className="input payment__input"

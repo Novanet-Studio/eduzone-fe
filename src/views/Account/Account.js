@@ -43,7 +43,7 @@ function Account() {
     const isPropImage = prop === 'image'
 
     if (!isPropName && !isPropImage) return null
-    
+
     return products.find((product) => product.type === name)[prop]
   }
 
@@ -92,7 +92,7 @@ function Account() {
     fetchUser()
     setLoadingContent(true)
   }, [subscriptionCancelled, account.subscription.id, user.username])
-  
+
   const handleConfirmPasswordForm = async ({ confirmPassword }) => {
     const signinParams = {
       userName: user.username,
@@ -108,7 +108,6 @@ function Account() {
 
       closeModalSubs()
       setSubscriptionCancelled(true)
-
     } catch (error) {
       console.log({ error })
       throw new Error('There was an error while confirm user password')
@@ -126,18 +125,18 @@ function Account() {
   if (loadingContent) {
     return (
       <Layout>
-      <section className="account">
-        <div className="container">
-          <div className="account__info">
-            <h2>Account Settings</h2>
-            <div className="account__card">
-              <div className="account__card-header">
-                <p>Updating content ...</p>
+        <section className="account">
+          <div className="container">
+            <div className="account__info">
+              <h2>Account Settings</h2>
+              <div className="account__card">
+                <div className="account__card-header">
+                  <p>Updating content ...</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       </Layout>
     )
   }
@@ -145,189 +144,198 @@ function Account() {
   return (
     <>
       <Layout>
-      <Modal isOpen={isOpenModal} closeModal={closeModal}>
-        <h2 className="modal__title">¡Thanks for you subscription!</h2>
-        <p className="modal__text">
-          We have sent you an email with your access credentials for future
-          reference.
-        </p>
-        <button className="button modal__button modal__button-blue">
-          <a
-            href="https://www.eduzoneserver.com/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Access now
-          </a>
-        </button>
-      </Modal>
-      <Modal isOpen={isOpenModalSubs} closeModal={closeModalSubs}>
-        <form onSubmit={handleSubmit(handleConfirmPasswordForm)}>
-          <div className="edit__form-group">
-            <label className="edit__form-label" htmlFor="firstname">
-              Confirm password
-            </label>
-            <input
-              className="edit__form-input"
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              ref={register({
-                minLength: {
-                  value: 6,
-                  message: 'Your password must be at least 6 characters',
-                },
-                maxLength: {
-                  value: 20,
-                  message: 'The password must be between 6 and 20 characters',
-                },
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="confirmPassword"
-              as={<ErrorMessageContainer />}
-            />
-          </div>
-          <button className="edit__button-update" type="submit">
-            confirm
-          </button>
-        </form>
-      </Modal>
-      {error && <ErrorMessage error={error} />}
-      <section className="account">
-        <div className="container">
-          <div className="account__info">
-            <h2 className="account__title">Account Settings</h2>
-
-            {/* User account */}
-            <div className="account__card">
-              <div className="account__card-header">
-                <h3 className="account__card-title">User account</h3>
-              </div>
-              <hr className="account__line" />
-              {isEditing ? (
-                <AccountEditing setEditing={setIsEditing} />
-              ) : (
-                <AccountDetails />
-              )}
-
-              <button className="button edit__button" onClick={handleEdit}>
-                {isEditing ? 'Cancel editing' : 'Edit info'}
-              </button>
-            </div>
-
-            {/* User account */}
-
-            <ManageLicense showError={showError} loading={setLoadingContent} />
-
-            {/* Stripe account */}
-            {account.subscription.id ? (
-              <div className="account__card">
-                <div className="account__card-header">
-                  <h3 className="account__card-title">
-                    Billing account information
-                  </h3>
-                  <div className="account__card-info">
-                    <span className="account__card-data">
-                      <h4>Current plan:</h4>
-                      <p className="account__card-data">
-                        {`\u00A0${extractProductProperty(selectedProduct, 'name')}`}
-                      </p>
-                    </span>
-                  </div>
-                  <div className="account__card-info">
-                    <img
-                      className="account__card-img"
-                      src={extractProductProperty(selectedProduct, 'image')}
-                      alt={`Product ${extractProductProperty(selectedProduct, 'name')}`}
-                    />
-                  </div>
-                </div>
-                <hr className="account__line" />
-                <div className="account__card-info">
-                  <h3 className="account__card-title">Credit Card</h3>
-                  <span className="account__card-data">
-                    {customerPaymentMethod}
-                  </span>
-                </div>
-
-                <div
-                  className="button account__button"
-                  onClick={() => handleChangePriceForm()}
-                >
-                  Change pricing plan {'»'}
-                </div>
-
-                <div
-                  className="button account__button"
-                  onClick={handleCancelSubscription}
-                >
-                  Cancel subscription {'»'}
-                </div>
-              </div>
-            ) : (
-              <div className="account__card">
-                <div className="account__card-header">
-                  <h3 className="account__card-title">
-                    You don't have an billing account
-                  </h3>
-                </div>
-                <hr className="account__line" />
-                <div className="account__card-info">
-                  <span className="account__card-data">
-                    <p>Please, select a subscription</p>
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {showChangePriceForm ? (
-              <div className="account__card">
-                <h2 className="account__title">Change pricing plan</h2>
-                <div className="prices__products">
-                  {products.map((product, index) => {
-                    let currentProductSelected = false
-                    if (product.name === selectedProduct) {
-                      currentProductSelected = true
-                    }
-                    return (
-                      <Product
-                        key={index}
-                        product={product}
-                        currentProductSelected={currentProductSelected}
-                        handleClick={handleClick}
-                      />
-                    )
-                  })}
-                </div>
-                {newProductSelected ? (
-                  <PriceChangeForm
-                    customerId={account.subscription.customer}
-                    subscriptionId={account.subscription.id}
-                    currentProductSelected={selectedProduct}
-                    newProductSelected={newProductSelected}
-                    setShowChangePriceForm={setShowChangePriceForm}
-                    setSelectedProduct={setSelectedProduct}
-                  />
-                ) : null}
-              </div>
-            ) : null}
-            <p className="account__text-down">
-              If you're not satisfied within 30 days, we will not charge you any
-              amount.
-            </p>
+        <Modal isOpen={isOpenModal} closeModal={closeModal}>
+          <h2 className="modal__title">¡Thanks for you subscription!</h2>
+          <p className="modal__text">
+            We have sent you an email with your access credentials for future
+            reference.
+          </p>
+          <button className="button modal__button modal__button-blue">
             <a
-              className="button account__button"
-              href="https://www.eduzoneserver.com/studentportal/"
+              href="https://www.eduzoneserver.com/"
               target="_blank"
               rel="noreferrer"
             >
-              Go to Edu-Zone
+              Access now
             </a>
+          </button>
+        </Modal>
+        <Modal isOpen={isOpenModalSubs} closeModal={closeModalSubs}>
+          <form onSubmit={handleSubmit(handleConfirmPasswordForm)}>
+            <div className="edit__form-group">
+              <label className="edit__form-label" htmlFor="firstname">
+                Confirm password
+              </label>
+              <input
+                className="edit__form-input"
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                ref={register({
+                  minLength: {
+                    value: 6,
+                    message: 'Your password must be at least 6 characters',
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: 'The password must be between 6 and 20 characters',
+                  },
+                })}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="confirmPassword"
+                as={<ErrorMessageContainer />}
+              />
+            </div>
+            <button className="edit__button-update" type="submit">
+              confirm
+            </button>
+          </form>
+        </Modal>
+        {error && <ErrorMessage error={error} />}
+        <section className="account">
+          <div className="container">
+            <div className="account__info">
+              <h2 className="account__title">Account Settings</h2>
+
+              {/* User account */}
+              <div className="account__card">
+                <div className="account__card-header">
+                  <h3 className="account__card-title">User account</h3>
+                </div>
+                <hr className="account__line" />
+                {isEditing ? (
+                  <AccountEditing setEditing={setIsEditing} />
+                ) : (
+                  <AccountDetails />
+                )}
+
+                <button className="button edit__button" onClick={handleEdit}>
+                  {isEditing ? 'Cancel editing' : 'Edit info'}
+                </button>
+              </div>
+
+              {/* User account */}
+
+              <ManageLicense
+                showError={showError}
+                loading={setLoadingContent}
+              />
+
+              {/* Stripe account */}
+              {account.subscription.id ? (
+                <div className="account__card">
+                  <div className="account__card-header">
+                    <h3 className="account__card-title">
+                      Billing account information
+                    </h3>
+                    <div className="account__card-info">
+                      <span className="account__card-data">
+                        <h4>Current plan:</h4>
+                        <p className="account__card-data">
+                          {`\u00A0${extractProductProperty(
+                            selectedProduct,
+                            'name',
+                          )}`}
+                        </p>
+                      </span>
+                    </div>
+                    <div className="account__card-info">
+                      <img
+                        className="account__card-img"
+                        src={extractProductProperty(selectedProduct, 'image')}
+                        alt={`Product ${extractProductProperty(
+                          selectedProduct,
+                          'name',
+                        )}`}
+                      />
+                    </div>
+                  </div>
+                  <hr className="account__line" />
+                  <div className="account__card-info">
+                    <h3 className="account__card-title">Credit Card</h3>
+                    <span className="account__card-data">
+                      {customerPaymentMethod}
+                    </span>
+                  </div>
+
+                  <div
+                    className="button account__button"
+                    onClick={() => handleChangePriceForm()}
+                  >
+                    Change pricing plan {'»'}
+                  </div>
+
+                  <div
+                    className="button account__button"
+                    onClick={handleCancelSubscription}
+                  >
+                    Cancel subscription {'»'}
+                  </div>
+                </div>
+              ) : (
+                <div className="account__card">
+                  <div className="account__card-header">
+                    <h3 className="account__card-title">
+                      You don't have an billing account
+                    </h3>
+                  </div>
+                  <hr className="account__line" />
+                  <div className="account__card-info">
+                    <span className="account__card-data">
+                      <p>Please, select a subscription</p>
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {showChangePriceForm ? (
+                <div className="account__card">
+                  <h2 className="account__title">Change pricing plan</h2>
+                  <div className="prices__products">
+                    {products.map((product, index) => {
+                      let currentProductSelected = false
+                      if (product.name === selectedProduct) {
+                        currentProductSelected = true
+                      }
+                      return (
+                        <Product
+                          key={index}
+                          product={product}
+                          currentProductSelected={currentProductSelected}
+                          handleClick={handleClick}
+                        />
+                      )
+                    })}
+                  </div>
+                  {newProductSelected ? (
+                    <PriceChangeForm
+                      customerId={account.subscription.customer}
+                      subscriptionId={account.subscription.id}
+                      currentProductSelected={selectedProduct}
+                      newProductSelected={newProductSelected}
+                      setShowChangePriceForm={setShowChangePriceForm}
+                      setSelectedProduct={setSelectedProduct}
+                    />
+                  ) : null}
+                </div>
+              ) : null}
+              <p className="account__text-down">
+                If you're not satisfied within 7 days, we will not charge you
+                any amount.
+              </p>
+              <a
+                className="button account__button"
+                href="https://www.eduzoneserver.com/studentportal/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Go to Edu-Zone
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </Layout>
     </>
   )

@@ -7,7 +7,7 @@
   flex: 0 0 100%;
 }
 
-  .products {
+.products {
   @include flex;
   text-align: center;
   justify-content: space-between;
@@ -37,7 +37,7 @@
       .products__head {
         background-color: $azul;
       }
-      .products__check {  
+      .products__check {
         box-shadow: 0 0 0 2px $azul;
         &:checked:before {
           background: $azul;
@@ -221,7 +221,7 @@
         font-size: 1.3rem;
         line-height: 1.5rem;
         margin-bottom: 0.5vh;
-      }      
+      }
     }
     &__check {
       margin-top: 1.5vh;

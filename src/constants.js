@@ -12,64 +12,55 @@ export const URL =
 export const products = [
   {
     key: 0,
-    price: '$8.95',
+    price: '$9.90',
     name: 'Math',
     type: 'math',
     image: MathProduct,
     interval: 'month',
     billed: 'monthly',
-    content: ['Math', 'Grades 1 to 6'],
+    content: ['Grades 1 to 6'],
   },
   {
     key: 1,
-    price: '$8.95',
+    price: '$9.90',
     name: 'Language Arts',
     type: 'arts',
     image: LanguageProduct,
     interval: 'month',
     billed: 'monthly',
-    content: ['English Language', 'Grades 1 to 5'],
+    content: ['Grades 1 to 5'],
   },
   {
     key: 2,
-    price: '$12.95',
+    price: '$14.90',
     name: 'Combo package',
     type: 'combo',
     image: ComboProduct,
     interval: 'month',
     billed: 'monthly',
-    content: [
-      'Math & English Language',
-      'ELA Grades 1 to 5',
-      'Math Grades 1 to 6',
-    ],
+    content: ['Math Grades 1 to 6', 'ELA Grades 1 to 5'],
   },
 ]
 
 export const faq = [
   {
     title: 'What is Edu-zone?',
-    body:
-      'Edu-zone is a digital publisher specializing on developing standard-aligned content. These contents offer an interactive experience to engage learners.',
+    body: 'Edu-zone is a digital publisher specializing on developing standard-aligned content. These contents offer an interactive experience to engage learners.',
   },
   {
     title: 'What content will I find in the subscription?',
-    body:
-      'You will find content for English Language Arts (Grades 1-5 ), and Mathematics (Grades 1-6).',
+    body: 'You will find content for English Language Arts (Grades 1-5 ), and Mathematics (Grades 1-6).',
   },
   {
     title: 'How much does it cost?',
-    body:
-      'The subscription starts at 8.95 USD/month. You will only be charged 30 days after your subscription date. You may cancel your subscription at anytime during those first 30 days.',
+    body: 'The subscription starts at 9.90 USD/month. You will only be charged 7 days after your subscription date. You may cancel your subscription at anytime during those first 7 days.',
   },
   {
     title: 'Where can I access Edu-zone?',
-    body:
-      'Edu-zone can be accessed through these web browsers: Chrome, Safari, Edge or download our iOS app.',
+    body: 'Edu-zone can be accessed through these web browsers: Chrome, Safari, Edge or download our iOS app.',
   },
   {
     title: 'How do I cancel?',
-    body:
-      'First, you have to log in on our site: www.eduzonestore.edu-zone.org with your access credentials.  After that, click on : “Cancel subscription”. Even after you cancel, you may continue to enjoy Edu-zone content until the next billing date.',
+    body: 'First, you have to log in on our site: www.eduzonestore.edu-zone.org with your access credentials.  After that, click on : “Cancel subscription”. Even after you cancel, you may continue to enjoy Edu-zone content until the next billing date.',
   },
 ]
