@@ -38,7 +38,7 @@ export const products = [
     image: ComboProduct,
     interval: 'month',
     billed: 'monthly',
-    content: ['Math Grades 1 to 6', 'ELA Grades 1 to 5'],
+    content: ['Math Grades 1 to 6', 'English Language Arts Grades 1 to 5'],
   },
 ]
 
